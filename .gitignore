@@ -1,0 +1,23 @@
+#Temp files
+*~
+*.bak
+
+# Documentation build directory
+Doc/manual
+
+# Sourcecode testing
+SourceCode/Processing/build
+SourceCode/Java/build
+SourceCode/JavaScript/build
+SourceCode/Python/build
+SourceCode/JavaScript/node_modules
+SourceCode/C++/build
+
+#Books directory (these are build targets)
+Books
+
+#ignore compiled Python files
+*pyc
+
+# Minified JS and CSS files
+lib/*-min.*

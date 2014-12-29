@@ -6,10 +6,10 @@
     "Processing": ["pde"]
   },
   "lang": "en",
-  "module_origin": "http://opendsax.local",
-  "exercise_server": "https://opendsa.cc.vt.edu/",
-  "logging_server": "https://opendsa.cc.vt.edu/",
-  "score_server": "https://opendsa.cc.vt.edu/",
+  "module_origin": "https://opendsax.herokuapp.com",
+  "exercise_server": "https://opendsax.herokuapp.com/",
+  "logging_server": "https://opendsax.herokuapp.com/",
+  "score_server": "https://opendsax.herokuapp.com/",
   "build_JSAV": false,
   "allow_anonymous_credit": true,
   "suppress_todo": false,
@@ -21,7 +21,35 @@
   },
   "chapters": {
     "Sorting": {
-      "Sorting/Quicksort": {
+      "Sorting/QuicksortCOMP1": {
+        "long_name": "Quicksort",
+        "exercises": {
+          "quicksortAV": {
+            "long_name": "Quicksort Visualization",
+            "required": false,
+            "points": 0,
+            "showhide": "none",
+            "threshold": 1.0
+          },
+          "quicksortCON": {
+            "long_name": "Quicksort Partition Slideshow",
+            "required": false,
+            "points": 0.0,
+            "threshold": 1.0
+          },
+          "quicksortPRO": {
+            "long_name": "Quicksort Proficiency Exercise",
+            "required": true,
+            "points": 2.0,
+            "threshold": 0.90,
+            "exer_options": {
+              "JXOP-feedback": "continuous",
+              "JXOP-fixmode": "fix"
+            }
+          }
+        }
+      },
+      "Sorting/QuicksortCOMP2": {
         "long_name": "Quicksort",
         "exercises": {
           "quicksortAV": {

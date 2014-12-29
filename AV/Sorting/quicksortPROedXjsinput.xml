@@ -1,36 +1,37 @@
-<problem display_name="webGLDemo">
+<problem display_name="quicksortPRO">
 <script type="loncapa/python">
 <![CDATA[
 import json
 def vglcfn(e, ans):
-  '''
-  par is a dictionary containing two keys, "answer" and "state"
-  The value of answer is the JSON string returned by getGrade
-  The value of state is the JSON string returned by getState
-  '''
-  par = json.loads(ans)
-  # We can use either the value of the answer key to grade
-  answer = json.loads(par["answer"])
-  return answer["cylinder"] and not answer["cube"]
-  '''
-  # Or we could use the value of the state key
-  state = json.loads(par["state"])
-  selectedObjects = state["selectedObjects"]
-  return selectedObjects["cylinder"] and not selectedObjects["cube"]
-  '''
+    '''
+    par is a dictionary containing two keys, "answer" and "state"
+    The value of answer is the JSON string returned by getGrade
+    The value of state is the JSON string returned by getState
+    '''
+    par = json.loads(ans)
+    answer = json.loads(par["answer"])
+    total = answer["total"]
+    correct = answer["correct"]
+    undo = answer["undo"]
+    fix = answer["fix"]
+    student = answer["student"]
+    score = correct - undo - fix
+    if score < 0:
+       score = 0
+    grade_decimal = score / total
+    return {'msg':'Good', 'ok': True, 'grade_decimal': grade_decimal}
 ]]>
 </script>
-<p>
+  <p>
 Here is a complete proficiency exercise to see how well you understand Quicksort.
 </p>
-<customresponse cfn="vglcfn">
-  <jsinput gradefn="WebGLDemo.getGrade"
-    get_statefn="WebGLDemo.getState"
-    set_statefn="WebGLDemo.setState"
-    initial_state='{"selectedObjects":{"cube":true,"cylinder":false}}'
-    width="792"
-    height="512"
-    html_file="http://opendsax.local/av/sorting/quicksortPRO.html"
-    sop="true"/>
-</customresponse>
+  <customresponse cfn="vglcfn">
+    <jsinput gradefn="quicksortPRO.getGrade"
+      get_statefn="quicksortPRO.getState"
+      set_statefn="quicksortPRO.setState"
+      width="792" 
+      height="512" 
+      html_file="https://opendsax.herokuapp.com/AV/Sorting/quicksortPRO.html" 
+      sop="false"/>
+  </customresponse>
 </problem>

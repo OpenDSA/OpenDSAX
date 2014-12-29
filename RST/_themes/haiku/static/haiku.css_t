@@ -26,7 +26,7 @@
 html {
     margin: 0px;
     padding: 0px;
-    background: #FFF url(bg-page.png) top left repeat-x;
+    /*background: #FFF url(bg-page.png) top left repeat-x;*/
 }
 
 body {
@@ -34,7 +34,7 @@ body {
     margin: auto;
     padding: 0px;
     font-family: "DejaVu Sans", Arial, Helvetica, sans-serif;
-    min-width: 59em;
+    min-width: 49em;
     max-width: 70em;
     color: {{ theme_textcolor }};
 }
@@ -44,6 +44,7 @@ div.footer {
     font-size: 11px;
     text-align: center;
     letter-spacing: 0.5px;
+    display: none;
 }
 
 /* link colors and text decoration */
@@ -100,9 +101,9 @@ a.headerlink:hover {
 
 div.content {
     margin-top: 20px;
-    margin-left: 40px;
-    margin-right: 40px;
-    margin-bottom: 50px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-bottom: 20px;
     font-size: 0.9em;
 }
 
@@ -115,6 +116,7 @@ div.header {
     height: 121px;
     /* background: #eeeeee; */
     padding: 0 40px;
+    display: none;
 }
 div.header .title-wrapper {
     top: 0;
@@ -167,6 +169,7 @@ div.title {
 }
 div.topnav {
     /* background: #e0e0e0; */
+    display: none;
 }
 div.topnav p {
     margin-top: 0;
@@ -178,6 +181,7 @@ div.topnav p {
 }
 div.bottomnav {
     background: #eeeeee;
+    display: none;
 }
 div.bottomnav p {
     margin-right: 40px;

@@ -1,7 +1,9 @@
 "use strict";
 // /*jslint noempty: false */
 /*global alert: true, ODSA */
-$(document).ready(function () {
+var quicksortPRO = {};
+
+$(document).ready(function() {
   // Process help button: Give a full help page for this activity
   function help() {
     window.open("quicksortHelpPRO.html", 'helpwindow');
@@ -33,10 +35,13 @@ $(document).ready(function () {
     ODSA.AV.logExerciseInit(initData);
 
     // Create the array the user will intereact with
-    userArr = av.ds.array(initialArray, {indexed: true, layout: arrayLayout.val()});
+    userArr = av.ds.array(initialArray, {
+      indexed: true,
+      layout: arrayLayout.val()
+    });
 
     // Assign a click handler function to the user array
-    userArr.click(function (index) {
+    userArr.click(function(index) {
       clickHandler(this, index);
     });
 
@@ -53,8 +58,10 @@ $(document).ready(function () {
 
   // Create the model solution used for grading the exercise
   function modelSolution(av) {
-    var modelArr = av.ds.array(initialArray,
-                               {indexed: true, layout: arrayLayout.val()});
+    var modelArr = av.ds.array(initialArray, {
+      indexed: true,
+      layout: arrayLayout.val()
+    });
 
     // ModelSolution vars used for fixing the state
     var msPivotIndex = av.variable(-1);
@@ -68,11 +75,12 @@ $(document).ready(function () {
     av.displayInit();
 
     quicksort(av, modelArr, 0, modelArr.size() - 1, msPivotIndex,
-              msPivotMoved, msPartitioned, msLeft, msRight);
+      msPivotMoved, msPartitioned, msLeft, msRight);
 
     // Return model array and all state variables needed to grade/fix state
     return [modelArr, msPivotIndex, msPivotMoved, msPartitioned,
-            msLeft, msRight];
+      msLeft, msRight
+    ];
   }
 
   /**
@@ -81,7 +89,7 @@ $(document).ready(function () {
    * solution for grading purposes
    */
   function quicksort(av, arr, i, j, msPivotIndex, msPivotMoved,
-                     msPartitioned, msLeft, msRight) {
+    msPartitioned, msLeft, msRight) {
     // Select the pivot
     var pIndex = Math.floor((i + j) / 2);
     arr.highlightBlue(pIndex);
@@ -131,7 +139,7 @@ $(document).ready(function () {
     // Sort left partition
     if ((k - i) > 1) {
       quicksort(av, arr, i, k - 1, msPivotIndex, msPivotMoved,
-                msPartitioned, msLeft, msRight);
+        msPartitioned, msLeft, msRight);
     } else if ((k - i) === 1) {
       // If the sublist is a single element, mark it as sorted
       av.umsg(interpret("av_c7"));
@@ -144,7 +152,7 @@ $(document).ready(function () {
     // Sort right partition
     if ((j - k) > 1) {
       quicksort(av, arr, k + 1, j, msPivotIndex, msPivotMoved,
-                msPartitioned, msLeft, msRight);
+        msPartitioned, msLeft, msRight);
     } else if ((j - k) === 1) {
       // If the sublist is a single element, mark it as sorted
       av.umsg(interpret("av_c8"));
@@ -168,8 +176,12 @@ $(document).ready(function () {
   function partition(arr, l, r, pivot) {
     while (l <= r) {
       // Move bounds inward until they meet
-      while (arr.value(l) < pivot) { l++; }
-      while ((r >= l) && (arr.value(r) >= pivot)) { r--; }
+      while (arr.value(l) < pivot) {
+        l++;
+      }
+      while ((r >= l) && (arr.value(r) >= pivot)) {
+        r--;
+      }
       if (r > l) {
         arr.swap(l, r);
       }
@@ -309,7 +321,7 @@ $(document).ready(function () {
 
   // Reset the model solution variables
   function resetMSStateVars(msPivotIndex, msPivotMoved,
-                            msPartitioned, msLeft, msRight) {
+    msPartitioned, msLeft, msRight) {
     msPivotIndex.value(-1);
     msPivotMoved.value(false);
     msPartitioned.value(false);
@@ -377,15 +389,39 @@ $(document).ready(function () {
   // settings for the AV
   var settings = new JSAV.utils.Settings($(".jsavsettings"));
   // add the layout setting preference
-  var arrayLayout = settings.add("layout", {"type": "select",
-        "options": {"bar": "Bar", "array": "Array"},
-        "label": "Array layout: ", "value": "array"});
+  var arrayLayout = settings.add("layout", {
+    "type": "select",
+    "options": {
+      "bar": "Bar",
+      "array": "Array"
+    },
+    "label": "Array layout: ",
+    "value": "array"
+  });
 
   var arraySize = 10,
-      initialArray = [],
-      av = new JSAV($('.avcontainer'), {settings: settings});
+    initialArray = [],
+    av = new JSAV($('.avcontainer'), {
+      settings: settings
+    }),
+    channel;
 
-  av.recorded();     // we are not recording an AV with an algorithm
+  // Establish a channel only if this application is embedded in an iframe.
+  // This will let the parent window communicate with this application using
+  // RPC and bypass SOP restrictions.
+  if (window.parent !== window) {
+    channel = Channel.build({
+      window: window.parent,
+      origin: "*",
+      scope: "JSInput"
+    });
+
+    channel.bind("getGrade", getGrade);
+    channel.bind("getState", getState);
+    channel.bind("setState", setState);
+  }
+
+  av.recorded(); // we are not recording an AV with an algorithm
 
   // Initialize the variables
   var userArr = [];
@@ -409,8 +445,36 @@ $(document).ready(function () {
   //   - Each of the state variables will only be compared by value
   // {fix: fixState}: The function to call to fix the state of the exercise
   // if the user makes a mistake in 'fix' mode
-  var exercise = av.exercise(modelSolution, initialize,
-         {compare: [{"class": ["processing", "sorted"]}, {}, {}, {}, {}, {}],
-          controls: $('.jsavexercisecontrols'), fix: fixState});
+  var exercise = av.exercise(modelSolution, initialize, {
+    compare: [{
+      "class": ["processing", "sorted"]
+    }, {}, {}, {}, {}, {}],
+    controls: $('.jsavexercisecontrols'),
+    fix: fixState
+  });
   exercise.reset();
-});
+
+  function getGrade() {
+    // The following return value may or may not be used to grade
+    // server-side.
+    // If getState and setState are used, then the Python grader also gets
+    // access to the return value of getState and can choose it instead to
+    // grade.
+    return JSON.stringify(exercise.score);
+  }
+
+  function getState() {
+    return JSON.stringify(exercise.score);
+  }
+
+  function setState() {
+
+  }
+  quicksortPRO = {
+    getState: getState,
+    setState: setState,
+    getGrade: getGrade,
+    exercise: exercise
+  };
+
+}());

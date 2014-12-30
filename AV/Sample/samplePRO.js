@@ -173,7 +173,6 @@ $(document).ready(function() {
     samplePRO = {
         getState: getState,
         setState: setState,
-        getGrade: getGrade,
-        exercise: exercise
+        getGrade: getGrade
     };
 }());

@@ -6,7 +6,7 @@
     "Processing": ["pde"]
   },
   "lang": "en",
-  "module_origin": "http://opendsax.local",
+  "module_origin": "http://algoviz.org",
   "exercise_server": "https://opendsa.cc.vt.edu/",
   "logging_server": "https://opendsa.cc.vt.edu/",
   "score_server": "https://opendsa.cc.vt.edu/",

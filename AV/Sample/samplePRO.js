@@ -1,5 +1,5 @@
 var samplePRO = {};
-$(document).ready(function() {
+$(document).ready(function () {
     var arraySize = 8,
         initialArray = [],
         jsavArray,
@@ -101,7 +101,7 @@ $(document).ready(function() {
             // mark this as a gradeable step; also handles continuous feedback
             exercise.gradeableStep();
         }
-    };
+    }
 
 
     var exercise = av.exercise(modelSolution, initialize, {
@@ -151,20 +151,20 @@ $(document).ready(function() {
 
             function delayLoop() {
                 var index;
-                setTimeout(function() {
+                setTimeout(function () {
                     index = state.lastState.ind[i - 1];
                     if (index.cls) {
                         // simulate student clicks
                         // TODO: should find a better way to do this, to be part of JSAV API?
                         $("#jsavcontainer .jsavindex:nth-child(" + i + ") .jsavvaluelabel").trigger("click");
                     } else {
-                        return
+                        return;
                     }
                     i += 1;
                     if (i <= state.lastState.ind.length) {
                         delayLoop();
                     }
-                }, 500)
+                }, 500);
             }
             delayLoop(); //  start the loop
         }

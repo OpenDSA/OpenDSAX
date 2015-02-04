@@ -17,7 +17,7 @@ class JSAVXBlock(XBlock, LmsCompatibilityMixin):
     
     problem_url = String(
         help = "Url of the jsav exercise",
-        default = "http://algoviz.org/AV/Sorting/quicksortPRO.html",
+        default = "http://algoviz.org/OpenDSAX/AV/Sorting/quicksortPRO.html",
         scope = Scope.settings)
 
     student_score = Float(

@@ -399,7 +399,7 @@ $(document).ready(function() {
     "value": "array"
   });
 
-  var arraySize = 10,
+  var arraySize = 2,
     initialArray = [],
     av = new JSAV($('.avcontainer'), {
       settings: settings

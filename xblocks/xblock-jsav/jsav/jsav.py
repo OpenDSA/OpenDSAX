@@ -17,7 +17,7 @@ class JSAVXBlock(XBlock, LmsCompatibilityMixin):
     
     problem_url = String(
         help = "Url of the jsav exercise",
-        default = "http://opendsa.local/AV/Sorting/quicksortPRO.html",
+        default = "http://algoviz.org/AV/Sorting/quicksortPRO.html",
         scope = Scope.settings)
 
     student_score = Float(
@@ -65,14 +65,14 @@ class JSAVXBlock(XBlock, LmsCompatibilityMixin):
     @XBlock.json_handler
     def report_progress(self, data, suffix=''):
         if "score" in data.keys():
-            max_score = float(data["score"]["correct"]) / float(data["score"]["total"]) * self.max_score()
+            current_score = float(data["score"]["correct"]) / float(data["score"]["total"])
             submission = { 'score' : data.get("score", None),
                            'seed' : data.get("seed", None), 
                            'log': data.get("log", None),
                            'datetime': data.get("datetime", None) }
             self.student_submissions.append(submission)
-            if max_score == self.max_score():
-                self.student_score = max_score
+            if current_score == 1:
+                self.student_score = self.max_score()
                 self.runtime.publish(self, "grade", { "value": self.student_score, "max_value": self.max_score() } )
         return {"student_score": self.student_score}
 

@@ -14,7 +14,7 @@ class LmsCompatibilityMixin(object):
     # Studio the default value for this field to show this XBlock
     # in the list of "Advanced Components"
     display_name = String(
-        default="jsav problem", 
+        default="JSAV-Based Proficiency Problem", 
         scope=Scope.settings,
         help="Display name"
     )
@@ -37,6 +37,13 @@ class LmsCompatibilityMixin(object):
         scope = Scope.settings)
 
     points = Float(
+        display_name="Problem Weight",
+        help = "The number of points this problem is worth",
+        values = {"min": 0, "step": 0.1},
+        default = 10,
+        scope = Scope.settings)
+
+    weight = Float(
         display_name="Problem Weight",
         help = "The number of points this problem is worth",
         values = {"min": 0, "step": 0.1},

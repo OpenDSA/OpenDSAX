@@ -8,7 +8,7 @@ function JSAVXBlock(runtime, element) {
             complete;
 
         // console.dir(e);
-        if (e.originalEvent.origin.indexOf("opendsa.local") < 0) {
+        if (e.originalEvent.origin.indexOf("opendsax.local") < 0) {
             console.log("Wrong origin...");
             return;
         }
@@ -31,9 +31,6 @@ function JSAVXBlock(runtime, element) {
                 reportProgress(data.score, data, data.seed);
             }
         }
-        // if (data.type == "jsav-submit") {
-        //     reportProgress(data.data.score, data.data.log, data.data.seed);
-        // }
     }
 
     $(document).ready(function() {

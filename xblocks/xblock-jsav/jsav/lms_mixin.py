@@ -31,30 +31,11 @@ class LmsCompatibilityMixin(object):
         help="ISO-8601 formatted string representing the due date of this assignment."
     )
 
-    required = Boolean(
-        help = "Whether the exercise is required for module proficiency",
-        default = False,
-        scope = Scope.settings)
-
-    points = Float(
-        display_name="Problem Weight",
-        help = "The number of points this problem is worth",
-        values = {"min": 0, "step": 0.1},
-        default = 10,
-        scope = Scope.settings)
-
     weight = Float(
         display_name="Problem Weight",
         help = "The number of points this problem is worth",
         values = {"min": 0, "step": 0.1},
         default = 10,
-        scope = Scope.settings)
-
-    threshold = Float(
-        display_name="Percentage For Proficiency",
-        help = "the percentage a student needs to score on the exercise to obtain proficiency, defaults to 100% (1 on a 0-1 scale)",
-        values = {"min": 0, "step": 0.01},
-        default = 1.00,
         scope = Scope.settings)
 
     def has_dynamic_children(self):
@@ -82,4 +63,4 @@ class LmsCompatibilityMixin(object):
     def max_score(self):
         """The maximum raw score of our problem.
         """
-        return self.points
+        return self.weight

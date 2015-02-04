@@ -1,6 +1,12 @@
 <div class="jsav_studio" style="padding: 10px;">
-  <h2>JSAV exercise</h2>
-  <div class="weight">
+  <h2>JSAV-Based Proficiency Problem Configration</h2>
+  <div class="problem_required">
+    Whether the exercise is required for module proficiency: <input type="checkbox" id="jsav_problem_required" value="{{required}}">
+  <div>
+  <div class="problem_threshold">
+    Percentage For Proficiency: <input type="text" id="jsav_problem_threshold" value="{{threshold}}"/>
+  <div>
+  <div class="problem_weight">
     The number of points this problem is worth: <input type="text" id="jsav_problem_weight" value="{{points}}"/>
   <div>
   <h3>EITHER</h3>
@@ -39,7 +45,7 @@
 
 <h3>OR</h3>
 <div style="border: 1px solid #909090; margin: 10px; padding: 5px;">
-  <p>Submit a problem url. URLs are only accepted from <em>cs.hut.fi</em> domains.</p>
+  <p>Submit a problem url. URLs are only accepted from <em>algoviz.org</em> domain.</p>
     <input type="text" id="jsav_problem_url" value="{{problem_url}}" size="90" /><br />
     <button id="jsav_url_submit" style="width: 80px; height:50px; font-size: 18px;margin-top:10px;">Submit</button>
   </div>

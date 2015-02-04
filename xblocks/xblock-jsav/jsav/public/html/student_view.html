@@ -1,0 +1,12 @@
+<div id="jsav_status">
+    Your current score on this question is <span class="problem_score">{{student_score}}</span>&nbsp;/&nbsp;<span class="problem_weight">{{weight}}</span>
+	{% if student_proficiency %}
+	    <span class="problem_complete">WELL DONE</span>
+	{% endif %}
+</div>
+<iframe
+	class="jsav_iframe"
+	seamless="seamless"
+	style="border: none;"
+	src="{{problem_url}}"
+	width="800" height="800">...</iframe>

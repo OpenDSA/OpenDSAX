@@ -21,3 +21,9 @@ Books
 
 # Minified JS and CSS files
 lib/*-min.*
+
+# Distribution / packaging
+.Python
+*.egg-info/
+.installed.cfg
+*.egg

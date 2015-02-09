@@ -32,14 +32,15 @@ function JSAVXBlock(runtime, element) {
 
     $(document).ready(function() {
         //remove extraneous listeners
-        $(window).off("message")
-        $(window).on("message", messageListener)
+        // $(window).off("message")
+        $(element).on("message", messageListener)
         $(".problem_score", element).text(Math.round($(".problem_score", element).text()));
         $(".problem_weight", element).text(Math.round($(".problem_weight", element).text()));
     });
 
     function reportProgress(score, log, seed) {
         var handlerUrl = runtime.handlerUrl(element, 'report_progress');
+        console.log(handlerUrl);
         $.ajax({
             type: "POST",
             url: handlerUrl,
@@ -56,8 +57,9 @@ function JSAVXBlock(runtime, element) {
     function updateProgress(result) {
         $(".problem_score", element).text(Math.round(result.student_score));
         $(".student_attempts", element).text(result.student_attempts);
+
         if (result.student_proficiency) {
-            $(".problem_score", element).parent().append('<span class="problem_complete">WELL DONE</span>');
+            $(".problem_complete", element).text(" WELL DONE");
         }
     }
 }

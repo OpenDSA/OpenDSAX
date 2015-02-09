@@ -3,7 +3,7 @@ import json, urllib2
 
 from django.template import Context, Template
 
-from lms_mixin import LmsCompatibilityMixin
+from .lms_mixin import LmsCompatibilityMixin
 from xblock.core import XBlock
 from xblock.fields import Scope, String, Boolean, Integer, Float, List
 from xblock.fragment import Fragment
@@ -33,6 +33,11 @@ class JSAVXBlock(XBlock, LmsCompatibilityMixin):
         scope = Scope.settings)
 
     long_name = String(
+        help = "Problem Long Name",
+        default = "",
+        scope = Scope.settings)
+
+    short_name = String(
         help = "Problem Long Name",
         default = "",
         scope = Scope.settings)
@@ -137,8 +142,8 @@ class JSAVXBlock(XBlock, LmsCompatibilityMixin):
             self.student_submissions.append(submission)
             if current_score >= self.threshold:
                 self.student_proficiency = True
-                self.student_score = self.max_score()
-                self.runtime.publish(self, "grade", { "value": self.student_score, "max_value": self.max_score() } )
+                self.student_score = self.weight
+                self.runtime.publish(self, "grade", { "value": self.student_score, "max_value": self.weight } )
         return {"student_score": self.student_score,
                 "student_proficiency": self.student_proficiency}
 

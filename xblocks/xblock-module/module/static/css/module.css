@@ -1,0 +1,9 @@
+/* CSS for ModuleXBlock */
+
+.module_block .count {
+    font-weight: bold;
+}
+
+.module_block p {
+    cursor: pointer;
+}

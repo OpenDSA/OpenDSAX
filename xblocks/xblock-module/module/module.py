@@ -43,12 +43,13 @@ class ModuleXBlock(XBlock):
                 border: solid 1px #888; padding: 3px;
             }
             """)
-        context = Context({"total_weight": total_weight, 
-                           "total_student_score": total_student_score,
+        context = Context({"total_weight": int(total_weight), 
+                           "total_student_score": int(total_student_score),
                             "named_children": named_child_frags,
                            })
 
         result.add_content(self.runtime.render_template("student_template.html", context=context))
+        result.add_javascript_url(self.runtime.local_resource_url(self, 'public/js/src/module.js'))
         return result
 
     # # will get total weights and total student scores for childern blocks
@@ -71,9 +72,9 @@ class ModuleXBlock(XBlock):
         return [
             ("ModuleXBlock",
              """<module>
-                    <jsav></jsav> 
-                    <jsav></jsav> 
-                    <jsav></jsav> 
+                    <jsav weight="10"></jsav>
+                    <jsav weight="20"></jsav>
+                    <jsav weight="30"></jsav>
                 </module>
              """),
         ]

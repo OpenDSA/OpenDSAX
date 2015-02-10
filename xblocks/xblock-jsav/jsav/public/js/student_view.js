@@ -1,4 +1,6 @@
-function JSAVXBlock(runtime, element) {
+function JSAVXBlock_{{seed}}(runtime, element) {
+    var seed = "{{seed}}";
+
     function roundPercent(number) {
         return Math.round(number * 100) / 100;
     }
@@ -11,7 +13,15 @@ function JSAVXBlock(runtime, element) {
             console.log("Wrong origin...");
             return;
         }
+
         var data = e.originalEvent.data;
+        console.log("seed: " + seed + " data.seed: " + data.seed);
+        console.dir(data);
+
+        if (data.seed != parseInt(seed)) {
+            console.log("Wrong seed...");
+            return;
+        }
 
         if (data.type === "jsav-exercise-grade-change" || data.type === "jsav-exercise-grade" || data.type === "jsav-exercise-step-fixed") {
             // On grade change events, log the user's score and submit it
@@ -30,10 +40,10 @@ function JSAVXBlock(runtime, element) {
         }
     }
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         //remove extraneous listeners
         // $(window).off("message")
-        $(element).on("message", messageListener)
+        $(window).on("message", messageListener);
         $(".problem_score", element).text(Math.round($(".problem_score", element).text()));
         $(".problem_weight", element).text(Math.round($(".problem_weight", element).text()));
     });
@@ -59,7 +69,8 @@ function JSAVXBlock(runtime, element) {
         $(".student_attempts", element).text(result.student_attempts);
 
         if (result.student_proficiency) {
-            $(".problem_complete", element).text(" WELL DONE");
+            var correctImg = "/resource/jsav/public/images/correct-icon.png";
+            $(".problem_complete img", element).attr('src', correctImg);
         }
     }
 }

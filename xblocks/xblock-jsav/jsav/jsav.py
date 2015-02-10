@@ -1,5 +1,9 @@
 import pkg_resources
 import json, urllib2
+import inspect
+import random
+import string  # pylint: disable=W0402
+import time
 
 from django.template import Context, Template
 
@@ -10,6 +14,14 @@ from xblock.fragment import Fragment
 
 
 class JSAVXBlock(XBlock, LmsCompatibilityMixin):
+    """
+    JSAV-Based Proficiency Problem
+    """
+    seed = Integer(
+        help="Random seed for this student", 
+        scope=Scope.user_state, 
+        default=0)
+
     instructions = String(
         help = "The instructions to show to learners",
         default = "Write instructions to learners here...",
@@ -84,16 +96,21 @@ class JSAVXBlock(XBlock, LmsCompatibilityMixin):
         scope = Scope.user_state)
 
     def student_view(self, context):
-        template = Template(self.resource_string("public/html/student_view.html"))
-        context = Context({"student_score": self.student_score, 
+        html_template = Template(self.resource_string("public/html/student_view.html"))
+        html_context = Context({"student_score": self.student_score, 
                            "weight": self.weight, 
                            "problem_url": self.get_problem_url(), 
                            "student_proficiency": self.student_proficiency})
+        fragment = Fragment(html_template.render(html_context))
+        # fragment.add_javascript_url(self.runtime.local_resource_url(self, 'public/js/student_view.js'))
 
-        fragment = Fragment(template.render(context))
-        fragment.add_javascript_url(self.runtime.local_resource_url(self, 'public/js/student_view.js'))
+        js_template = Template(self.resource_string("public/js/student_view.js"))
+        js_context = Context({'seed': self.seed if self.seed else self.set_student_seed()}) 
+        js_str = js_template.render(js_context)
+        fragment.add_javascript(js_str)
+
         fragment.add_css_url(self.runtime.local_resource_url(self, 'public/css/jsav_xblock.css'))
-        fragment.initialize_js('JSAVXBlock')
+        fragment.initialize_js('JSAVXBlock'+'_'+str(self.seed if self.seed else self.set_student_seed()))
         return fragment
 
     def studio_view(self, context):
@@ -110,6 +127,7 @@ class JSAVXBlock(XBlock, LmsCompatibilityMixin):
         fragment.initialize_js("JSAVXBlockStudioEdit")
         return fragment
 
+
     @XBlock.json_handler
     def change_problem(self, data, suffix=''):
         if 'problem_url' in data:
@@ -121,15 +139,29 @@ class JSAVXBlock(XBlock, LmsCompatibilityMixin):
         if 'required' in data:
             self.required = float(data['required'])
 
+
     def resource_string(self, path):
         """Handy helper for getting resources from our kit."""
         data = pkg_resources.resource_string(__name__, path)
         return data.decode("utf8")
 
+
+    def set_student_seed(self):
+        """Set a random seed for the student so they each have different but repeatable data."""
+        # Don't return zero, that's the default, and the sign that we should make a new seed.
+        self.seed = int(time.time() * 1000) % 100 + 1
+        return self.seed        
+
+
     def get_problem_url(self):
         """Handy helper for getting URL plus paramters."""
-        URL = self.problem_url+"?"+"JXOP-fixmode"+"="+self.JXOP_fixmode+"&"+"JXOP-code"+"="+self.JXOP_code+"&"+"JXOP-feedback"+"="+self.JXOP_feedback+"&"+"JOP-lang"+"="+self.JOP_lang
+        URL = self.problem_url+"?"+"JXOP-fixmode"+"="+self.JXOP_fixmode+"&"\
+                                  +"JXOP-code"+"="+self.JXOP_code+"&"\
+                                  +"JXOP-feedback"+"="+self.JXOP_feedback+"&"\
+                                  +"JOP-lang"+"="+self.JOP_lang+"&"\
+                                  +"seed"+"="+ str(self.seed if self.seed else self.set_student_seed())
         return URL
+
 
     @XBlock.json_handler
     def report_progress(self, data, suffix=''):

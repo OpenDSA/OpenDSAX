@@ -1,6 +1,8 @@
 /* Javascript for ModuleXBlock. */
 function ModuleXBlock(runtime, element) {
 
+    console.dir(ODSA);
+
     function roundPercent(number) {
         return Math.round(number * 100) / 100;
     }
@@ -17,7 +19,7 @@ function ModuleXBlock(runtime, element) {
         var score,
             complete;
 
-        if (e.originalEvent.origin.indexOf("algoviz.org") < 0) {
+        if (e.originalEvent.origin.indexOf("opendsax.local") < 0) {
             console.log("Wrong origin...");
             return;
         }
@@ -50,7 +52,7 @@ function ModuleXBlock(runtime, element) {
         }
     }
 
-    $(document).ready(function () {
+    $(document).ready(function() {
         //remove extraneous listeners
         // $(window).off("message")
         $(window).on("message", messageListener);

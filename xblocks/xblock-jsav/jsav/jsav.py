@@ -165,6 +165,7 @@ class JSAVXBlock(XBlock, LmsCompatibilityMixin):
 
     @XBlock.json_handler
     def report_progress(self, data, suffix=''):
+        already_proficient = self.student_proficiency if self.student_proficiency else False
         if "score" in data.keys():
             current_score = float(data["score"]["correct"]) / float(data["score"]["total"])
             submission = { 'score' : data.get("score", None),
@@ -177,7 +178,9 @@ class JSAVXBlock(XBlock, LmsCompatibilityMixin):
                 self.student_score = self.weight
                 self.runtime.publish(self, "grade", { "value": self.student_score, "max_value": self.weight } )
         return {"student_score": self.student_score,
-                "student_proficiency": self.student_proficiency}
+                "problem_weight": self.weight,
+                "student_proficiency": self.student_proficiency,
+                "already_proficient": already_proficient}
 
 
     @staticmethod

@@ -1,10 +1,18 @@
 <div id="module_progress">
-    Your current progress for this module is <span class="total_problem_score">{{context.total_student_score}}</span>&nbsp;/&nbsp;<span class="total_problem_weight">{{context.total_weight}}
+    Your current progress for this module is 
+    <span class="total_problem_score">{{context.total_student_score}}</span>&nbsp;/&nbsp;
+    <span class="total_problem_weight">{{context.total_weight}}</span>
+    <span class="module_complete">
+    	{% if module_completed %} 
+    		<img src="/resource/jsav/public/images/correct-icon.png">
+    	{% else %}
+    		<img src="/resource/jsav/public/images/incorrect-icon.png">
+    	{% endif %}
+	</span>
 
-	<div class="problem">
-	    {% for content in context.named_children %}
-	    {{content.body_html|safe}}
-	    {% endfor %}
-	</div>
 </div>
-
+<div class="module">
+    {% for content in context.named_children %}
+    {{content.body_html|safe}}
+    {% endfor %}
+</div>

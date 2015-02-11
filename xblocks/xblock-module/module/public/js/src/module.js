@@ -23,7 +23,7 @@ function ModuleXBlock(runtime, element) {
         }
 
         var data = e.originalEvent.data;
-        // console.log("seed: " + seed + " data.seed: " + data.seed);
+        console.log("type: " + data.type + " uiid: " + data.uiid + " seed: " + data.seed);
         // console.dir(data);
 
         if (data.type === "jsav-exercise-grade-change" || data.type === "jsav-exercise-grade" || data.type === "jsav-exercise-step-fixed") {
@@ -40,14 +40,15 @@ function ModuleXBlock(runtime, element) {
                 var children = runtime.children(element);
                 for (var i = 0; i < children.length; i++) {
                     var child = children[i];
+                    console.log("student completed the problem, child.seed: " + child.seed + " data.seed: " + data.seed);
                     if (child.seed === data.seed) {
                         callIfExists(child, 'reportProgress', data);
+                        break;
                     }
                 }
             }
         }
     }
-
 
     $(document).ready(function () {
         //remove extraneous listeners

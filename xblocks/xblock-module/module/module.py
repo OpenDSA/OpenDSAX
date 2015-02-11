@@ -34,22 +34,24 @@ class ModuleXBlock(XBlock):
             child = self.runtime.get_block(child_id)
             total_weight += child.weight
             total_student_score += child.student_score
-
             frag = self.runtime.render_child(child, "student_view")
             result.add_frag_resources(frag)
             named_child_frags.append(frag)
         result.add_css("""
-            .problem {
+            .module {
                 border: solid 1px #888; padding: 3px;
             }
             """)
+        module_completed = True if total_student_score == total_weight else False
         context = Context({"total_weight": int(total_weight), 
                            "total_student_score": int(total_student_score),
-                            "named_children": named_child_frags,
+                           "module_completed": module_completed,
+                           "named_children": named_child_frags,
                            })
 
         result.add_content(self.runtime.render_template("student_template.html", context=context))
         result.add_javascript_url(self.runtime.local_resource_url(self, 'public/js/src/module.js'))
+        result.initialize_js('ModuleXBlock')
         return result
 
     # # will get total weights and total student scores for childern blocks
@@ -74,7 +76,6 @@ class ModuleXBlock(XBlock):
              """<module>
                     <jsav weight="10"></jsav>
                     <jsav weight="20"></jsav>
-                    <jsav weight="30"></jsav>
                 </module>
              """),
         ]

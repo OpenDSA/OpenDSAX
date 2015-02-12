@@ -15,6 +15,26 @@ class ModuleXBlock(XBlock):
     """
     has_children = True
 
+    display_module = Boolean(
+        help = "",
+        default = True,
+        scope = Scope.settings)
+
+    short_name = String(
+        help = "",
+        default = "QuicksortCOMP1",
+        scope = Scope.settings)
+
+    long_name = String(
+        help = "",
+        default = "Quicksort",
+        scope = Scope.settings)
+
+    chapter = String(
+        help = "",
+        default = "Sorting",
+        scope = Scope.settings)
+
     def resource_string(self, path):
         """Handy helper for getting resources from our kit."""
         data = pkg_resources.resource_string(__name__, path)
@@ -28,7 +48,11 @@ class ModuleXBlock(XBlock):
 
         result = Fragment()
         result.add_css_url(self.runtime.local_resource_url(self, 'public/css/module.css'))
-        result.add_javascript_url(self.runtime.local_resource_url(self, 'public/js/src/config.js'))
+        result.add_css_url(self.runtime.local_resource_url(self, 'public/lib/normalize.css'))
+        result.add_css_url(self.runtime.local_resource_url(self, 'public/JSAV/css/JSAV.css'))
+        result.add_css_url(self.runtime.local_resource_url(self, 'public/lib/odsaMOD-min.css'))
+        result.add_css_url(self.runtime.local_resource_url(self, 'public/lib/jquery-ui.css'))
+        result.add_css_url(self.runtime.local_resource_url(self, 'public/lib/odsaStyle.css'))
         result.add_javascript_url(self.runtime.local_resource_url(self, 'public/js/src/module.js'))
 
         named_child_frags = []
@@ -60,29 +84,38 @@ class ModuleXBlock(XBlock):
 
 
     def add_ss_javascript_resources(self, problem_url, fragment):
-        fragment.add_javascript_url(problem_url+"../../lib/jquery.min.js")
+        fragment.add_javascript_url(self.runtime.local_resource_url(self, 'public/lib/jquery.min.js'))
         fragment.add_javascript_url("//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML")
-        fragment.add_javascript_url(problem_url+"../../lib/jquery-ui.min.js")
-        fragment.add_javascript_url(problem_url+"../../JSAV/lib/jquery.transit.js")
-        fragment.add_javascript_url(problem_url+"../../JSAV/lib/raphael.js")
-        fragment.add_javascript_url(problem_url+"../../JSAV/build/JSAV-min.js")
-        fragment.add_javascript_url(problem_url+"../../lib/odsaUtils-min.js")
-        fragment.add_javascript_url(problem_url+"../../lib/odsaMOD-min.js")
-        fragment.add_javascript_url(problem_url+"../../lib/conceptMap.js")
+        fragment.add_javascript_url(self.runtime.local_resource_url(self, 'public/lib/jquery-ui.min.js'))
+        fragment.add_javascript_url(self.runtime.local_resource_url(self, 'public/JSAV/lib/jquery.transit.js'))
+        fragment.add_javascript_url(self.runtime.local_resource_url(self, 'public/JSAV/lib/raphael.js'))
+        fragment.add_javascript_url(self.runtime.local_resource_url(self, 'public/JSAV/build/JSAV-min.js'))
+
+        js_template = Template(self.resource_string("public/js/src/config.js"))
+        js_context = Context({
+                              'displayModule': self.display_module,
+                              'shortName': self.short_name,
+                              'longName': self.long_name,
+                              'chapter': self.chapter,
+                            }) 
+        js_str = js_template.render(js_context)
+        fragment.add_javascript(js_str)
+        # fragment.add_javascript_url(self.runtime.local_resource_url(self, 'public/js/src/config.js'))
+        fragment.add_javascript_url(self.runtime.local_resource_url(self, 'public/lib/odsaUtils-min.js'))
+        fragment.add_javascript_url(self.runtime.local_resource_url(self, 'public/lib/odsaMOD-min.js'))
+        fragment.add_javascript_url(self.runtime.local_resource_url(self, 'public/lib/conceptMap.js'))
         # <script type="text/javascript" src="_static/config.js"></script>
 
     # workbench while developing your XBlock.
     @staticmethod
     def workbench_scenarios():
         """A canned scenario for display in the workbench."""
-        # <jsav problem_url="http://algoviz.org/OpenDSAX/AV/Sorting/quicksortPRO.html/" required="True" threshold="0.5" long_name="" weight="100" showhide="" JXOP_fixmode="" JXOP_code="" JXOP_feedback="" JOP_lang=""></jsav>
-
         return [
             ("ModuleXBlock",
              """<module>
                     <jsav weight="10"></jsav>
                     <jsav weight="20"></jsav>
-                    <jsav problem_type="ss" problem_url="http://opendsax.local/AV/Sorting/" short_name="quicksortCON"></jsav>
+                    <jsav problem_type="ss" problem_url="/AV/Sorting/" short_name="quicksortCON"></jsav>
                 </module>
              """),
         ]

@@ -19,6 +19,7 @@ function ModuleXBlock(runtime, element) {
         var score,
             complete;
 
+        // TODO:to be configurable
         if (e.originalEvent.origin.indexOf("opendsax.local") < 0) {
             console.log("Wrong origin...");
             return;
@@ -52,7 +53,7 @@ function ModuleXBlock(runtime, element) {
         }
     }
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         //remove extraneous listeners
         // $(window).off("message")
         $(window).on("message", messageListener);

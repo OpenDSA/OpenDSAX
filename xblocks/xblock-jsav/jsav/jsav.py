@@ -34,7 +34,7 @@ class JSAVXBlock(XBlock, LmsCompatibilityMixin):
     
     problem_url = String(
         help = "URL of the JSAV-Based exercise",
-        default = "http://OpenDSAX.local/AV/Sorting/quicksortPRO.html",
+        default = "/AV/Sorting/",
         scope = Scope.settings)
 
     required = Boolean(
@@ -51,12 +51,12 @@ class JSAVXBlock(XBlock, LmsCompatibilityMixin):
 
     long_name = String(
         help = "Problem Long Name",
-        default = "",
+        default = " Quick Sort Proficiency Problem",
         scope = Scope.settings)
 
     short_name = String(
         help = "Problem short Name",
-        default = "",
+        default = "quicksortPRO",
         scope = Scope.settings)
 
     showhide = String(
@@ -106,6 +106,7 @@ class JSAVXBlock(XBlock, LmsCompatibilityMixin):
             html_context = Context({"name": self.short_name})
             fragment = Fragment(html_template.render(html_context))
             # fragment.add_javascript_url(self.problem_url+"../../lib/odsaUtils-min.js")
+            fragment.add_javascript_url("/resource/jsav/public/AV/Sorting/quicksortCODE.js")
             fragment.add_javascript_url(self.get_problem_url()+".js")
             fragment.add_css_url(self.get_problem_url()+".css")
             # fragment.initialize_js('JSAVXBlock'+'_'+str(self.seed if self.seed else self.set_student_seed()))
@@ -167,14 +168,14 @@ class JSAVXBlock(XBlock, LmsCompatibilityMixin):
 
     def get_problem_url(self):
         """Handy helper for getting URL plus paramters."""
-        if self.problem_type == "ss":
-            URL = self.problem_url+self.short_name
-        else:
-            URL = self.problem_url+"?"+"JXOP-fixmode"+"="+self.JXOP_fixmode+"&"\
-                                      +"JXOP-code"+"="+self.JXOP_code+"&"\
-                                      +"JXOP-feedback"+"="+self.JXOP_feedback+"&"\
-                                      +"JOP-lang"+"="+self.JOP_lang+"&"\
-                                      +"seed"+"="+ str(self.seed if self.seed else self.set_student_seed())
+        base_url = "/resource/jsav/public/"
+        URL = base_url+self.problem_url+self.short_name
+        if self.problem_type == "pe":
+            URL += ".html"+"?"+"JXOP-fixmode"+"="+self.JXOP_fixmode+"&"\
+                                  +"JXOP-code"+"="+self.JXOP_code+"&"\
+                                  +"JXOP-feedback"+"="+self.JXOP_feedback+"&"\
+                                  +"JOP-lang"+"="+self.JOP_lang+"&"\
+                                  +"seed"+"="+ str(self.seed if self.seed else self.set_student_seed())
         return URL
 
 
@@ -206,7 +207,7 @@ class JSAVXBlock(XBlock, LmsCompatibilityMixin):
         return [
             ("JSAVXblock",
              """<vertical_demo>
-                    <jsav></jsav> 
+                    <jsav short_name="quicksortPRO"></jsav> 
                 </vertical_demo>
              """),
         ]

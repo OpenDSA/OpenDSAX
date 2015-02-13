@@ -1,3 +1,4 @@
+{% if weight%} 
 <div id="jsav_status">
     Your current score on this question is <span class="problem_score">{{student_score}}</span>&nbsp;/&nbsp;<span class="problem_weight">{{weight}}</span>
     <span class="problem_complete">
@@ -8,6 +9,8 @@
       {% endif %}
   </span>
 </div>
+{% endif %}
+
 <div id="{{name}}" class="ssAV" data-points="0.0" data-threshold="1.0" data-type="ss" data-required="False" data-long-name="Quicksort Partition Slideshow">
   <span class="jsavcounter"></span>
   <a class="jsavsettings" href="#">Settings</a>

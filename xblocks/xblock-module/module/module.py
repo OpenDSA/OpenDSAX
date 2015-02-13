@@ -47,6 +47,8 @@ class ModuleXBlock(XBlock):
         total_student_score = 0
 
         result = Fragment()
+        result.add_css_url(self.runtime.local_resource_url(self, 'public/_static/pygments.css'))
+        result.add_css_url(self.runtime.local_resource_url(self, 'public/_static/haiku.css'))
         result.add_css_url(self.runtime.local_resource_url(self, 'public/css/module.css'))
         result.add_css_url(self.runtime.local_resource_url(self, 'public/lib/normalize.css'))
         result.add_css_url(self.runtime.local_resource_url(self, 'public/JSAV/css/JSAV.css'))
@@ -54,18 +56,19 @@ class ModuleXBlock(XBlock):
         result.add_css_url(self.runtime.local_resource_url(self, 'public/lib/jquery-ui.css'))
         result.add_css_url(self.runtime.local_resource_url(self, 'public/lib/odsaStyle.css'))
         result.add_javascript_url(self.runtime.local_resource_url(self, 'public/js/src/module.js'))
-        self.add_ss_javascript_resources(result)
+        self.add_javascript_resources(result)
 
         named_child_frags = []
         # self.children is an attribute obtained from ChildrenModelMetaclass, so disable the
         # static pylint checking warning about this.
         for child_id in self.children:  # pylint: disable=E1101
             child = self.runtime.get_block(child_id)
-            total_weight += child.weight
-            total_student_score += child.student_score
+            if child.XBlock_type == "problem":
+                total_weight += child.weight
+                total_student_score += child.student_score
             frag = self.runtime.render_child(child, "student_view")
             # if child.problem_type == "ss":
-            #     self.add_ss_javascript_resources(child.problem_url, result)
+            #     self.add_javascript_resources(child.problem_url, result)
             result.add_frag_resources(frag)
             named_child_frags.append(frag)
 
@@ -84,14 +87,7 @@ class ModuleXBlock(XBlock):
         return result
 
 
-    def add_ss_javascript_resources(self, fragment):
-        fragment.add_javascript_url(self.runtime.local_resource_url(self, 'public/lib/jquery.min.js'))
-        fragment.add_javascript_url("//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML")
-        fragment.add_javascript_url(self.runtime.local_resource_url(self, 'public/lib/jquery-ui.min.js'))
-        fragment.add_javascript_url(self.runtime.local_resource_url(self, 'public/JSAV/lib/jquery.transit.js'))
-        fragment.add_javascript_url(self.runtime.local_resource_url(self, 'public/JSAV/lib/raphael.js'))
-        fragment.add_javascript_url(self.runtime.local_resource_url(self, 'public/JSAV/build/JSAV-min.js'))
-
+    def add_javascript_resources(self, fragment):
         js_template = Template(self.resource_string("public/js/src/config.js"))
         js_context = Context({
                               'displayModule': self.display_module,
@@ -100,7 +96,15 @@ class ModuleXBlock(XBlock):
                               'chapter': self.chapter,
                             }) 
         js_str = js_template.render(js_context)
+        fragment.add_resource_url(self.runtime.local_resource_url(self, 'public/js/src/x-mathjax-config.js'), 'text/x-mathjax-config', placement="head")
         fragment.add_javascript(js_str)
+        fragment.add_javascript_url(self.runtime.local_resource_url(self, 'public/lib/jquery.min.js'))
+        fragment.add_javascript_url("//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML")
+        fragment.add_javascript_url(self.runtime.local_resource_url(self, 'public/lib/jquery-ui.min.js'))
+        fragment.add_javascript_url(self.runtime.local_resource_url(self, 'public/JSAV/lib/jquery.transit.js'))
+        fragment.add_javascript_url(self.runtime.local_resource_url(self, 'public/JSAV/lib/raphael.js'))
+        fragment.add_javascript_url(self.runtime.local_resource_url(self, 'public/JSAV/build/JSAV-min.js'))
+
         # fragment.add_javascript_url(self.runtime.local_resource_url(self, 'public/js/src/config.js'))
         fragment.add_javascript_url(self.runtime.local_resource_url(self, 'public/lib/odsaUtils-min.js'))
         fragment.add_javascript_url(self.runtime.local_resource_url(self, 'public/lib/odsaMOD-min.js'))
@@ -111,13 +115,13 @@ class ModuleXBlock(XBlock):
     @staticmethod
     def workbench_scenarios():
         """A canned scenario for display in the workbench."""
-        # <jsav weight="20"></jsav>
-        # <jsav problem_type="ss" problem_url="/AV/Sorting/" short_name="quicksortCON"></jsav>
         return [
             ("ModuleXBlock",
              """<module>
-                    <jsav problem_type="ss" problem_url="/AV/Sorting/" required="True" threshold="0.5" short_name="quicksortCON" long_name="Quick Sort CON" weight="100" showhide="hide" JXOP_fixmode="fix" JXOP_code="none" JXOP_feedback="continuous" JOP_lang="en"></jsav>
-                    <jsav problem_type="pe" problem_url="/AV/Sorting/" required="True" threshold="0.5" short_name="quicksortPRO" long_name="Quick Sort" weight="100" showhide="" JXOP_fixmode="fix" JXOP_code="none" JXOP_feedback="continuous" JOP_lang="en"></jsav>
+                    <content/>
+                    <jsav weight="20"></jsav>
+                    <jsav problem_type="ss" problem_url="/AV/Sorting/" short_name="quicksortCON"></jsav>
+                    <jsav problem_type="pe" problem_url="/AV/Sorting/" required="True" threshold="0.5" short_name="quicksortPRO" long_name="Quick Sort" weight="100" showhide="hide" JXOP_fixmode="fix" JXOP_code="none" JXOP_feedback="continuous" JOP_lang="en"></jsav>
                 </module>
              """),
         ]

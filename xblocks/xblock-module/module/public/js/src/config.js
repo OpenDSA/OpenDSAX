@@ -23,6 +23,15 @@
   settings.BUILD_DATE = "2014-12-29 14:18:41";
   settings.BUILD_CMAP = true;
 
+  var DOCUMENTATION_OPTIONS = {
+    URL_ROOT: './',
+    VERSION: '0.4.1',
+    COLLAPSE_INDEX: false,
+    FILE_SUFFIX: '.html',
+    HAS_SOURCE: true
+  };
+
   window.ODSA = {};
   window.ODSA.SETTINGS = settings;
+  window.DOCUMENTATION_OPTIONS = DOCUMENTATION_OPTIONS;
 }());

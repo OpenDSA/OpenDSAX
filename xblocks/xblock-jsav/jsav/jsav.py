@@ -17,6 +17,11 @@ class JSAVXBlock(XBlock, LmsCompatibilityMixin):
     """
     JSAV-Based Proficiency Problem
     """
+    XBlock_type = String(
+        help="The XBlock type", 
+        scope=Scope.content, 
+        default="problem")
+
     seed = Integer(
         help="Random seed for this student", 
         scope=Scope.user_state, 

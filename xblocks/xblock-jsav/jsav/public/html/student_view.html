@@ -1,13 +1,15 @@
+{% if weight%} 
 <div id="jsav_status">
     Your current score on this question is <span class="problem_score">{{student_score}}</span>&nbsp;/&nbsp;<span class="problem_weight">{{weight}}</span>
     <span class="problem_complete">
-    	{% if student_proficiency %} 
-    		<img src="/resource/jsav/public/images/correct-icon.png">
-    	{% else %}
-    		<img src="/resource/jsav/public/images/incorrect-icon.png">
-    	{% endif %}
-	</span>
+        {% if student_proficiency %} 
+            <img src="/resource/jsav/public/images/correct-icon.png">
+        {% else %}
+            <img src="/resource/jsav/public/images/incorrect-icon.png">
+        {% endif %}
+    </span>
 </div>
+{% endif %}
 <iframe
 	class="jsav_iframe"
 	seamless="seamless"

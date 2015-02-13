@@ -1,8 +1,21 @@
 function JSAVXBlock_{{seed}}(runtime, element) {
     // _{{seed}}
-    var seed = "{{seed}}";
+    var seed = "{{seed}}",
+        shortName = "{{shortName}}",
+        longName = "{{longName}}",
+        points = "{{points}}",
+        required = "{{required}}",
+        threshold = "{{threshold}}",
+        problemType = "{{problemType}}";
+
 
     $(document).ready(function () {
+
+        // $(element).on("jsav-log-event", function (e, data) {
+        //     console.dir(data);
+        //     data.seed = seed;
+        //     $("body").trigger("jsav-log-event", [data]);
+        // });
         $(".problem_score", element).text(Math.round($(".problem_score", element).text()));
         $(".problem_weight", element).text(Math.round($(".problem_weight", element).text()));
     });
@@ -63,6 +76,12 @@ function JSAVXBlock_{{seed}}(runtime, element) {
     }
     return {
         "seed": seed,
+        "shortName": shortName,
+        "longName": longName,
+        "points": points,
+        "required": required,
+        "threshold": threshold,
+        "problemType": problemType,
         "reportProgress": reportProgress
     }
 }

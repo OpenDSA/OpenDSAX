@@ -51,7 +51,7 @@ class JSAVXBlock(XBlock, LmsCompatibilityMixin):
 
     long_name = String(
         help = "Problem Long Name",
-        default = " Quick Sort Proficiency Problem",
+        default = "Quick Sort Proficiency Problem",
         scope = Scope.settings)
 
     short_name = String(
@@ -95,15 +95,24 @@ class JSAVXBlock(XBlock, LmsCompatibilityMixin):
         default = False,
         scope = Scope.user_state)
 
-    student_submissions = List(
-        help="Student's stored submissions",
+    student_submissions_pe = List(
+        help="Student's stored submissions for pe",
+        default = [],
+        scope = Scope.user_state)
+
+    student_submissions_ss = List(
+        help="Student's stored submissions for ss",
         default = [],
         scope = Scope.user_state)
 
     def student_view(self, context):
+        html_context = Context({"student_score": self.student_score, 
+                                "name": self.short_name,
+                                "weight": self.weight, 
+                                "problem_url": self.get_problem_url(), 
+                                "student_proficiency": self.student_proficiency})
         if self.problem_type == "ss":
             html_template = Template(self.resource_string("public/html/ss_view.html"))
-            html_context = Context({"name": self.short_name})
             fragment = Fragment(html_template.render(html_context))
             # fragment.add_javascript_url(self.problem_url+"../../lib/odsaUtils-min.js")
             fragment.add_javascript_url("/resource/jsav/public/AV/Sorting/quicksortCODE.js")
@@ -112,16 +121,21 @@ class JSAVXBlock(XBlock, LmsCompatibilityMixin):
             # fragment.initialize_js('JSAVXBlock'+'_'+str(self.seed if self.seed else self.set_student_seed()))
         else:
             html_template = Template(self.resource_string("public/html/student_view.html"))
-            html_context = Context({"student_score": self.student_score, 
-                               "weight": self.weight, 
-                               "problem_url": self.get_problem_url(), 
-                               "student_proficiency": self.student_proficiency})
             fragment = Fragment(html_template.render(html_context))
-            js_template = Template(self.resource_string("public/js/student_view.js"))
-            js_context = Context({'seed': self.seed if self.seed else self.set_student_seed()}) 
-            js_str = js_template.render(js_context)
-            fragment.add_javascript(js_str)
 
+        js_template = Template(self.resource_string("public/js/student_view.js"))
+        js_context = Context({
+                              "seed": self.seed if self.seed else self.set_student_seed(),
+                              "shortName": self.short_name,
+                              "longName": self.long_name,
+                              "points": self.weight,
+                              "required": self.required,
+                              "threshold": self.threshold,
+                              "problemType": self.problem_type,
+                              })
+
+        js_str = js_template.render(js_context)
+        fragment.add_javascript(js_str)
         fragment.add_css_url(self.runtime.local_resource_url(self, 'public/css/jsav_xblock.css'))
         fragment.initialize_js('JSAVXBlock'+'_'+str(self.seed if self.seed else self.set_student_seed()))
         return fragment
@@ -168,7 +182,7 @@ class JSAVXBlock(XBlock, LmsCompatibilityMixin):
 
     def get_problem_url(self):
         """Handy helper for getting URL plus paramters."""
-        base_url = "/resource/jsav/public/"
+        base_url = "/resource/jsav/public"
         URL = base_url+self.problem_url+self.short_name
         if self.problem_type == "pe":
             URL += ".html"+"?"+"JXOP-fixmode"+"="+self.JXOP_fixmode+"&"\
@@ -182,17 +196,22 @@ class JSAVXBlock(XBlock, LmsCompatibilityMixin):
     @XBlock.json_handler
     def report_progress(self, data, suffix=''):
         already_proficient = self.student_proficiency if self.student_proficiency else False
-        if "score" in data.keys():
-            current_score = float(data["score"]["correct"]) / float(data["score"]["total"])
-            submission = { 'score' : data.get("score", None),
-                           'seed' : data.get("seed", None), 
-                           'log': data.get("log", None),
-                           'datetime': data.get("datetime", None) }
-            self.student_submissions.append(submission)
-            if current_score >= self.threshold:
-                self.student_proficiency = True
-                self.student_score = self.weight
-                self.runtime.publish(self, "grade", { "value": self.student_score, "max_value": self.weight } )
+        if self.problem_type == "ss":
+            self.student_proficiency = True
+            self.student_score = self.weight
+            self.runtime.publish(self, "grade", { "value": self.student_score, "max_value": self.weight } )
+        else:
+            if "score" in data.keys():
+                current_score = float(data["score"]["correct"]) / float(data["score"]["total"])
+                submission = { 'score' : data.get("score", None),
+                               'seed' : data.get("seed", None), 
+                               'log': data.get("log", None),
+                               'datetime': data.get("datetime", None) }
+                self.student_submissions_pe.append(submission)
+                if current_score >= self.threshold:
+                    self.student_proficiency = True
+                    self.student_score = self.weight
+                    self.runtime.publish(self, "grade", { "value": self.student_score, "max_value": self.weight } )
         return {"student_score": self.student_score,
                 "problem_weight": self.weight,
                 "student_proficiency": self.student_proficiency,
@@ -203,11 +222,11 @@ class JSAVXBlock(XBlock, LmsCompatibilityMixin):
     def workbench_scenarios():
         """A canned scenario for display in the workbench."""
         # The XBLock can be initialized with parameters by using the following syntax
-        # <jsav problem_url="http://algoviz.org/OpenDSAX/AV/Sorting/quicksortPRO.html/" required="True" threshold="0.5" long_name="" weight="100" showhide="" JXOP_fixmode="" JXOP_code="" JXOP_feedback="" JOP_lang=""></jsav>
+        # <jsav short_name="quicksortPRO"></jsav> 
         return [
             ("JSAVXblock",
              """<vertical_demo>
-                    <jsav short_name="quicksortPRO"></jsav> 
+                    <jsav problem_type="pe" problem_url="/AV/Sorting/" required="True" threshold="0.5" short_name="quicksortPRO" long_name="Quick Sort" weight="100" showhide="hide" JXOP_fixmode="fix" JXOP_code="none" JXOP_feedback="continuous" JOP_lang="en"></jsav>
                 </vertical_demo>
              """),
         ]

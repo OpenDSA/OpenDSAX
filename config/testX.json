@@ -21,35 +21,7 @@
   },
   "chapters": {
     "Sorting": {
-      "Sorting/QuicksortCOMP1": {
-        "long_name": "Quicksort",
-        "exercises": {
-          "quicksortAV": {
-            "long_name": "Quicksort Visualization",
-            "required": false,
-            "points": 0,
-            "showhide": "none",
-            "threshold": 1.0
-          },
-          "quicksortCON": {
-            "long_name": "Quicksort Partition Slideshow",
-            "required": false,
-            "points": 0.0,
-            "threshold": 1.0
-          },
-          "quicksortPRO": {
-            "long_name": "Quicksort Proficiency Exercise",
-            "required": true,
-            "points": 2.0,
-            "threshold": 0.90,
-            "exer_options": {
-              "JXOP-feedback": "continuous",
-              "JXOP-fixmode": "fix"
-            }
-          }
-        }
-      },
-      "Sorting/QuicksortCOMP2": {
+      "Sorting/Quicksort": {
         "long_name": "Quicksort",
         "exercises": {
           "quicksortAV": {

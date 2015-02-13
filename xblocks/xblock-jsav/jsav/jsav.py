@@ -42,6 +42,16 @@ class JSAVXBlock(XBlock, LmsCompatibilityMixin):
         default = "/AV/Sorting/",
         scope = Scope.settings)
 
+    problem_width = Integer(
+        help = "width",
+        default = 100,
+        scope = Scope.settings)
+
+    problem_height = Integer(
+        help = "height",
+        default = 100,
+        scope = Scope.settings)
+
     required = Boolean(
         help = "Whether the exercise is required for module proficiency",
         default = False,
@@ -114,6 +124,8 @@ class JSAVXBlock(XBlock, LmsCompatibilityMixin):
         html_context = Context({"student_score": self.student_score, 
                                 "name": self.short_name,
                                 "weight": self.weight, 
+                                "width": self.problem_width, 
+                                "height": self.problem_height, 
                                 "problem_url": self.get_problem_url(), 
                                 "student_proficiency": self.student_proficiency})
         if self.problem_type == "ss":

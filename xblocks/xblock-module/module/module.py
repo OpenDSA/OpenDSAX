@@ -112,16 +112,19 @@ class ModuleXBlock(XBlock):
         # <script type="text/javascript" src="_static/config.js"></script>
 
     # workbench while developing your XBlock.
+        # <content short_name="Quicksort"/>
+        # <jsav problem_type="ss" problem_url="/AV/Sorting/" short_name="quicksortCON"></jsav>
+        # <jsav problem_type="pe" problem_url="/AV/Sorting/" problem_width="802" problem_height="422" required="True" threshold="0.5" short_name="quicksortPRO" long_name="Quick Sort" weight="100" showhide="hide" JXOP_fixmode="fix" JXOP_code="none" JXOP_feedback="continuous" JOP_lang="en"></jsav>
     @staticmethod
     def workbench_scenarios():
         """A canned scenario for display in the workbench."""
         return [
             ("ModuleXBlock",
              """<module>
-                    <content/>
-                    <jsav weight="20"></jsav>
+                    <content short_name="Quicksort"/>
                     <jsav problem_type="ss" problem_url="/AV/Sorting/" short_name="quicksortCON"></jsav>
-                    <jsav problem_type="pe" problem_url="/AV/Sorting/" required="True" threshold="0.5" short_name="quicksortPRO" long_name="Quick Sort" weight="100" showhide="hide" JXOP_fixmode="fix" JXOP_code="none" JXOP_feedback="continuous" JOP_lang="en"></jsav>
+                    <jsav problem_type="pe" problem_url="/AV/Sorting/" problem_width="822" problem_height="452" required="True" threshold="0.5" short_name="quicksortAV" long_name="Quick Sort" weight="100" showhide="hide" JXOP_fixmode="fix" JXOP_code="none" JXOP_feedback="continuous" JOP_lang="en"></jsav>
+                    <jsav problem_type="pe" problem_url="/AV/Sorting/" problem_width="805" problem_height="515" required="True" threshold="0.5" short_name="quicksortPRO" long_name="Quick Sort" weight="100" showhide="hide" JXOP_fixmode="fix" JXOP_code="none" JXOP_feedback="continuous" JOP_lang="en"></jsav>
                 </module>
              """),
         ]

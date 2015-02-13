@@ -21,10 +21,25 @@ class ContentXBlock(XBlock):
         scope=Scope.content, 
         default="content")
 
-    count = Integer(
-        default=0, scope=Scope.user_state,
-        help="A simple counter, to show something happening",
-    )
+    seed = Integer(
+        help="Random seed for this student", 
+        scope=Scope.user_state, 
+        default=0)
+
+    contnet_type = String(
+        help = "whether slideshow 'ss' or proficiency exercise 'pe'",
+        default = "pe",
+        scope = Scope.settings)
+    
+    long_name = String(
+        help = "Problem Long Name",
+        default = "Quick Sort Proficiency Problem",
+        scope = Scope.settings)
+
+    short_name = String(
+        help = "Problem short Name",
+        default = "quicksortPRO",
+        scope = Scope.settings)
 
     def resource_string(self, path):
         """Handy helper for getting resources from our kit."""
@@ -37,7 +52,8 @@ class ContentXBlock(XBlock):
         The primary view of the ContentXBlock, shown to students
         when viewing courses.
         """
-        frag = Fragment(self.resource_string("public/html/QuicksortCOMP1.html"))
+        url = "public/html/"+self.short_name+".html"
+        frag = Fragment(self.resource_string(url))
         return frag
 
     # TO-DO: change this handler to perform your own actions.  You may need more

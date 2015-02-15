@@ -14,7 +14,10 @@
   settings.ALLOW_ANON_CREDIT = true;
   settings.REQ_FULL_SS = true;
   settings.BUILD_TO_ODSA = "../../../";
+  // workbench version
   settings.BOOK_URL = "/resource/module/public/";
+  // lms version
+  // settings.BOOK_URL = "/xblock/resource/module/public/";
 
   settings.DISP_MOD_COMP = "{{displayModule}}";
   settings.MODULE_NAME = "{{shortName}}";

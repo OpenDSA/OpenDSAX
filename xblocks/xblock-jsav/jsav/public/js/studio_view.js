@@ -1,7 +1,7 @@
 function JSAVXBlockStudioEdit(runtime, element) {
     var handlerUrl = runtime.handlerUrl(element, 'change_problem');
 
-    $(document).ready(function() {
+    $(document).ready(function () {
 
         function getExerciseName() {
                 return $("#jsav_problem_select :selected", element).data("name");
@@ -22,12 +22,12 @@ function JSAVXBlockStudioEdit(runtime, element) {
         $("#jsav_problem_select", element).change(showParameters);
 
         // Listener for drop down's submit button
-        $('#jsav_problem_submit', element).click(function() {
+        $('#jsav_problem_submit', element).click(function () {
             var problem_url = $("#jsav_problem_select", element).val();
             var params = '';
             var selected = getExerciseName();
             // 
-            $('#jsav_parameters div[data-name="' + selected + '"] select').each(function() {
+            $('#jsav_parameters div[data-name="' + selected + '"] select').each(function () {
                 if ($(this).val().length > 0) {
                     if (params.length > 0) {
                         params += '&' + $(this).data("name") + '=' + $(this).val();
@@ -50,7 +50,7 @@ function JSAVXBlockStudioEdit(runtime, element) {
             });
         });
 
-        $('#jsav_url_submit', element).click(function() {
+        $('#jsav_url_submit', element).click(function () {
 
             $.ajax({
                 type: "POST",
@@ -66,5 +66,4 @@ function JSAVXBlockStudioEdit(runtime, element) {
         });
 
     });
-
 }

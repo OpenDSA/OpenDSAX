@@ -1,0 +1,25 @@
+{
+    "OpenDSALogoT64.png": {
+        "contentType": "image/png", 
+        "content_son": {
+            "category": "asset", 
+            "course": "CS3114", 
+            "name": "OpenDSALogoT64.png", 
+            "org": "VT", 
+            "revision": null, 
+            "tag": "c4x"
+        }, 
+        "displayname": "OpenDSALogoT64.png", 
+        "filename": "/c4x/VT/CS3114/asset/OpenDSALogoT64.png", 
+        "import_path": "OpenDSALogoT64.png", 
+        "locked": false, 
+        "thumbnail_location": [
+            "c4x", 
+            "VT", 
+            "CS3114", 
+            "thumbnail", 
+            "OpenDSALogoT64-png.jpg", 
+            null
+        ]
+    }
+}

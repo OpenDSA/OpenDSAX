@@ -14,7 +14,7 @@ class LmsCompatibilityMixin(object):
     # Studio the default value for this field to show this XBlock
     # in the list of "Advanced Components"
     display_name = String(
-        default="JSAV-Based Materials", 
+        default="Test", 
         scope=Scope.settings,
         help="Display name"
     )
@@ -45,7 +45,7 @@ class LmsCompatibilityMixin(object):
         and query it to find the children, or whether it can just trust what's
         in the static (cheaper) children listing.
         """
-        return False
+        return True
 
     @property
     def has_score(self):
@@ -54,7 +54,7 @@ class LmsCompatibilityMixin(object):
         For LMS Progress page/grades download purposes, we're always going to
         have a score, even if it's just 0 at the start.
         """
-        return True
+        return False
 
     @property
     def icon_class(self):

@@ -2,41 +2,26 @@
 
 import pkg_resources
 
+from .lms_mixin import LmsCompatibilityMixin
 from xblock.core import XBlock
-from xblock.fields import Scope, Integer, String
+from xblock.fields import Scope, Integer
 from xblock.fragment import Fragment
 
 
-class ContentXBlock(XBlock):
+class TestXBlock(XBlock, LmsCompatibilityMixin):
     """
     TO-DO: document what your XBlock does.
     """
-    seed = Integer(
-        help="Random seed for this student", 
-        scope=Scope.user_state, 
-        default=0)
 
-    XBlock_type = String(
-        help="The XBlock type", 
-        scope=Scope.content, 
-        default="content")
+    # Fields are defined on the class.  You can access them in your code as
+    # self.<fieldname>.
+    has_children = True
 
-
-    contnet_type = String(
-        help = "module header 'header', module body 'body', module footer 'footer', top navigation bar 'nav', table to content 'toc'",
-        default = "body",
-        scope = Scope.settings)
-    
-    short_name = String(
-        help = "html file name for header, body, footer types",
-        default = "quicksortPRO",
-        scope = Scope.settings)
-
-    long_name = String(
-        help = "description",
-        default = "",
-        scope = Scope.settings)
-
+    # TO-DO: delete count, and define your own fields.
+    count = Integer(
+        default=0, scope=Scope.user_state,
+        help="A simple counter, to show something happening",
+    )
 
     def resource_string(self, path):
         """Handy helper for getting resources from our kit."""
@@ -46,11 +31,14 @@ class ContentXBlock(XBlock):
     # TO-DO: change this view to display your data your own way.
     def student_view(self, context=None):
         """
-        The primary view of the ContentXBlock, shown to students
+        The primary view of the TestXBlock, shown to students
         when viewing courses.
         """
-        url = "public/html/"+self.short_name+".html"
-        frag = Fragment(self.resource_string(url))
+        html = self.resource_string("static/html/test.html")
+        frag = Fragment(html.format(self=self))
+        frag.add_css(self.resource_string("static/css/test.css"))
+        frag.add_javascript(self.resource_string("static/js/src/test.js"))
+        frag.initialize_js('TestXBlock')
         return frag
 
     # TO-DO: change this handler to perform your own actions.  You may need more
@@ -72,9 +60,11 @@ class ContentXBlock(XBlock):
     def workbench_scenarios():
         """A canned scenario for display in the workbench."""
         return [
-            ("ContentXBlock",
+            ("TestXBlock",
              """<vertical_demo>
-                <content/>
+                <test/>
+                <test/>
+                <test/>
                 </vertical_demo>
              """),
         ]

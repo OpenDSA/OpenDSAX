@@ -1,0 +1,4 @@
+<course advanced_modules="[&quot;jsav&quot;, &quot;module&quot;, &quot;content&quot;, &quot;lti&quot;, &quot;word_cloud&quot;, &quot;split_test&quot;, &quot;test&quot;]" course_image="OpenDSALogoT64.png" display_name="OpenDSAX" graceperiod="" start="2014-09-15T09:00:00Z" user_partitions="[{&quot;name&quot;: &quot;groupConf&quot;, &quot;version&quot;: 1, &quot;description&quot;: &quot;Group one&quot;, &quot;groups&quot;: [{&quot;version&quot;: 1, &quot;id&quot;: 77425904626, &quot;name&quot;: &quot;Group A&quot;}, {&quot;version&quot;: 1, &quot;id&quot;: 155080582504, &quot;name&quot;: &quot;Group B&quot;}], &quot;id&quot;: 525183181472}]">
+  <chapter url_name="87931d97e5964eb19ac4489f8cb6ec3e"/>
+  <wiki slug="VT.CS3114.Fall_2014"/>
+</course>

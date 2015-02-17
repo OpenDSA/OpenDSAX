@@ -24,6 +24,9 @@ min: nomin
 
 testX: min
 	python $(CONFIG_SCRIPT) config/testX.json
+    
+testXEDX: min
+	python $(CONFIG_SCRIPT) --edx config/testX.json
 
 allBooks: testX
 

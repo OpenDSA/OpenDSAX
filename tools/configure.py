@@ -180,7 +180,7 @@ def process_module(config, index_rst, mod_path, mod_attrib={'exercises':{}}, dep
   num_ref_map[mod_name] = mod_num
 
 
-def generate_index_rst(config, slides = False):
+def generate_index_rst(config, slides = False, edx = False):
   """Generates the index.rst file, calls process_section() on config.chapters to recursively process all the modules in the book (in order), as each is processed it is added to the index.rst"""
 
   print "Generating index.rst\n"
@@ -208,7 +208,7 @@ def generate_index_rst(config, slides = False):
     index_rst.write("   :maxdepth: 3\n\n")
 
     # Process the Gradebook and Registerbook as well
-    if not slides:
+    if not (slides or edx):
       process_module(config, mod_path='Gradebook', index_rst=index_rst)
       process_module(config, mod_path='RegisterBook', index_rst=index_rst)
 
@@ -221,7 +221,7 @@ def generate_index_rst(config, slides = False):
     index_rst.write("* :ref:`search`\n")
 
 
-def generate_todo_rst(config, slides = False):
+def generate_todo_rst(config, slides = False, edx = False):
   """Sorts the list of ToDo directives (generated while recursively processing each module) by type and writes them all out to a file"""
   print '\nGenerating ToDo file...'
 
@@ -285,7 +285,7 @@ def initialize_output_directory(config):
 
 
 
-def initialize_conf_py_options(config, slides):
+def initialize_conf_py_options(config, slides, edx):
   """Initializes the options used to generate conf.py"""
   options = {}
   options['title'] = config.title
@@ -311,7 +311,7 @@ def initialize_conf_py_options(config, slides):
   options['exercises_root_dir'] = config.exercises_root_dir
   # The relative path between the ebook output directory (where the HTML files are generated) and the root ODSA directory
   options['eb2root'] = config.rel_build_to_odsa_path
-  options['rel_book_output_path'] = config.rel_book_output_path
+  options['rel_book_output_path'] = 'oxl/' if edx else config.rel_book_output_path
   options['slides_lib'] = 'hieroglyph' if slides else ''
 
   return options
@@ -322,6 +322,7 @@ def configure(config_file_path, options):
   global satisfied_requirements
 
   slides = options.slides
+  edx = options.edx
 
   print "Configuring OpenDSA, using " + config_file_path
 
@@ -355,7 +356,7 @@ def configure(config_file_path, options):
 
   # Initialize output directory, create index.rst, and process all of the modules
   initialize_output_directory(config)
-  generate_index_rst(config, slides)
+  generate_index_rst(config, slides, edx)
 
   # Print out a list of any exercises found in RST files that do not appear in the config file
   if len(missing_exercises) > 0:
@@ -373,7 +374,7 @@ def configure(config_file_path, options):
 
   # Entries are only added to todo_list if config.suppress_todo is False
   if len(todo_list) > 0:
-    generate_todo_rst(config, slides)
+    generate_todo_rst(config, slides, edx)
 
   # Dump num_ref_map to table.json to be used by the Sphinx directives
   with open(config.book_dir + 'table.json', 'w') as num_ref_map_file:
@@ -386,7 +387,7 @@ def configure(config_file_path, options):
     json.dump(module_chap_map, page_chapter_file)
 
   # Initialize options for conf.py
-  options = initialize_conf_py_options(config, slides)
+  options = initialize_conf_py_options(config, slides, edx)
 
   # Create a Makefile in the output directory
   with open(config.book_dir + 'Makefile', 'w') as makefile:
@@ -406,6 +407,8 @@ def configure(config_file_path, options):
 
   if slides:
     proc = subprocess.Popen(['make', '-C', config.book_dir, 'slides'], stdout=subprocess.PIPE)
+  elif edx:
+    proc = subprocess.Popen(['make', '-C', config.book_dir, 'edx'], stdout=subprocess.PIPE)
   else:
     proc = subprocess.Popen(['make', '-C', config.book_dir], stdout=subprocess.PIPE)
   for line in iter(proc.stdout.readline,''):
@@ -424,13 +427,12 @@ def configure(config_file_path, options):
 if __name__ == "__main__":
   parser = OptionParser()
   parser.add_option("-s", "--slides", help="Causes configure.py to create slides", dest="slides", action="store_true", default=False)
+  parser.add_option("-e", "--edx", help="Causes configure.py to create an edx site", dest="edx", action="store_true", default=False)
   parser.add_option("--dry-run", help="Causes configure.py to configure the book but stop before compiling it", dest="dry_run", action="store_true", default=False)
   (options, args) = parser.parse_args()
 
-  if options.slides:
-    os.environ['SLIDES'] = 'yes'
-  else:
-    os.environ['SLIDES'] = 'no'
+  os.environ['SLIDES'] = 'yes' if options.slides else 'no'
+  os.environ['EDX'] = 'yes' if options.edx else 'no'
 
   # Process script arguments
   if len(args) != 1:

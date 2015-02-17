@@ -40,8 +40,12 @@ def parse_index_rst(source_dir):
 # Updates the index.html page
 def update_index_html(dest_dir, sectnum):
   # Process index.html separately from the modules files
-  with open(dest_dir + 'index.html', 'r') as index_html_file:
-    index_html = index_html_file.readlines()
+  try:
+    with open(dest_dir + 'index.html', 'r') as index_html_file:
+      index_html = index_html_file.readlines()
+  except IOError:
+    with open(dest_dir + 'index.xml', 'r') as index_html_file:
+      index_html = index_html_file.readlines()
 
   for line_num, line in enumerate(index_html):
     #inject css rule to remove haiku's orange bullets

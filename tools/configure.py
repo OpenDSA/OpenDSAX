@@ -311,7 +311,8 @@ def initialize_conf_py_options(config, slides, edx):
   options['exercises_root_dir'] = config.exercises_root_dir
   # The relative path between the ebook output directory (where the HTML files are generated) and the root ODSA directory
   options['eb2root'] = config.rel_build_to_odsa_path
-  options['rel_book_output_path'] = 'oxl/' if edx else config.rel_book_output_path
+  config.rel_book_output_path = 'oxl/' if edx else config.rel_book_output_path
+  options['rel_book_output_path'] = config.rel_book_output_path
   options['slides_lib'] = 'hieroglyph' if slides else ''
 
   return options
@@ -417,11 +418,13 @@ def configure(config_file_path, options):
   # Calls the postprocessor to update chapter, section, and module numbers, and glossary terms definition
   update_TOC(config.book_src_dir, config.book_dir + config.rel_book_output_path, module_chap_map)
   if 'Glossary' in processed_modules:
-    update_TermDef(config.book_dir + config.rel_book_output_path + 'Glossary.html', cmap_map['concepts'])
+    extension = 'xml' if edx else 'html'
+    update_TermDef(config.book_dir + config.rel_book_output_path + 'Glossary.' + extension, cmap_map['concepts'])
 
     # Create the concept map definition file in _static html directory
-    with codecs.open(config.book_dir + 'html/_static/GraphDefs.json', 'w', 'utf-8') as graph_defs_file:
-      json.dump(cmap_map, graph_defs_file)
+    if not edx:
+      with codecs.open(config.book_dir + 'html/_static/GraphDefs.json', 'w', 'utf-8') as graph_defs_file:
+        json.dump(cmap_map, graph_defs_file)
 
 # Code to execute when run as a standalone program
 if __name__ == "__main__":

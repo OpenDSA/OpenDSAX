@@ -1,0 +1,9 @@
+/* CSS for ContentXBlock */
+
+.content_block .count {
+    font-weight: bold;
+}
+
+.content_block p {
+    cursor: pointer;
+}

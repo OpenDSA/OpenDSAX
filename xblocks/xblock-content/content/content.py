@@ -38,7 +38,7 @@ class ContentXBlock(XBlock):
 
     short_name = String(
         help = "Problem short Name",
-        default = "quicksortPRO",
+        default = "Quicksort",
         scope = Scope.settings)
 
     def resource_string(self, path):

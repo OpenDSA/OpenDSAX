@@ -45,9 +45,11 @@ sftp-config.json
 
 # Symlinks
 SourceCode/Processing/build
+xblocks/xblock-jsav/jsav/public/_static
 xblocks/xblock-jsav/jsav/public/AV
 xblocks/xblock-jsav/jsav/public/JSAV
 xblocks/xblock-jsav/jsav/public/lib
+xblocks/xblock-module/module/public/_static
 xblocks/xblock-module/module/public/AV
 xblocks/xblock-module/module/public/JSAV
 xblocks/xblock-module/module/public/lib

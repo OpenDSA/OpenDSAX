@@ -44,3 +44,18 @@ pull:
 	make -s -C JSAV
 	make -s min
 	cd Doc; make
+
+pullx: pull
+	make testX
+	@cp -fr /home/OpenDSAX/AV /home/OpenDSAX/xblocks/xblock-module/module/public/
+	@cp -fr /home/OpenDSAX/JSAV /home/OpenDSAX/xblocks/xblock-module/module/public/
+	@cp -fr /home/OpenDSAX/lib /home/OpenDSAX/xblocks/xblock-module/module/public/
+	@cp -fr /home/OpenDSAX/Books/testX/html/_static /home/OpenDSAX/xblocks/xblock-module/module/public/
+	@cp -fr /home/OpenDSAX/AV /home/OpenDSAX/xblocks/xblock-jsav/jsav/public/
+	@cp -fr /home/OpenDSAX/JSAV /home/OpenDSAX/xblocks/xblock-jsav/jsav/public/
+	@cp -fr /home/OpenDSAX/lib /home/OpenDSAX/xblocks/xblock-jsav/jsav/public/
+	@cp -fr /home/OpenDSAX/Books/testX/html/_static /home/OpenDSAX/xblocks/xblock-jsav/jsav/public/
+	@cp -fr /home/OpenDSAX/Books/testX/html /home/OpenDSAX/xblocks/xblock-content/content/public/
+	sudo -u edxapp /edx/bin/pip.edxapp install /home/OpenDSAX/xblocks/xblock-jsav/ --upgrade
+	sudo -u edxapp /edx/bin/pip.edxapp install /home/OpenDSAX/xblocks/xblock-module/ --upgrade
+	sudo -u edxapp /edx/bin/pip.edxapp install /home/OpenDSAX/xblocks/xblock-content/ --upgrade

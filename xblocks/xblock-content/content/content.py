@@ -11,32 +11,35 @@ class ContentXBlock(XBlock):
     """
     TO-DO: document what your XBlock does.
     """
-    seed = Integer(
-        help="Random seed for this student", 
-        scope=Scope.user_state, 
-        default=0)
 
+    # Fields are defined on the class.  You can access them in your code as
+    # self.<fieldname>.
+
+    # TO-DO: delete count, and define your own fields.
     XBlock_type = String(
         help="The XBlock type", 
         scope=Scope.content, 
         default="content")
 
+    seed = Integer(
+        help="Random seed for this student", 
+        scope=Scope.user_state, 
+        default=0)
 
     contnet_type = String(
-        help = "module header 'header', module body 'body', module footer 'footer', top navigation bar 'nav', table to content 'toc'",
-        default = "body",
+        help = "whether slideshow 'ss' or proficiency exercise 'pe'",
+        default = "pe",
         scope = Scope.settings)
     
-    short_name = String(
-        help = "html file name for header, body, footer types",
-        default = "quicksortPRO",
-        scope = Scope.settings)
-
     long_name = String(
-        help = "description",
-        default = "",
+        help = "Problem Long Name",
+        default = "Quick Sort Proficiency Problem",
         scope = Scope.settings)
 
+    short_name = String(
+        help = "Problem short Name",
+        default = "Quicksort",
+        scope = Scope.settings)
 
     def resource_string(self, path):
         """Handy helper for getting resources from our kit."""

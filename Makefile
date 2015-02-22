@@ -59,3 +59,28 @@ pullx: pull
 	sudo -u edxapp /edx/bin/pip.edxapp install /home/OpenDSAX/xblocks/xblock-jsav/ --upgrade
 	sudo -u edxapp /edx/bin/pip.edxapp install /home/OpenDSAX/xblocks/xblock-module/ --upgrade
 	sudo -u edxapp /edx/bin/pip.edxapp install /home/OpenDSAX/xblocks/xblock-content/ --upgrade
+
+xblock: 
+	rm -r /edx/app/edxapp/venvs/edxapp/lib/python2.7/site-packages/jsav
+	cd /edx/app/edxapp
+	sudo -H -u edxapp /edx/bin/pip.edxapp install /home/OpenDSAX/xblocks/xblock-jsav/ --upgrade
+
+pullx: pull
+	make testX
+	@cp -fr /home/OpenDSAX/AV /home/OpenDSAX/xblocks/xblock-module/module/public/
+	@cp -fr /home/OpenDSAX/JSAV /home/OpenDSAX/xblocks/xblock-module/module/public/
+	@cp -fr /home/OpenDSAX/lib /home/OpenDSAX/xblocks/xblock-module/module/public/
+	@cp -fr /home/OpenDSAX/Books/testX/html/_static /home/OpenDSAX/xblocks/xblock-module/module/public/
+	@cp -fr /home/OpenDSAX/AV /home/OpenDSAX/xblocks/xblock-jsav/jsav/public/
+	@cp -fr /home/OpenDSAX/JSAV /home/OpenDSAX/xblocks/xblock-jsav/jsav/public/
+	@cp -fr /home/OpenDSAX/lib /home/OpenDSAX/xblocks/xblock-jsav/jsav/public/
+	@cp -fr /home/OpenDSAX/Books/testX/html/_static /home/OpenDSAX/xblocks/xblock-jsav/jsav/public/
+	@cp -fr /home/OpenDSAX/Books/testX/html /home/OpenDSAX/xblocks/xblock-content/content/public/
+	sudo -u edxapp /edx/bin/pip.edxapp install /home/OpenDSAX/xblocks/xblock-jsav/ --upgrade
+	sudo -u edxapp /edx/bin/pip.edxapp install /home/OpenDSAX/xblocks/xblock-module/ --upgrade
+	sudo -u edxapp /edx/bin/pip.edxapp install /home/OpenDSAX/xblocks/xblock-content/ --upgrade
+
+
+	sudo -u edxapp /edx/bin/pip.edxapp install /home/OpenDSAX/xblocks/xblock-jsav/
+	sudo -u edxapp /edx/bin/pip.edxapp install /home/OpenDSAX/xblocks/xblock-module/
+	sudo -u edxapp /edx/bin/pip.edxapp install /home/OpenDSAX/xblocks/xblock-content/

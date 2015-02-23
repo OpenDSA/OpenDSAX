@@ -61,9 +61,18 @@ pullx: pull
 	sudo -u edxapp /edx/bin/pip.edxapp install /home/OpenDSAX/xblocks/xblock-content/ --upgrade
 
 xblock: 
+
 	rm -r /edx/app/edxapp/venvs/edxapp/lib/python2.7/site-packages/jsav
+	rm -r /edx/app/edxapp/venvs/edxapp/lib/python2.7/site-packages/xblock_jsav-0.3-py2.7.egg-info
 	cd /edx/app/edxapp
-	sudo -H -u edxapp /edx/bin/pip.edxapp install /home/OpenDSAX/xblocks/xblock-jsav/ --upgrade
+	sudo -H -u edxapp /edx/bin/pip.edxapp install /home/OpenDSAX/xblocks/xblock-jsav/
+	sudo /edx/bin/supervisorctl -c /edx/etc/supervisord.conf restart edxapp:
+
+	rm -r /edx/app/edxapp/venvs/edxapp/lib/python2.7/site-packages/xblockutils
+	rm -r /edx/app/edxapp/venvs/edxapp/lib/python2.7/site-packages/xblock_utils-0.1a0-py2.7.egg-info
+	cd /edx/app/edxapp
+	sudo -H -u edxapp /edx/bin/pip.edxapp install /home/OpenDSAX/xblocks/xblock-utils/
+	sudo /edx/bin/supervisorctl -c /edx/etc/supervisord.conf restart edxapp:
 
 pullx: pull
 	make testX

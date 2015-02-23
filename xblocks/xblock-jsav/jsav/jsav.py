@@ -138,66 +138,61 @@ class JSAVXBlock(XBlock, LmsCompatibilityMixin, StudioEditableXBlockMixin):
 
     editable_fields = ('problem_type', 'problem_url','problem_width', 'problem_height','required', 'threshold', 'long_name', 'short_name', 'showhide', 'JXOP_fixmode','JXOP_code','JXOP_feedback','JOP_lang', 'display_name')
 
+    # def student_view_temp(self, context):
+    def student_view(self, context):
+        html_context = Context({"student_score": self.student_score, 
+                                "name": self.short_name,
+                                "weight": self.weight, 
+                                "width": self.problem_width, 
+                                "height": self.problem_height, 
+                                "problem_url": self.get_problem_url(self.short_name+".html"), 
+                                "student_proficiency": self.student_proficiency,
+                                "correct_icon": self.runtime.local_resource_url(self, 'public/images/correct-icon.png'),
+                                "incorrect_icon": self.runtime.local_resource_url(self, 'public/images/incorrect-icon.png'),
+                                })
+        if self.problem_type == "ss":
+            html_template = Template(self.resource_string("public/html/ss_view.html"))
+            fragment = Fragment(html_template.render(html_context))
+            fragment.add_javascript_url("/resource/jsav/public/AV/Sorting/quicksortCODE.js")
+            fragment.add_javascript_url(self.get_problem_url(self.short_name+".js"))
+            fragment.add_css_url(self.get_problem_url(self.short_name+".css"))
+            # fragment.initialize_js('JSAVXBlock'+'_'+str(self.seed if self.seed else self.set_student_seed()))
+        else:
+            html_template = Template(self.resource_string("public/html/student_view.html"))
+            fragment = Fragment(html_template.render(html_context))
+
+        js_template = Template(self.resource_string("public/js/student_view.js"))
+        js_context = Context({"seed": self.seed if self.seed else self.set_student_seed(),
+                              "shortName": self.short_name,
+                              "longName": self.long_name,
+                              "points": self.weight,
+                              "required": self.required,
+                              "threshold": self.threshold,
+                              "problemType": self.problem_type,
+                              })
+
+        js_str = js_template.render(js_context)
+        fragment.add_javascript(js_str)
+        fragment.add_css_url(self.runtime.local_resource_url(self, 'public/css/jsav_xblock.css'))
+        fragment.initialize_js('JSAVXBlock'+'_'+str(self.seed))
+        return fragment
+
+    # change function name from studio_view to student_view to be able to display it in workbench
     # def student_view(self, context):
-    #     html_context = Context({"student_score": self.student_score, 
-    #                             "name": self.short_name,
-    #                             "weight": self.weight, 
-    #                             "width": self.problem_width, 
-    #                             "height": self.problem_height, 
-    #                             "problem_url": self.get_problem_url(), 
-    #                             "student_proficiency": self.student_proficiency})
-    #     if self.problem_type == "ss":
-    #         html_template = Template(self.resource_string("public/html/ss_view.html"))
-    #         fragment = Fragment(html_template.render(html_context))
-    #         # fragment.add_javascript_url(self.problem_url+"../../lib/odsaUtils-min.js")
-    #         fragment.add_javascript_url("/resource/jsav/public/AV/Sorting/quicksortCODE.js")
-    #         fragment.add_javascript_url(self.get_problem_url()+".js")
-    #         fragment.add_css_url(self.get_problem_url()+".css")
-    #         # fragment.initialize_js('JSAVXBlock'+'_'+str(self.seed if self.seed else self.set_student_seed()))
-    #     else:
-    #         html_template = Template(self.resource_string("public/html/student_view.html"))
-    #         fragment = Fragment(html_template.render(html_context))
-
-    #     js_template = Template(self.resource_string("public/js/student_view.js"))
-    #     js_context = Context({
-    #                           "seed": self.seed if self.seed else self.set_student_seed(),
-    #                           "shortName": self.short_name,
-    #                           "longName": self.long_name,
-    #                           "points": self.weight,
-    #                           "required": self.required,
-    #                           "threshold": self.threshold,
-    #                           "problemType": self.problem_type,
-    #                           })
-
-    #     js_str = js_template.render(js_context)
-    #     fragment.add_javascript(js_str)
-    #     fragment.add_css_url(self.runtime.local_resource_url(self, 'public/css/jsav_xblock.css'))
-    #     fragment.initialize_js('JSAVXBlock'+'_'+str(self.seed if self.seed else self.set_student_seed()))
-    #     return fragment
-
     # def studio_view(self, context):
-    #     template = Template(self.resource_string("public/html/studio.html"))
+    #     template = Template(self.resource_string("public/html/studio_view.html"))
     #     exercise_information = json.load(urllib2.urlopen("https://trak.cs.hut.fi/jsav/jsondump"))
     #     context = Context({"exercises": exercise_information, 
-    #                        "problem_url": self.get_problem_url(), 
+    #                        "problem_url": self.problem_url, 
     #                        "points": self.weight,
     #                        "required": self.required,
     #                        "threshold":self.threshold})
 
     #     fragment = Fragment(template.render(context))
-    #     fragment.add_javascript_url(self.runtime.local_resource_url(self, 'public/js/studio.js'))
+    #     fragment.add_javascript_url(self.runtime.local_resource_url(self, 'public/js/studio_view.js'))
     #     fragment.initialize_js("JSAVXBlockStudioEdit")
     #     return fragment
 
-
-    # def studio_view(self, context):
-    #     template = Template(self.resource_string("public/html/studio.html"))
-    #     exercise_information = json.load(urllib2.urlopen("https://trak.cs.hut.fi/jsav/jsondump"))
-    #     context = Context({"exercises": exercise_information, "problem_url": self.problem_url, "points": self.points})
-    #     fragment = Fragment(template.render(context))
-    #     fragment.add_javascript_url(self.runtime.local_resource_url(self, 'public/js/studio.js'))
-    #     fragment.initialize_js("JSAVXBlockStudioEdit")
-    #     return fragment
 
     @XBlock.json_handler
     def change_problem(self, data, suffix=''):
@@ -224,16 +219,21 @@ class JSAVXBlock(XBlock, LmsCompatibilityMixin, StudioEditableXBlockMixin):
         return self.seed        
 
 
-    def get_problem_url(self):
+    def get_problem_url(self, short_name):
         """Handy helper for getting URL plus paramters."""
-        base_url = "/resource/jsav/public"
-        URL = base_url+self.problem_url+self.short_name
+        # workbench version 
+        base_url = 'public'+self.problem_url+short_name
+        # lms version
+        # base_url = "/xblock/resource/jsav/public"
+        # URL = base_url+self.problem_url+self.short_name
+
+        URL = self.runtime.local_resource_url(self, base_url)
         if self.problem_type == "pe":
-            URL += ".html"+"?"+"JXOP-fixmode"+"="+self.JXOP_fixmode+"&"\
-                                  +"JXOP-code"+"="+self.JXOP_code+"&"\
-                                  +"JXOP-feedback"+"="+self.JXOP_feedback+"&"\
-                                  +"JOP-lang"+"="+self.JOP_lang+"&"\
-                                  +"seed"+"="+ str(self.seed if self.seed else self.set_student_seed())
+            URL += "?"+"JXOP-fixmode"+"="+self.JXOP_fixmode+"&"\
+                      +"JXOP-code"+"="+self.JXOP_code+"&"\
+                      +"JXOP-feedback"+"="+self.JXOP_feedback+"&"\
+                      +"JOP-lang"+"="+self.JOP_lang+"&"\
+                      +"seed"+"="+ str(self.seed if self.seed else self.set_student_seed())
         return URL
 
 

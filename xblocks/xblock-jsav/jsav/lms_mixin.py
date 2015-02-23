@@ -35,7 +35,7 @@ class LmsCompatibilityMixin(object):
         display_name="Problem Weight",
         help = "The number of points this problem is worth",
         values = {"min": 0, "step": 0.1},
-        default = 10,
+        default = 345,
         scope = Scope.settings)
 
     def has_dynamic_children(self):

@@ -6,7 +6,10 @@ function JSAVXBlock_{{seed}}(runtime, element) {
         points = "{{points}}",
         required = "{{required}}",
         threshold = "{{threshold}}",
-        problemType = "{{problemType}}";
+        problemType = "{{problemType}}",
+        correctImg = "";
+
+    console.log("JSAVXBlock_");
 
 
     $(document).ready(function () {
@@ -16,6 +19,9 @@ function JSAVXBlock_{{seed}}(runtime, element) {
         //     data.seed = seed;
         //     $("body").trigger("jsav-log-event", [data]);
         // });
+        if (window.ODSA[shortName] && typeof window.ODSA[shortName] === 'function') {
+            window.ODSA[shortName]();
+        }
         $(".problem_score", element).text(Math.round($(".problem_score", element).text()));
         $(".problem_weight", element).text(Math.round($(".problem_weight", element).text()));
     });
@@ -40,12 +46,12 @@ function JSAVXBlock_{{seed}}(runtime, element) {
     }
 
     function updateProgress(result) {
-        console.dir(result);
         $(".problem_score", element).text(Math.round(result.student_score));
         $(".student_attempts", element).text(result.student_attempts);
 
         if (result.student_proficiency) {
-            var correctImg = "/resource/jsav/public/images/correct-icon.png";
+            correctImg = result.correct_icon;
+            // "/resource/jsav/public/images/correct-icon.png";
             $(".problem_complete img", element).attr('src', correctImg);
         }
 
@@ -66,10 +72,10 @@ function JSAVXBlock_{{seed}}(runtime, element) {
             // TODO: module proficiency should be calculated based on only required problems.
             total_problem_score = parseInt($(".total_problem_score", $module).text());
             total_problem_weight = parseInt($(".total_problem_weight", $module).text());
-            console.log("total_problem_score: " + total_problem_score + "total_problem_weight: " + total_problem_weight);
+            // console.log("total_problem_score: " + total_problem_score + "total_problem_weight: " + total_problem_weight);
 
             if (total_problem_score == total_problem_weight) {
-                var correctImg = "/resource/jsav/public/images/correct-icon.png";
+                correctImg = result.correct_icon;
                 $(".module_complete img", $module).attr('src', correctImg);
             }
         }

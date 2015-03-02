@@ -75,7 +75,6 @@ function ModuleXBlock(runtime, element) {
         }
     }
 
-
     // Handle data from events generated on the module page or received from embedded pages
     function JSAVEventHandler(data) {
         console.log("JSAVEventHandler");

@@ -35,5 +35,5 @@ setup(
             'content = content:ContentXBlock',
         ]
     },
-    package_data=package_data("content", ["static", "public"]),
+    package_data=package_data("content", ["static", "public", "templates"]),
 )

@@ -2,20 +2,19 @@
 
 import pkg_resources
 
+from lms_mixin import LmsCompatibilityMixin
+from xblockutils.studio_editable import StudioEditableXBlockMixin
 from xblock.core import XBlock
 from xblock.fields import Scope, Integer, String
 from xblock.fragment import Fragment
+from django.template import Context, Template
 
 
-class ContentXBlock(XBlock):
+class ContentXBlock(XBlock, LmsCompatibilityMixin, StudioEditableXBlockMixin):
     """
-    TO-DO: document what your XBlock does.
+    OpenDSA content viewer
     """
 
-    # Fields are defined on the class.  You can access them in your code as
-    # self.<fieldname>.
-
-    # TO-DO: delete count, and define your own fields.
     XBlock_type = String(
         help="The XBlock type", 
         scope=Scope.content, 
@@ -32,14 +31,16 @@ class ContentXBlock(XBlock):
         scope = Scope.settings)
     
     long_name = String(
-        help = "Problem Long Name",
+        help = "OpenDSA Content",
         default = "Quick Sort Proficiency Problem",
         scope = Scope.settings)
 
     short_name = String(
-        help = "Problem short Name",
+        help = "Problem short Name, html file name",
         default = "Quicksort",
         scope = Scope.settings)
+
+    editable_fields = ('short_name', 'long_name')
 
     def resource_string(self, path):
         """Handy helper for getting resources from our kit."""
@@ -52,22 +53,16 @@ class ContentXBlock(XBlock):
         The primary view of the ContentXBlock, shown to students
         when viewing courses.
         """
+        result = Fragment()
         url = "public/html/"+self.short_name+".html"
-        frag = Fragment(self.resource_string(url))
-        return frag
+        fragment = Fragment(self.resource_string(url))
+        html_template = Template(self.resource_string("templates/student_view.html"))
+        html_context = Context({"fragment": fragment}) 
+        html_str = html_template.render(html_context)
+        result.add_content(html_str)
+        return result
 
-    # TO-DO: change this handler to perform your own actions.  You may need more
-    # than one handler, or you may not need any handlers at all.
-    @XBlock.json_handler
-    def increment_count(self, data, suffix=''):
-        """
-        An example handler, which increments the data.
-        """
-        # Just to show data coming in...
-        assert data['hello'] == 'world'
-
-        self.count += 1
-        return {"count": self.count}
+    # author_view = studio_view
 
     # TO-DO: change this to create the scenarios you'd like to see in the
     # workbench while developing your XBlock.

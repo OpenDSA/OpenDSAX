@@ -8,14 +8,13 @@ import time
 from django.template import Context, Template
 
 from lms_mixin import LmsCompatibilityMixin
-from xblockutils.studio_editable import StudioEditableXBlockMixin
+from xblockutils.studio_editable import StudioEditableXBlockMixin, StudioContainerXBlockMixin
 from xblock.core import XBlock
 from xblock.fields import Scope, String, Boolean, Integer, Float, List
 from xblock.fragment import Fragment
 
 
-class JSAVXBlock(XBlock, LmsCompatibilityMixin, StudioEditableXBlockMixin):
-# class JSAVXBlock(XBlock, LmsCompatibilityMixin):
+class JSAVXBlock(XBlock, LmsCompatibilityMixin, StudioEditableXBlockMixin, StudioContainerXBlockMixin):
     """
     JSAV-Based Proficiency Problem
     """
@@ -36,10 +35,14 @@ class JSAVXBlock(XBlock, LmsCompatibilityMixin, StudioEditableXBlockMixin):
 
     problem_type = String(
         help = "whether slideshow 'ss' or proficiency exercise 'pe'",
-        default = "pe",
-        values = ({"value":"pe","display_name":"Proficiency Exercise"}, {"value":"ss","display_name":"Slide Show"}),
+        default = "ss",
+        values = ({"value":"pe","display_name":"Proficiency Exercise"}, 
+                  {"value":"ss","display_name":"Slide Show"},
+                  {"value":"av","display_name":"Algorithm Visualization"}
+                  ),
         scope = Scope.settings)
     
+    # TODO: provide a list of available problems
     problem_url = String(
         help = "URL of the JSAV-Based exercise",
         default = "/AV/Sorting/",
@@ -78,12 +81,12 @@ class JSAVXBlock(XBlock, LmsCompatibilityMixin, StudioEditableXBlockMixin):
 
     short_name = String(
         help = "Problem short Name",
-        default = "quicksortPRO",
+        default = "quicksortCON",
         scope = Scope.settings)
 
     showhide = String(
         help = "controls whether or not the exercises is displayed and a Show / Hide button created",
-        default = "hide",
+        default = "show",
         values = ({"value":"hide","display_name":"Hide"}, {"value":"show","display_name":"Show"}),
         scope = Scope.settings)
 
@@ -111,8 +114,7 @@ class JSAVXBlock(XBlock, LmsCompatibilityMixin, StudioEditableXBlockMixin):
                   {"value":"fi","display_name":"Finnish"},
                   {"value":"fr","display_name":"French"},
                   {"value":"pt","display_name":"Portuguese"},
-                  {"value":"sv","display_name":"Swedish"},
-                  ),
+                  {"value":"sv","display_name":"Swedish"}),
         scope = Scope.settings)
 
     student_score = Float(
@@ -136,7 +138,9 @@ class JSAVXBlock(XBlock, LmsCompatibilityMixin, StudioEditableXBlockMixin):
         default = [],
         scope = Scope.user_state)
 
-    editable_fields = ('problem_type', 'problem_url','problem_width', 'problem_height','required', 'threshold', 'long_name', 'short_name', 'showhide', 'JXOP_fixmode','JXOP_code','JXOP_feedback','JOP_lang', 'display_name')
+    editable_fields = ('problem_type', 'problem_url','problem_width', 'problem_height','required', 'threshold', 
+                       'long_name', 'short_name', 'showhide', 'JXOP_fixmode','JXOP_code','JXOP_feedback',
+                       'JOP_lang', 'display_name', 'weight')
 
     # def student_view_temp(self, context):
     def student_view(self, context):
@@ -153,10 +157,10 @@ class JSAVXBlock(XBlock, LmsCompatibilityMixin, StudioEditableXBlockMixin):
         if self.problem_type == "ss":
             html_template = Template(self.resource_string("public/html/ss_view.html"))
             fragment = Fragment(html_template.render(html_context))
-            fragment.add_javascript_url("/resource/jsav/public/AV/Sorting/quicksortCODE.js")
+            # TODO: CODE.js file is hardcoded for now, it should be removed
+            fragment.add_javascript_url("/xblock/resource/jsav/public/AV/Sorting/quicksortCODE.js")
             fragment.add_javascript_url(self.get_problem_url(self.short_name+".js"))
             fragment.add_css_url(self.get_problem_url(self.short_name+".css"))
-            # fragment.initialize_js('JSAVXBlock'+'_'+str(self.seed if self.seed else self.set_student_seed()))
         else:
             html_template = Template(self.resource_string("public/html/student_view.html"))
             fragment = Fragment(html_template.render(html_context))
@@ -173,37 +177,9 @@ class JSAVXBlock(XBlock, LmsCompatibilityMixin, StudioEditableXBlockMixin):
 
         js_str = js_template.render(js_context)
         fragment.add_javascript(js_str)
-        fragment.add_css_url(self.runtime.local_resource_url(self, 'public/css/jsav_xblock.css'))
+        # fragment.add_css_url(self.runtime.local_resource_url(self, 'public/css/jsav_xblock.css'))
         fragment.initialize_js('JSAVXBlock'+'_'+str(self.seed))
         return fragment
-
-    # change function name from studio_view to student_view to be able to display it in workbench
-    # def student_view(self, context):
-    # def studio_view(self, context):
-    #     template = Template(self.resource_string("public/html/studio_view.html"))
-    #     exercise_information = json.load(urllib2.urlopen("https://trak.cs.hut.fi/jsav/jsondump"))
-    #     context = Context({"exercises": exercise_information, 
-    #                        "problem_url": self.problem_url, 
-    #                        "points": self.weight,
-    #                        "required": self.required,
-    #                        "threshold":self.threshold})
-
-    #     fragment = Fragment(template.render(context))
-    #     fragment.add_javascript_url(self.runtime.local_resource_url(self, 'public/js/studio_view.js'))
-    #     fragment.initialize_js("JSAVXBlockStudioEdit")
-    #     return fragment
-
-
-    @XBlock.json_handler
-    def change_problem(self, data, suffix=''):
-        if 'problem_url' in data:
-            self.problem_url = data['problem_url']
-        if 'weight' in data:
-            self.weight = float(data['weight'])
-        if 'threshold' in data:
-            self.threshold = float(data['threshold'])
-        if 'required' in data:
-            self.required = float(data['required'])
 
 
     def resource_string(self, path):
@@ -236,11 +212,21 @@ class JSAVXBlock(XBlock, LmsCompatibilityMixin, StudioEditableXBlockMixin):
                       +"seed"+"="+ str(self.seed if self.seed else self.set_student_seed())
         return URL
 
+    @XBlock.json_handler
+    def change_problem(self, data, suffix=''):
+        if 'problem_url' in data:
+            self.problem_url = data['problem_url']
+        if 'weight' in data:
+            self.weight = float(data['weight'])
+        if 'threshold' in data:
+            self.threshold = float(data['threshold'])
+        if 'required' in data:
+            self.required = float(data['required'])
 
     @XBlock.json_handler
     def report_progress(self, data, suffix=''):
         already_proficient = self.student_proficiency if self.student_proficiency else False
-        if self.problem_type == "ss":
+        if self.problem_type in ("ss", "av"):
             self.student_proficiency = True
             self.student_score = self.weight
             self.runtime.publish(self, "grade", { "value": self.student_score, "max_value": self.weight } )
@@ -259,7 +245,9 @@ class JSAVXBlock(XBlock, LmsCompatibilityMixin, StudioEditableXBlockMixin):
         return {"student_score": self.student_score,
                 "problem_weight": self.weight,
                 "student_proficiency": self.student_proficiency,
-                "already_proficient": already_proficient}
+                "already_proficient": already_proficient,
+                "correct_icon": self.runtime.local_resource_url(self, 'public/images/correct-icon.png'),
+                "incorrect_icon": self.runtime.local_resource_url(self, 'public/images/incorrect-icon.png')}
 
 
     @staticmethod

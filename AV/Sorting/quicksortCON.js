@@ -1,13 +1,20 @@
-"use strict";
-/*global ODSA */
-$(document).ready(function () {
+window.ODSA = window.ODSA || {};
+
+window.ODSA.quicksortCON = function () {
+  console.log("quicksortCON");
+
   var av_name = "quicksortCON";
-  var interpret = ODSA.UTILS.loadConfig({"av_name": av_name}).interpreter;
+  var interpret = window.ODSA.UTILS.loadConfig({
+    "av_name": av_name,
+    "json_path": "AV/Sorting/quicksortCON.json",
+  }).interpreter;
 
   var theArray = [76, 6, 57, 88, 85, 42, 83, 73, 48, 60];
   var av = new JSAV(av_name);
   // Create an array object under control of JSAV library
-  var arr = av.ds.array(theArray, {indexed: true});
+  var arr = av.ds.array(theArray, {
+    indexed: true
+  });
 
   // Slide 1
   av.umsg(interpret("av_c1"));
@@ -112,4 +119,4 @@ $(document).ready(function () {
   // Slide 20
   av.umsg(interpret("av_c16"));
   av.recorded();
-}(jQuery));
+}

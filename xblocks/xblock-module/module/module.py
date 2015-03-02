@@ -4,37 +4,41 @@ import pkg_resources
 
 from django.template import Context, Template
 
-from .lms_mixin import LmsCompatibilityMixin
+from lms_mixin import LmsCompatibilityMixin
+from xblockutils.studio_editable import StudioEditableXBlockMixin, StudioContainerXBlockMixin
 from xblock.core import XBlock
 from xblock.fields import Scope, String, Boolean, Integer, Float, List
 from xblock.fragment import Fragment
 
 
-class ModuleXBlock(XBlock, LmsCompatibilityMixin):
+class ModuleXBlock(XBlock, LmsCompatibilityMixin, StudioEditableXBlockMixin, StudioContainerXBlockMixin):
     """
     To show student progress in all module problems in terms of total_student_score / total_weight
     """
     has_children = True
 
     display_module = Boolean(
-        help = "",
+        help = "Whether the module is diplayed or not:",
         default = True,
         scope = Scope.settings)
 
     short_name = String(
-        help = "",
+        help = "Module Short Name:",
         default = "Quicksort",
         scope = Scope.settings)
 
     long_name = String(
-        help = "",
+        help = "Module Long Name:",
         default = "Quicksort",
         scope = Scope.settings)
 
+    # TODO: provide a list of available chapters
     chapter = String(
-        help = "",
+        help = "Chapter name",
         default = "Sorting",
         scope = Scope.settings)
+
+    editable_fields = ('chapter', 'long_name', 'short_name')
 
     def resource_string(self, path):
         """Handy helper for getting resources from our kit."""
@@ -42,23 +46,22 @@ class ModuleXBlock(XBlock, LmsCompatibilityMixin):
         return data.decode("utf8")
 
 
-    # The content controls how the Inputs attach to Graders
-    # def student_view_temp(self, context=None):
     def student_view(self, context=None):
         total_weight = 0
         total_student_score = 0
 
         result = Fragment()
-        # result.add_css_url(self.runtime.local_resource_url(self, 'public/_static/pygments.css'))
+        result.add_css_url(self.runtime.local_resource_url(self, 'public/css/main.css'))
         # result.add_css_url(self.runtime.local_resource_url(self, 'public/_static/haiku.css'))
-        # result.add_css_url(self.runtime.local_resource_url(self, 'public/css/module.css'))
+        # result.add_css_url(self.runtime.local_resource_url(self, 'public/_static/pygments.css'))
         # result.add_css_url(self.runtime.local_resource_url(self, 'public/lib/normalize.css'))
         # result.add_css_url(self.runtime.local_resource_url(self, 'public/JSAV/css/JSAV.css'))
         # result.add_css_url(self.runtime.local_resource_url(self, 'public/lib/odsaMOD-min.css'))
         # result.add_css_url(self.runtime.local_resource_url(self, 'public/lib/jquery-ui.css'))
         # result.add_css_url(self.runtime.local_resource_url(self, 'public/lib/odsaStyle.css'))
-        result.add_javascript_url(self.runtime.local_resource_url(self, 'public/js/src/student_view.js'))
+        # result.add_css_url(self.runtime.local_resource_url(self, 'public/css/module.css'))
         self.add_javascript_resources(result)
+        result.add_javascript_url(self.runtime.local_resource_url(self, 'public/js/src/student_view.js'))
 
         named_child_frags = []
         # self.children is an attribute obtained from ChildrenModelMetaclass, so disable the
@@ -86,20 +89,46 @@ class ModuleXBlock(XBlock, LmsCompatibilityMixin):
                                 }) 
         html_str = html_template.render(html_context)
         result.add_content(html_str)
-
         result.initialize_js('ModuleXBlock')
         return result
 
-    # def student_view(self, context):
-    def studio_view(self, context):
-        html_template = Template(self.resource_string("public/html/studio_view.html"))
-        html_context = Context({"display_module": self.display_module,
-                                "short_name": self.short_name,
-                                "long_name": self.long_name}) 
-        fragment = Fragment(html_template.render(html_context))
-        fragment.add_javascript_url(self.runtime.local_resource_url(self, "public/js/src/studio_view.js"))
-        fragment.initialize_js("ModuleXBlockStudio")
+
+    def author_preview_view(self, context):
+        result = Fragment()
+        children_names = []
+        for child_id in self.children:  # pylint: disable=E1101
+            child = self.runtime.get_block(child_id)
+            children_names.append(child.long_name)
+
+        html_template = Template(self.resource_string("public/html/author_preview_view.html"))
+        html_context = Context({"children_names": children_names}) 
+        html_str = html_template.render(html_context)
+        result.add_content(html_str)
+        return result
+
+
+    def author_edit_view(self, context):
+        """
+        Child blocks can override this to control the view shown to authors in Studio when
+        editing this block's children.
+        """
+        fragment = Fragment()
+        fragment.add_css_url(self.runtime.local_resource_url(self, 'public/css/main.css'))
+        # fragment.add_css_url(self.runtime.local_resource_url(self, 'public/_static/haiku.css'))
+        # fragment.add_css_url(self.runtime.local_resource_url(self, 'public/_static/pygments.css'))
+        # fragment.add_css_url(self.runtime.local_resource_url(self, 'public/lib/normalize.css'))
+        # fragment.add_css_url(self.runtime.local_resource_url(self, 'public/JSAV/css/JSAV.css'))
+        # fragment.add_css_url(self.runtime.local_resource_url(self, 'public/lib/odsaMOD-min.css'))
+        # fragment.add_css_url(self.runtime.local_resource_url(self, 'public/lib/jquery-ui.css'))
+        # fragment.add_css_url(self.runtime.local_resource_url(self, 'public/lib/odsaStyle.css'))
+        # fragment.add_css_url(self.runtime.local_resource_url(self, 'public/css/module.css'))
+        self.add_javascript_resources(fragment)
+        fragment.add_javascript_url(self.runtime.local_resource_url(self, 'public/js/src/student_view.js'))
+
+        self.render_children(context, fragment, can_reorder=True, can_add=True)
+        fragment.initialize_js('ModuleXBlock')
         return fragment
+
 
     @XBlock.json_handler
     def change_problem(self, data, suffix=''):
@@ -112,7 +141,7 @@ class ModuleXBlock(XBlock, LmsCompatibilityMixin):
 
 
     def add_javascript_resources(self, fragment):
-        fragment.add_resource_url(self.runtime.local_resource_url(self, 'public/js/src/x-mathjax-config.js'), 'text/x-mathjax-config', placement="head")
+        # fragment.add_resource_url(self.runtime.local_resource_url(self, 'public/js/src/x-mathjax-config.js'), 'text/x-mathjax-config', placement="head")
         js_template = Template(self.resource_string("public/js/src/config.js"))
         js_context = Context({'displayModule': self.display_module,
                               'shortName': self.short_name,
@@ -121,7 +150,7 @@ class ModuleXBlock(XBlock, LmsCompatibilityMixin):
         js_str = js_template.render(js_context)
         fragment.add_javascript(js_str)
         # fragment.add_javascript_url(self.runtime.local_resource_url(self, 'public/lib/jquery.min.js'))
-        fragment.add_javascript_url("//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML")
+        # fragment.add_javascript_url("//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML")
         # fragment.add_javascript_url(self.runtime.local_resource_url(self, 'public/lib/jquery-ui.min.js'))
         fragment.add_javascript_url(self.runtime.local_resource_url(self, 'public/JSAV/lib/jquery.transit.js'))
         fragment.add_javascript_url(self.runtime.local_resource_url(self, 'public/JSAV/lib/raphael.js'))

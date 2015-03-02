@@ -14,7 +14,7 @@ class LmsCompatibilityMixin(object):
     # Studio the default value for this field to show this XBlock
     # in the list of "Advanced Components"
     display_name = String(
-        default="Module", 
+        default="OpenDSA Module", 
         scope=Scope.settings,
         help="Display name"
     )

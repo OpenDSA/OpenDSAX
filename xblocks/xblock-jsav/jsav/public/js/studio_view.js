@@ -1,12 +1,13 @@
 function JSAVXBlockStudioEdit(runtime, element) {
     var handlerUrl = runtime.handlerUrl(element, 'change_problem');
 
-    $(document).ready(function () {
+    $(document).ready(function() {
 
         function getExerciseName() {
-                return $("#jsav_problem_select :selected", element).data("name");
-            }
-            // shows the parameters only for the chosen exercise
+            return $("#jsav_problem_select :selected", element).data("name");
+        }
+
+        // shows the parameters only for the chosen exercise
         function showParameters() {
             // hide all parameter divs
             $("#jsav_parameters div", element).hide();
@@ -22,12 +23,11 @@ function JSAVXBlockStudioEdit(runtime, element) {
         $("#jsav_problem_select", element).change(showParameters);
 
         // Listener for drop down's submit button
-        $('#jsav_problem_submit', element).click(function () {
+        $('#jsav_problem_submit', element).click(function() {
             var problem_url = $("#jsav_problem_select", element).val();
             var params = '';
             var selected = getExerciseName();
-            // 
-            $('#jsav_parameters div[data-name="' + selected + '"] select').each(function () {
+            $('#jsav_parameters div[data-name="' + selected + '"] select').each(function() {
                 if ($(this).val().length > 0) {
                     if (params.length > 0) {
                         params += '&' + $(this).data("name") + '=' + $(this).val();
@@ -50,20 +50,16 @@ function JSAVXBlockStudioEdit(runtime, element) {
             });
         });
 
-        $('#jsav_url_submit', element).click(function () {
-
+        $('#jsav_url_submit', element).click(function() {
             $.ajax({
                 type: "POST",
                 url: handlerUrl,
                 data: JSON.stringify({
                     "problem_url": $("#jsav_problem_url", element).val(),
-                    "weight": $("#jsav_problem_weight", element).val(),
-                    "threshold": $("#jsav_problem_threshold", element).val(),
-                    "required": $('#jsav_problem_required').is(":checked"),
+                    "weight": $("#jsav_problem_weight", element).val()
                 }),
                 success: location.reload()
             });
         });
-
     });
 }

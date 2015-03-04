@@ -20,27 +20,62 @@ class ContentXBlock(XBlock, LmsCompatibilityMixin, StudioEditableXBlockMixin):
         scope=Scope.content, 
         default="content")
 
+    next_link = String(
+        help="link to the next module", 
+        scope=Scope.settings, 
+        default="next_link")
+
+    prev_link = String(
+        help="link to the previous module", 
+        scope=Scope.settings, 
+        default="prev_link")
+
+    next_name = String(
+        help="name of the next module", 
+        scope=Scope.settings, 
+        default="next_name")
+
+    prev_name = String(
+        help="name of the previous module", 
+        scope=Scope.settings, 
+        default="prev_name")
+
+    toc_link = String(
+        help="link to the table of content", 
+        scope=Scope.settings, 
+        default="toc_link")
+
+    source_link = String(
+        help="link to the source rst file", 
+        scope=Scope.settings, 
+        default="source_link")
+
     seed = Integer(
-        help="Random seed for this student", 
+        help="Random seed", 
         scope=Scope.user_state, 
         default=0)
 
     contnet_type = String(
-        help = "whether slideshow 'ss' or proficiency exercise 'pe'",
-        default = "pe",
+        help = "whether OpenDSA contnet , header, footer or navigation bar",
+        default = "content",
+        values = ({"value":"content","display_name":"OpenDSA Content"}, 
+                  {"value":"header","display_name":"OpenDSA Header"},
+                  {"value":"footer","display_name":"OpenDSA Footer"},
+                  {"value":"topnav","display_name":"OpenDSA Navigation Bar"}),
         scope = Scope.settings)
     
     long_name = String(
         help = "OpenDSA Content",
-        default = "Quick Sort Proficiency Problem",
+        default = "OpenDSA Content",
         scope = Scope.settings)
 
     short_name = String(
-        help = "Problem short Name, html file name",
+        help = "OpenDSA contnet name, html file name",
         default = "Quicksort",
         scope = Scope.settings)
 
-    editable_fields = ('short_name', 'long_name')
+    editable_fields = ('contnet_type', 'short_name', 'long_name','next_link','next_name',
+                       'prev_link','prev_name','toc_link','source_link')
 
     def resource_string(self, path):
         """Handy helper for getting resources from our kit."""
@@ -53,16 +88,30 @@ class ContentXBlock(XBlock, LmsCompatibilityMixin, StudioEditableXBlockMixin):
         The primary view of the ContentXBlock, shown to students
         when viewing courses.
         """
-        result = Fragment()
-        url = "public/html/"+self.short_name+".html"
-        fragment = Fragment(self.resource_string(url))
-        html_template = Template(self.resource_string("templates/student_view.html"))
-        html_context = Context({"fragment": fragment}) 
-        html_str = html_template.render(html_context)
-        result.add_content(html_str)
-        return result
-
-    # author_view = studio_view
+        if self.contnet_type == "content":
+            result = Fragment()
+            url = "public/html/"+self.short_name+".html"
+            fragment = Fragment(self.resource_string(url))
+            html_template = Template(self.resource_string("templates/student_view.html"))
+            html_context = Context({"fragment": fragment}) 
+            html_str = html_template.render(html_context)
+            result.add_content(html_str)
+            return result
+        elif self.contnet_type == "topnav":
+            html_context = Context({"source_link": self.source_link, 
+                                    "prev_link": self.prev_link, 
+                                    "prev_name": self.prev_name, 
+                                    "toc_link": self.toc_link, 
+                                    "next_link": self.next_link, 
+                                    "next_name": self.next_name, 
+                                    })
+            html_template = Template(self.resource_string("templates/student_view_topnav.html"))
+            fragment = Fragment(html_template.render(html_context))
+            return fragment
+        elif self.contnet_type == "header":
+            return
+        elif self.contnet_type == "footer":
+            return
 
     # TO-DO: change this to create the scenarios you'd like to see in the
     # workbench while developing your XBlock.

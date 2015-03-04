@@ -1,3 +1,138 @@
+/**** STYLING THE DIALOG ****/
+.jsavdialog {
+  border: 1px solid black;
+  background-color: #fff;
+  z-index: 1000;
+  position: absolute;
+  top: 0; 
+  left: 0;
+  -moz-border-radius: 6px;
+  -ms-border-radius: 6px;
+  -o-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  border-radius: 6px;
+}
+.jsavmodal {
+  z-index: 999;
+  background-color: rgb(120, 120, 120);
+  background-color: rgba(0, 0, 0, 0.2);
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.jsavdialog h2 {
+  background-color: #eee;
+  border-bottom: 1px dashed black;
+  color: black;
+  font-size: 1.5em;
+  font-weight: bold;
+  margin: 0;
+  padding: 5px;
+  -moz-border-radius: 6px 6px 0 0;
+  -ms-border-radius: 6px 6px 0 0;
+  -o-border-radius: 6px 6px 0 0;
+  -webkit-border-radius: 6px 6px 0 0;
+  border-radius: 6px 6px 0 0;
+}
+.jsavsettings {
+  padding: 15px;
+}
+a.jsavsettings {
+  background-image: url(images/settings.png);
+  width: 20px;
+  height: 20px;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-color: #aaa;
+  text-indent: 120%;
+  padding: 2px;
+  border: 1px solid #777;
+  -o-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 50%;
+  float:right; 
+  margin-right:10px; 
+  display:block;
+  white-space: nowrap;
+  overflow: hidden;
+}
+a.jsavsettings:hover {
+  background-color: #888;
+}
+.jsavsettings .jsavhelp {
+  font-size: 80%;
+  margin-left: 40px;
+}
+.jsavrow {
+  margin: 15px 8px 4px 8px;
+}
+.jsavsettings label {
+  display: inline;
+}
+/**** END STYLING THE DIALOG ****/
+
+/**** MODEL ANSWER ********/
+.jsavmodelanswer.jsavcontainer {
+  padding: 0;
+  padding-bottom: 5px;
+  background-color: white;
+  border-width: 0;
+  border-radius: 8px;
+  position: relative;
+}
+.jsavmodelanswer .jsavcounter {
+  float: left;
+  left: 10px;
+  position: absolute;
+  top: 15px;
+}
+.jsavmodelanswer .jsavcontrols span {
+  margin: 5px 20px 0 0;
+}
+.jsavmodelanswer .jsavcontrols .jsavend {
+  margin-right: 0;
+}
+/* move the (model answer) dialog outside of view when preparing it */
+.jsavdialog.jsavmodelpreparing {
+  left: -110% !important;
+}
+a.jsavdialogclose {
+  background-color: #AAA;
+  border: 2px solid white;
+  -ms-border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -o-border-radius: 20px;
+  border-radius: 20px;
+  color: white;
+  float: right;
+  font-family: monospace;
+  font-size: 20px;
+  font-weight: normal;
+  height: 20px;
+  padding: 3px;
+  text-align: center;
+  text-decoration: none;
+  width: 20px;
+  line-height: 1;
+}
+
+div.topnav {
+     background: #e0e0e0; 
+    // display: none;
+}
+
+div.topnav p {
+    margin-top: 0;
+    margin-left: 40px;
+    margin-right: 40px;
+    margin-bottom: 0px;
+    text-align: right;
+    font-size: 12px;  /* 0.8em; */
+}
+
 #ODSAModule {
 
 div.clearer {
@@ -671,8 +806,8 @@ div.title {
     margin-bottom: 25px;
 }
 div.topnav {
-    /* background: #e0e0e0; */
-    display: none;
+     background: #e0e0e0; 
+    // display: none;
 }
 div.topnav p {
     margin-top: 0;
@@ -880,31 +1015,31 @@ hr {
 }
 
 /* printer only pretty stuff */
-@media print {
-    .noprint {
-        display: none;
-    }
-    /* for acronyms we want their definitions inlined at print time */
-    acronym[title]:after {
-        font-size: small;
-        content: " (" attr(title) ")";
-        font-style: italic;
-    }
-    /* and not have mozilla dotted underline */
-    acronym {
-        border: none;
-    }
-    div.topnav, div.bottomnav, div.header, table.index {
-        display: none;
-    }
-    div.content {
-        margin: 0px;
-        padding: 0px;
-    }
-    html {
-        background: #FFF;
-    }
-}
+// @media print {
+//     .noprint {
+//         display: none;
+//     }
+//     /* for acronyms we want their definitions inlined at print time */
+//     acronym[title]:after {
+//         font-size: small;
+//         content: " (" attr(title) ")";
+//         font-style: italic;
+//     }
+//      and not have mozilla dotted underline 
+//     acronym {
+//         border: none;
+//     }
+//     div.topnav, div.bottomnav, div.header, table.index {
+//         display: none;
+//     }
+//     div.content {
+//         margin: 0px;
+//         padding: 0px;
+//     }
+//     html {
+//         background: #FFF;
+//     }
+// }
 
 .viewcode-back {
     font-family: "DejaVu Sans", Arial, Helvetica, sans-serif;
@@ -2030,6 +2165,7 @@ a.jsavdialogclose {
   width: 20px;
   line-height: 1;
 }
+
 
 .jsavexercisecontrols {
   position: relative;

@@ -1,0 +1,9 @@
+/* CSS for TestJSAVXBlock */
+
+.testjsav_block .count {
+    font-weight: bold;
+}
+
+.testjsav_block p {
+    cursor: pointer;
+}

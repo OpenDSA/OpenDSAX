@@ -1,7 +1,7 @@
 window.ODSA = window.ODSA || {};
 
 window.ODSA.quicksortCON = function () {
-  console.log("quicksortCON");
+
 
   var av_name = "quicksortCON";
   var interpret = window.ODSA.UTILS.loadConfig({

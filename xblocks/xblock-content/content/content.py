@@ -113,6 +113,13 @@ class ContentXBlock(XBlock, LmsCompatibilityMixin, StudioEditableXBlockMixin):
         elif self.contnet_type == "footer":
             return
 
+
+    def studio_view(self, context):
+        fragment = super(ContentXBlock, self).studio_view(context)
+        fragment.add_javascript_url(self.runtime.local_resource_url(self, 'public/js/src/studio_edit_content.js'))
+        fragment.initialize_js('StudioEditableXBlockContent')
+        return fragment
+
     # TO-DO: change this to create the scenarios you'd like to see in the
     # workbench while developing your XBlock.
     @staticmethod

@@ -64,11 +64,13 @@ install-utils: xblock-utils restart-edxapp
 
 install-jsav: xblock-jsav restart-edxapp
 
+install-testjsav: xblock-testjsav restart-edxapp
+
 install-module: xblock-module restart-edxapp
 
 install-content: xblock-content restart-edxapp
 
-install-all: xblock-jsav xblock-module xblock-content xblock-utils restart-edxapp
+install-all: xblock-utils xblock-jsav xblock-testjsav xblock-module xblock-content restart-edxapp
 
 xblock-utils: 
 	rm -r /edx/app/edxapp/venvs/edxapp/lib/python2.7/site-packages/xblockutils
@@ -81,6 +83,12 @@ xblock-jsav:
 	rm -r /edx/app/edxapp/venvs/edxapp/lib/python2.7/site-packages/xblock_jsav-0.3-py2.7.egg-info
 	cd /edx/app/edxapp
 	sudo -H -u edxapp /edx/bin/pip.edxapp install /home/OpenDSAX/xblocks/xblock-jsav/
+
+xblock-testjsav: 
+	rm -r /edx/app/edxapp/venvs/edxapp/lib/python2.7/site-packages/testjsav
+	rm -r /edx/app/edxapp/venvs/edxapp/lib/python2.7/site-packages/testjsav_xblock-0.1-py2.7.egg-info
+	cd /edx/app/edxapp
+	sudo -H -u edxapp /edx/bin/pip.edxapp install /home/OpenDSAX/xblocks/xblock-testjsav/
 
 xblock-module: 
 	rm -r /edx/app/edxapp/venvs/edxapp/lib/python2.7/site-packages/module

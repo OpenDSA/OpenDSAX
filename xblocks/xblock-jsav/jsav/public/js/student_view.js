@@ -1,5 +1,5 @@
 function JSAVXBlock_{{seed}}(runtime, element) {
-    // _{{seed}}
+//function JSAVXBlock_{{seed}}(runtime, element) {
     var seed = "{{seed}}",
         shortName = "{{shortName}}",
         longName = "{{longName}}",
@@ -9,10 +9,7 @@ function JSAVXBlock_{{seed}}(runtime, element) {
         problemType = "{{problemType}}",
         correctImg = "";
 
-    // console.log("JSAVXBlock_");
-
-
-    $(document).ready(function() {
+    $(document).ready(function () {
 
         // $(element).on("jsav-log-event", function (e, data) {
         //     console.dir(data);

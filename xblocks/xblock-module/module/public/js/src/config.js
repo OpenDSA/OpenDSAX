@@ -1,6 +1,5 @@
 (function () {
 	// "use strict";
-	console.log("config.js");
 	var settings = {};
 	//@efouh: added this variable back because it is needed by gradebook.html
 	settings.BOOK_NAME = "testX";

@@ -1,0 +1,44 @@
+<div class="jsav_studio" style="padding: 10px;">
+  <h2>JSAV exercise</h2>
+  <div class="weight">
+    The number of points this problem is worth: <input type="text" id="jsav_problem_weight" value="{{points}}"/>
+    <div>
+      <h3>EITHER</h3>
+      <div style="border: 1px solid #909090; margin: 10px;padding: 5px;">
+        <p>Select exercise from the following list:</p>
+        <select id="jsav_problem_select">
+          {% for group in exercises%}
+            <option value="" disabled="disabled">{{group.name}}</option>
+            {% for exercise in group.exercises%}
+              <option value="{{exercise.source}}" data-name="{{exercise.name}}">&nbsp;&nbsp;&nbsp;{{exercise.name}}</option>
+            {% endfor %}
+          {% endfor %}
+        </select>
+        <div id="jsav_parameters" style="background-color:#e0e0e0; width: 400px; padding: 10px; margin: 10px;">
+          <p>Possible optional parameters: </p>
+          {% for group in exercises%}
+            {% for exercise in group.exercises %}
+              <div data-name="{{exercise.name}}">
+                {% for name, value in exercise.parameters.iteritems  %}
+                  {{name}}:
+                  <select data-name="{{name}}">
+                    {% for v in value %}
+                      <option value="{{v}}">{{ v }}</option>
+                    {% endfor %}
+                  </select>
+                {% endfor %}
+              </div>
+            {% endfor %}
+          {% endfor %}
+        </div>
+        <button id="jsav_problem_submit" style="width: 80px; height:50px; font-size: 18px;">Submit</button>
+      </div>
+      <h3>OR</h3>
+      <div style="border: 1px solid #909090; margin: 10px; padding: 5px;">
+        <p>Submit a problem url. URLs are only accepted from <em>cs.hut.fi</em> domains.</p>
+        <input type="text" id="jsav_problem_url" value="{{problem_url}}" size="90" /><br />
+        <button id="jsav_url_submit" style="width: 80px; height:50px; font-size: 18px;margin-top:10px;">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>

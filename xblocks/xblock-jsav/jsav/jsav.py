@@ -4,6 +4,7 @@ import inspect
 import random
 import string  # pylint: disable=W0402
 import time
+import logging
 
 from django.template import Context, Template
 
@@ -12,6 +13,8 @@ from xblockutils.studio_editable import StudioEditableXBlockMixin, StudioContain
 from xblock.core import XBlock
 from xblock.fields import Scope, String, Boolean, Integer, Float, List
 from xblock.fragment import Fragment
+from xblock.exceptions import JsonHandlerError
+from xblock.validation import Validation
 
 
 class JSAVXBlock(XBlock, LmsCompatibilityMixin, StudioEditableXBlockMixin, StudioContainerXBlockMixin):
@@ -76,13 +79,35 @@ class JSAVXBlock(XBlock, LmsCompatibilityMixin, StudioEditableXBlockMixin, Studi
         display_name="Long Name",
         help = "Problem Long Name",
         default = "quickSort",
-        scope = Scope.settings,
-        )
+        scope = Scope.settings,)
 
     short_name = String(
         help = "Problem short Name",
         default = "quicksortCON",
         scope = Scope.settings)
+
+    js_resources = String(
+        help = "supplementary js files",
+        default = "quicksortCODE.js",
+        scope = Scope.settings)
+
+    AVAILABLE_PROBLEMS = {
+        'login': {
+            'html': "static/html/login.html",
+            'css': ["static/css/sqli.css"],
+            'js': ["static/js/src/login.js"],
+            'js_objs': ['SqlInjectionXBlock'],
+            'log': 'previous_answers_login',
+        },
+        'union': {
+            'html': "static/html/union.html",
+            'css': ["static/css/sqli.css"],
+            'js': [],
+            'js_objs': [],
+            'log': 'previous_answers_union',
+        },
+    }
+
 
     showhide = String(
         help = "controls whether or not the exercises is displayed and a Show / Hide button created",
@@ -93,13 +118,13 @@ class JSAVXBlock(XBlock, LmsCompatibilityMixin, StudioEditableXBlockMixin, Studi
     JXOP_fixmode = String(
         help = "JSAV Exercise Option - fixmode",
         default = "fix",
-        values = ({"value":"fix","display_name":"Fix"}, {"value":"undo","display_name":"Undo"}),
+        # values = ({"value":"fix","display_name":"Fix"}, {"value":"undo","display_name":"Undo"}),
         scope = Scope.settings)
 
     JXOP_code = String(
         help = "JSAV Exercise Option - code",
         default = "none",
-        values = ({"value":"none","display_name":"None"}, {"value":"processing","display_name":"Processing"}),
+        # values = ({"value":"none","display_name":"None"}, {"value":"processing","display_name":"Processing"}),
         scope = Scope.settings)
 
     JXOP_feedback = String(
@@ -110,11 +135,11 @@ class JSAVXBlock(XBlock, LmsCompatibilityMixin, StudioEditableXBlockMixin, Studi
     JOP_lang = String(
         help = "JSAV configration Option - lang",
         default = "en",
-        values = ({"value":"en","display_name":"English"}, 
-                  {"value":"fi","display_name":"Finnish"},
-                  {"value":"fr","display_name":"French"},
-                  {"value":"pt","display_name":"Portuguese"},
-                  {"value":"sv","display_name":"Swedish"}),
+        # values = ({"value":"en","display_name":"English"}, 
+        #           {"value":"fi","display_name":"Finnish"},
+        #           {"value":"fr","display_name":"French"},
+        #           {"value":"pt","display_name":"Portuguese"},
+        #           {"value":"sv","display_name":"Swedish"}),
         scope = Scope.settings)
 
     student_score = Float(
@@ -138,11 +163,11 @@ class JSAVXBlock(XBlock, LmsCompatibilityMixin, StudioEditableXBlockMixin, Studi
         default = [],
         scope = Scope.user_state)
 
-    editable_fields = ('problem_type', 'problem_url','problem_width', 'problem_height','required', 'threshold', 
-                       'long_name', 'short_name', 'showhide', 'JXOP_fixmode','JXOP_code','JXOP_feedback',
+    editable_fields = ('problem_type', 'short_name', 'problem_url','problem_width',
+                       'problem_height','required', 'threshold', 'long_name', 'js_resources',
+                       'showhide', 'JXOP_fixmode', 'JXOP_code', 'JXOP_feedback', 
                        'JOP_lang', 'display_name', 'weight')
 
-    # def student_view_temp(self, context):
     def student_view(self, context):
         html_context = Context({"student_score": self.student_score, 
                                 "name": self.short_name,
@@ -155,10 +180,14 @@ class JSAVXBlock(XBlock, LmsCompatibilityMixin, StudioEditableXBlockMixin, Studi
                                 "incorrect_icon": self.runtime.local_resource_url(self, 'public/images/incorrect-icon.png'),
                                 })
         if self.problem_type == "ss":
-            html_template = Template(self.resource_string("public/html/ss_view.html"))
+            html_template = Template(self.resource_string("public/html/ss_student_view.html"))
             fragment = Fragment(html_template.render(html_context))
-            # TODO: CODE.js file is hardcoded for now, it should be removed
-            fragment.add_javascript_url("/xblock/resource/jsav/public/AV/Sorting/quicksortCODE.js")
+            # if self.js_resources:
+            #     js_resources = json.loads(self.js_resources)["js"]
+            #     for js_file in js_resources:
+            #         fragment.add_javascript_url(self.get_problem_url(js_file))
+            if self.js_resources:
+                fragment.add_javascript_url(self.get_problem_url(self.js_resources))
             fragment.add_javascript_url(self.get_problem_url(self.short_name+".js"))
             fragment.add_css_url(self.get_problem_url(self.short_name+".css"))
         else:
@@ -182,6 +211,23 @@ class JSAVXBlock(XBlock, LmsCompatibilityMixin, StudioEditableXBlockMixin, Studi
         return fragment
 
 
+    def studio_view(self, context):
+        fragment = super(JSAVXBlock, self).studio_view(context)
+        # fragment = Fragment()
+        jsav_based_info = json.load(urllib2.urlopen("http://algoviz.org/OpenDSAX/AV/jsav_based_materials_list.json"))
+
+        #Test trying to render the list of PE the same way utils lib is rendering fields
+        html_template2 = Template(self.resource_string("public/html/studio_view_jsav_based_materials.html"))
+        html_context2 = Context({"pe": jsav_based_info["pe"],"av": jsav_based_info["av"],"ss": jsav_based_info["ss"] })
+        html_str2 = html_template2.render(html_context2)
+        fragment.add_content(html_str2)
+        # fragment.add_javascript_url(self.runtime.local_resource_url(self, 'public/js/studio_view_jsav_based_materials.js'))
+
+        fragment.add_javascript_url(self.runtime.local_resource_url(self, 'public/js/studio_edit_jsav.js'))
+        fragment.initialize_js('StudioEditableXBlockJSAV')
+        return fragment
+
+
     def resource_string(self, path):
         """Handy helper for getting resources from our kit."""
         data = pkg_resources.resource_string(__name__, path)
@@ -196,7 +242,7 @@ class JSAVXBlock(XBlock, LmsCompatibilityMixin, StudioEditableXBlockMixin, Studi
 
 
     def get_problem_url(self, short_name):
-        """Handy helper for getting URL plus paramters."""
+        """Handy helper for getting URL plus pearamters."""
         # workbench version 
         base_url = 'public'+self.problem_url+short_name
         # lms version

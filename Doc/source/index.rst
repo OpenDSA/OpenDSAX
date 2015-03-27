@@ -11,5 +11,5 @@ Table of Contents
    :maxdepth: 3
 
    Introduction
-   Devstack
    SDK
+   Devstack

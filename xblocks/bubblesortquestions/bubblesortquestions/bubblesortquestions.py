@@ -1,6 +1,7 @@
 """TO-DO: Write a description of what this XBlock is."""
 
 import pkg_resources
+import random
 
 from xblock.core import XBlock
 from xblock.fields import Scope, Integer
@@ -15,6 +16,17 @@ class BubblesortQuestionsXBlock(XBlock):
     # Fields are defined on the class.  You can access them in your code as
     # self.<fieldname>.
     score = Integer(help="Score for the exercise", default = 0, scope=Scope.user_state)
+
+    """
+    Fill in the question html files here (urls)
+    """
+    questionPool = ["static/html/bubblesort_Question1.html", "static/html/bubblesort_Question2.html", "static/html/bubblesort_Question3.html", "static/html/bubblesort_Question4.html"]
+    """
+    maxQuestionIndex should be how many questions we have - 1
+    """
+    maxQuestionIndex = 3
+
+
 
     # TO-DO: delete count, and define your own fields.
     count = Integer(
@@ -39,9 +51,8 @@ class BubblesortQuestionsXBlock(XBlock):
         We can declare an array of html strings, and get an index and random.
         Should we inject the header/score html code prior to the random question?
         """
-        questionString = "static/html/bubblesort_Question2.html"
 
-
+        questionString = self.questionPool[random.randint(0,self.maxQuestionIndex)]
 
         html = self.resource_string(questionString)
         frag = Fragment(html.format(self=self))
@@ -61,9 +72,12 @@ class BubblesortQuestionsXBlock(XBlock):
         An example handler, which increments the data.
         """
         # Just to show data coming in...
-        assert data['question'] == 'change'
-        newHTML = self.resource_string("static/html/bubblesort_Question1.html")
-        return {"score": newHTML}
+
+        questionString = self.questionPool[random.randint(0,self.maxQuestionIndex)]
+        newHTML = self.resource_string(questionString)
+        if data['question'] == 'correct':
+            self.score = self.score + 1
+        return {"html": newHTML, "score": self.score}
 
     # TO-DO: change this to create the scenarios you'd like to see in the
     # workbench while developing your XBlock.

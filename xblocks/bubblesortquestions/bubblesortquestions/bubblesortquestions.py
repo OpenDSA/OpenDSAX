@@ -1,4 +1,4 @@
-"""TO-DO: Write a description of what this XBlock is."""
+"""This XBlock represents a multiple choice question pool. Copy most and replace the question pool html strings to use for your own questions."""
 
 import pkg_resources
 import random

@@ -6,9 +6,11 @@ var handlerUrl = runtime.handlerUrl(element, 'increment_score');
     function updateCount(result) {
         
         console.dir(result);
-        //$('.bubblesortquestions_block', element).innerHTML = result.score;
-        $('.bubblesortquestions_block', element).html(result.score);
-
+        $('.bubblesortquestions_block', element).html(result.html);
+        $('.score', element).text(result.score);
+        $('button', element).click(function(eventObject) {           
+            checkQuestion();
+        });
     }
 
 var question;
@@ -18,80 +20,43 @@ var answers = [];
 var submitButton;
 var nextQuestionButton;
 
-    function updateQuestion() {
-        submitButton.style.display = 'block';
-        nextQuestionButton.style.display = 'none';
-    if (a <=3)    
+    function checkQuestion() {
+
+        var selected = $("#solution:checked");
+
+        if (selected.val())
         {
-        questions[a].style.display = 'none';
-        questions[a+1].style.display = 'block';
-        a++;
+                $.ajax({
+                type: "POST",
+                url: handlerUrl,
+                data: JSON.stringify({"question": "correct"}),
+                success: updateCount
+            });
+        }
+        else
+        {
+            alert('incorrect answer');
         }
     }
 
     function submitAnswer() {
 
-        if (a == 0)
-        {
-            if(document.getElementById('question1_answer4').checked)
-            {
-                submitButton.style.display = 'none';
-                nextQuestionButton.style.display = 'block';
-            }
-        }
-        else if (a == 1)
-        {
-            if(document.getElementById('question2_answer1').checked)
-            {
-                submitButton.style.display = 'none';
-                nextQuestionButton.style.display = 'block';
-            }
-        }
-        else if (a == 2)
-        {
-            if(document.getElementById('question3_answer1').checked)
-            {
-                submitButton.style.display = 'none';
-                nextQuestionButton.style.display = 'block';
-            }
-        }
-        else if (a == 3)
-        {
-            if(document.getElementById('question4_answer1').checked)
-            {
-                submitButton.style.display = 'none';
-                nextQuestionButton.style.display = 'block';
-                nextQuestionButton.innerHTML = 'Correct!';
-                nextQuestionButton.disabled = 'true';
-            }
-        }
     }
 
-    $('button', element).click(function(eventObject) {
-        
-        if ('answer was correct')
-        {
-            $.ajax({
-                type: "POST",
-                url: handlerUrl,
-                data: JSON.stringify({"question": "change"}),
-                success: updateCount
-            });
-        }
-    });
 
 
     $(function() {
-        questions[0] = document.getElementById("form1");
-        questions[1] = document.getElementById("form2");
-        questions[2] = document.getElementById("form3");
-        questions[3] = document.getElementById("form4");
+        
+    $('button', element).click(function(eventObject) {
+        checkQuestion();
+    });
+
 
         submitButton = document.getElementById("submit");
         question = document.getElementById("question");
         nextQuestionButton = document.getElementById("nextQuestion");
-        nextQuestionButton.onclick = function(){ updateQuestion() };
-        submitButton.onclick = function(){ submitAnswer() };
+        //nextQuestionButton.onclick = function(){ updateQuestion() };
+        //submitButton.onclick = function(){ submitAnswer() };
     });
 
 }

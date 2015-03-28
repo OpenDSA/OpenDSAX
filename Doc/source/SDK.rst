@@ -35,7 +35,7 @@ Basic instructions for setting up the SDK:
 
 	$ cd ~/envs
 	$ virtualenv sdk
-	$ . ~/envs/sdk/bin/activa
+	$ . ~/envs/sdk/bin/activate
 
 	If you have multiple verisons of python installed, use python 2.7 to create the new virtualenv.
 

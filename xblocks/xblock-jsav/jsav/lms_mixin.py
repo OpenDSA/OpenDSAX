@@ -4,7 +4,7 @@ BASICALLY CRIBBED BY @jbau from the edx-ora2 project at
 https://raw.githubusercontent.com/edx/edx-ora2/master/apps/openassessment/xblock/lms_mixin.py
 """
 
-from xblock.fields import String, Float, Scope, DateTime, Boolean
+from xblock.fields import String, Float, Scope, DateTime, Boolean, Integer
 
 
 class LmsCompatibilityMixin(object):
@@ -14,7 +14,7 @@ class LmsCompatibilityMixin(object):
     # Studio the default value for this field to show this XBlock
     # in the list of "Advanced Components"
     display_name = String(
-        default="JSAV-Based Proficiency Problem", 
+        default="JSAV-Based Materials", 
         scope=Scope.settings,
         help="Display name"
     )
@@ -31,11 +31,11 @@ class LmsCompatibilityMixin(object):
         help="ISO-8601 formatted string representing the due date of this assignment."
     )
 
-    weight = Float(
+    weight = Integer(
         display_name="Problem Weight",
         help = "The number of points this problem is worth",
-        values = {"min": 0, "step": 0.1},
-        default = 10,
+        values = {"min": 1, "max": 10, "step": 1},
+        default = 3,
         scope = Scope.settings)
 
     def has_dynamic_children(self):

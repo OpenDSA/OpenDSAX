@@ -1,0 +1,183 @@
+{% load i18n %}
+<div class="jsav_based_materials">
+  <div class="jsav_pe">
+    <li
+      class="field comp-setting-entry metadata_entry"
+      data-field-name="PE"
+      data-default="Sorting Exercise"
+      data-cast="string"
+      >
+      <div class="wrapper-comp-setting">
+        <label class="label setting-label" for="xb-field-edit-PE">Proficiency Exercises List</label>
+        <select class="field-data-control jsav_material" id="xb-field-edit-PE" data-parentclass="jsav_pe">
+          {% for group in pe%}
+            <option value="" disabled="disabled">{{group.name}}</option>
+            {% for exercise in group.exercises%}
+              <option value="{{exercise.source}}" 
+              data-name="{{exercise.short_name}}"
+              data-long-name="{{exercise.long_name}}"
+              data-problem-url="{{exercise.problem_url}}"
+              data-js-resources="{{exercise.js_resources}}"
+              data-problem-width="{{exercise.problem_width}}"
+              data-problem-height="{{exercise.problem_height}}"
+              data-required="{{exercise.required}}"
+              data-threshold="{{exercise.threshold}}"
+              data-showhide="{{exercise.showhide}}"
+              data-weight="{{exercise.weight}}"
+              >&nbsp;&nbsp;&nbsp;{{exercise.long_name}}</option>
+            {% endfor %}
+          {% endfor %}
+        </select>
+      </div>
+      <span class="tip setting-help">List of all available proficiency exercises.</span>
+    </li>
+    <div id="jsav_parameters">
+      {% for group in pe %}
+        {% for exercise in group.exercises %}
+          <div data-name="{{exercise.short_name}}">
+            {% for name, value in exercise.parameters.iteritems  %}
+              <li
+                class="field comp-setting-entry metadata_entry"
+                data-field-name="{{name}}"
+                data-default=""
+                data-cast="string"
+                >
+                <div class="wrapper-comp-setting">
+                  <label class="label setting-label" for="xb-param-field-edit-{{name}}">{{name}}</label>
+                  <select
+                    class="field-data-control optionparams"
+                    id="xb-param-field-edit-{{name}}"
+                    >
+                    {% for v in value %}
+                      <option value="{{v}}">{{ v }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </li>
+            {% endfor %}
+          </div>
+        {% endfor %}
+      {% endfor %}
+    </div>
+  </div>
+  <div class="jsav_av">
+    <li
+      class="field comp-setting-entry metadata_entry"
+      data-field-name="AV"
+      data-default="Sorting AV"
+      data-cast="string"
+      >
+      <div class="wrapper-comp-setting">
+        <label class="label setting-label" for="xb-field-edit-AV">Visualization List</label>
+        <select class="field-data-control jsav_material" id="xb-field-edit-AV" data-parentclass="jsav_av">
+          {% for group in av%}
+            <option value="" disabled="disabled">{{group.name}}</option>
+            {% for exercise in group.exercises%}
+              <option value="{{exercise.source}}" 
+              data-name="{{exercise.short_name}}"
+              data-long-name="{{exercise.long_name}}"
+              data-problem-url="{{exercise.problem_url}}"
+              data-js-resources="{{exercise.js_resources}}"
+              data-problem-width="{{exercise.problem_width}}"
+              data-problem-height="{{exercise.problem_height}}"
+              data-required="{{exercise.required}}"
+              data-threshold="{{exercise.threshold}}"
+              data-showhide="{{exercise.showhide}}"
+              data-weight="{{exercise.weight}}"
+              >&nbsp;&nbsp;&nbsp;{{exercise.long_name}}</option>
+            {% endfor %}
+          {% endfor %}
+        </select>
+      </div>
+      <span class="tip setting-help">List of all available Visualizations</span>
+    </li>
+    <div id="jsav_parameters">
+      {% for group in av %}
+        {% for exercise in group.exercises %}
+          <div data-name="{{exercise.short_name}}">
+            {% for name, value in exercise.parameters.iteritems  %}
+              <li
+                class="field comp-setting-entry metadata_entry"
+                data-field-name="{{name}}"
+                data-default=""
+                data-cast="string"
+                >
+                <div class="wrapper-comp-setting">
+                  <label class="label setting-label" for="xb-param-field-edit-{{name}}">{{name}}</label>
+                  <select
+                    class="field-data-control optionparams"
+                    id="xb-param-field-edit-{{name}}"
+                    >
+                    {% for v in value %}
+                      <option value="{{v}}">{{ v }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </li>
+            {% endfor %}
+          </div>
+        {% endfor %}
+      {% endfor %}
+    </div>
+  </div>
+  <div class="jsav_ss">
+    <li
+      class="field comp-setting-entry metadata_entry"
+      data-field-name="SS"
+      data-default="Sorting Exercise"
+      data-cast="string"
+      >
+      <div class="wrapper-comp-setting">
+        <label class="label setting-label" for="xb-field-edit-SS">Slide Show List</label>
+        <select class="field-data-control jsav_material" id="xb-field-edit-SS" data-parentclass="jsav_ss">
+          {% for group in ss%}
+            <option value="" disabled="disabled">{{group.name}}</option>
+            {% for exercise in group.exercises%}
+              <option value="{{exercise.source}}" 
+              data-name="{{exercise.short_name}}"
+              data-long-name="{{exercise.long_name}}"
+              data-problem-url="{{exercise.problem_url}}"
+              data-js-resources="{{exercise.js_resources}}"
+              data-problem-width="{{exercise.problem_width}}"
+              data-problem-height="{{exercise.problem_height}}"
+              data-required="{{exercise.required}}"
+              data-threshold="{{exercise.threshold}}"
+              data-showhide="{{exercise.showhide}}"
+              data-weight="{{exercise.weight}}"
+              >&nbsp;&nbsp;&nbsp;{{exercise.long_name}}</option>
+            {% endfor %}
+          {% endfor %}
+        </select>
+      </div>
+      <span class="tip setting-help">List of all available Slide Shows.</span>
+    </li>
+    <div id="jsav_parameters">
+      {% for group in ss %}
+        {% for exercise in group.exercises %}
+          <div data-name="{{exercise.short_name}}">
+            {% for name, value in exercise.parameters.iteritems  %}
+              <li
+                class="field comp-setting-entry metadata_entry"
+                data-field-name="{{name}}"
+                data-default=""
+                data-cast="string"
+                >
+                <div class="wrapper-comp-setting">
+                  <label class="label setting-label" for="xb-param-field-edit-{{name}}">{{name}}</label>
+                  <select
+                    class="field-data-control optionparams"
+                    id="xb-param-field-edit-{{name}}"
+                    >
+                    {% for v in value %}
+                      <option value="{{v}}">{{ v }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </li>
+            {% endfor %}
+          </div>
+        {% endfor %}
+      {% endfor %}
+    </div>
+  </div>
+</div>

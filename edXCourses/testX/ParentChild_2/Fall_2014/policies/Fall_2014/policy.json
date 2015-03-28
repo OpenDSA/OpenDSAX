@@ -1,0 +1,74 @@
+{
+    "course/Fall_2014": {
+        "advanced_modules": [
+            "jsav", 
+            "module", 
+            "content", 
+            "lti", 
+            "word_cloud", 
+            "split_test", 
+            "test"
+        ], 
+        "course_image": "OpenDSALogoT64.png", 
+        "discussion_topics": {
+            "General": {
+                "id": "i4x-VT-CS_OpenDSAX-course-Fall_2014"
+            }
+        }, 
+        "display_name": "OpenDSAX", 
+        "graceperiod": "", 
+        "start": "2014-09-15T09:00:00Z", 
+        "tabs": [
+            {
+                "name": "Courseware", 
+                "type": "courseware"
+            }, 
+            {
+                "name": "Course Info", 
+                "type": "course_info"
+            }, 
+            {
+                "name": "Textbooks", 
+                "type": "textbooks"
+            }, 
+            {
+                "name": "Discussion", 
+                "type": "discussion"
+            }, 
+            {
+                "name": "Wiki", 
+                "type": "wiki"
+            }, 
+            {
+                "name": "Progress", 
+                "type": "progress"
+            }
+        ], 
+        "user_partitions": [
+            {
+                "description": "Group one", 
+                "groups": [
+                    {
+                        "id": 77425904626, 
+                        "name": "Group A", 
+                        "version": 1
+                    }, 
+                    {
+                        "id": 155080582504, 
+                        "name": "Group B", 
+                        "version": 1
+                    }
+                ], 
+                "id": 525183181472, 
+                "name": "groupConf", 
+                "version": 1
+            }
+        ], 
+        "xml_attributes": {
+            "filename": [
+                "course/Fall_2014.xml", 
+                "course/Fall_2014.xml"
+            ]
+        }
+    }
+}

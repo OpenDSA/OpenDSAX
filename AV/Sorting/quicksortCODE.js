@@ -1,14 +1,14 @@
-﻿"use strict";
-
-/**
+﻿/**
  * These extensions are a temporary measure until an annotation mechanism can be added to JSAV
  * We recommend AGAINST using these functions
  */
 
 (function ($) {
-//*****************************************************************************
-//*************                  JSAV Extensions                  *************
-//*****************************************************************************
+  console.log("quicksortCODE");
+  // "use strict";
+  //*****************************************************************************
+  //*************                  JSAV Extensions                  *************
+  //*****************************************************************************
 
   /**
    * Creates a left bound indicator above the specified indices

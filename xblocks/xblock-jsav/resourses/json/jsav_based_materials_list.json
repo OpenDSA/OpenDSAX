@@ -1,0 +1,426 @@
+[{
+	"exercises": [{
+		"description": "",
+		"parameters": {
+			"JOP-lang": ["en", "fi"],
+			"ex": ["orderOfGrowth", "orderOfGrowthEasy", "runningTimeOfIterativeAlgorithms", "runningTimeOfRecursiveAlgorithms", "recurrences"],
+			"show": ["", 3, 4, 5, 6, 7, 8, 9, 10]
+		},
+		"width": "100%",
+		"height": "1200px",
+		"source": "https://trak.cs.hut.fi/static/OpenDSA/AV/Development/sortingExercisePRO.html",
+		"aplus-url": "https://trak.cs.hut.fi/jsav/exercise/36",
+		"name": "Sorting Exercise"
+	}],
+	"name": "Testing"
+}, {
+	"exercises": [{
+		"description": "",
+		"parameters": {
+			"JOP-lang": ["en", "fi"],
+			"JXOP-code": ["", "none", "english", "finnish"]
+		},
+		"width": "100%",
+		"height": "1000px",
+		"source": "https://trak.cs.hut.fi/static/OpenDSA/AV/Development/postfixEvaluationPRO.html",
+		"aplus-url": "https://trak.cs.hut.fi/jsav/exercise/1",
+		"name": "Evaluating Postfix Expression"
+	}, {
+		"description": "",
+		"parameters": {
+			"JOP-lang": ["en", "fi"],
+			"JXOP-code": ["", "none", "english", "finnish"]
+		},
+		"width": "100%",
+		"height": "833px",
+		"source": "https://trak.cs.hut.fi/static/OpenDSA/AV/Development/infixToPostfixPRO.html",
+		"aplus-url": "https://trak.cs.hut.fi/jsav/exercise/2",
+		"name": "Infix To Postfix"
+	}, {
+		"description": "",
+		"parameters": {
+			"JOP-lang": ["en", "fi"],
+			"JXOP-code": ["", "none", "java", "processing"]
+		},
+		"width": "770px",
+		"height": "629px",
+		"source": "https://trak.cs.hut.fi/static/OpenDSA/AV/Searching/binarySearchPRO.html",
+		"aplus-url": "https://trak.cs.hut.fi/jsav/exercise/3",
+		"name": "Binary Search"
+	}, {
+		"description": "",
+		"parameters": {
+			"JOP-lang": ["en", "fi"],
+			"JXOP-code": ["", "none", "java"]
+		},
+		"width": "100%",
+		"height": "1033px",
+		"source": "https://trak.cs.hut.fi/static/OpenDSA/AV/Development/interpolationSearchPRO.html",
+		"aplus-url": "https://trak.cs.hut.fi/jsav/exercise/4",
+		"name": "Interpolation Search"
+	}],
+	"name": "Basic Data Structures And Algorithms"
+}, {
+	"exercises": [{
+		"description": "",
+		"parameters": {
+			"JOP-lang": ["en"],
+			"JXOP-code": ["", "none", "python"]
+		},
+		"width": "100%",
+		"height": "691px",
+		"source": "https://trak.cs.hut.fi/static/OpenDSA/AV/Development/insertionSortWithoutSwapPRO.html",
+		"aplus-url": "https://trak.cs.hut.fi/jsav/exercise/5",
+		"name": "Insertion Sort"
+	}, {
+		"description": "",
+		"parameters": {},
+		"width": "100%",
+		"height": "555px",
+		"source": "https://trak.cs.hut.fi/static/OpenDSA/AV/Development/selectionSortPRO.html",
+		"aplus-url": "https://trak.cs.hut.fi/jsav/exercise/6",
+		"name": "Selection Sort"
+	}, {
+		"description": "",
+		"parameters": {},
+		"width": "100%",
+		"height": "521px",
+		"source": "https://trak.cs.hut.fi/static/OpenDSA/AV/Development/selectionSort2PRO.html",
+		"aplus-url": "https://trak.cs.hut.fi/jsav/exercise/7",
+		"name": "Selection Sort "
+	}, {
+		"description": "",
+		"parameters": {
+			"JOP-lang": ["en", "fi", "sv"]
+		},
+		"width": "770px",
+		"height": "622px",
+		"source": "https://trak.cs.hut.fi/static/OpenDSA/AV/Sorting/mergesortPRO.html",
+		"aplus-url": "https://trak.cs.hut.fi/jsav/exercise/8",
+		"name": "Mergesort"
+	}, {
+		"description": "",
+		"parameters": {
+			"JOP-lang": ["en", "fi"],
+			"pivot": ["middle", "last", "medianof3"],
+			"JXOP-code": ["", "none", "processing"]
+		},
+		"width": "100%",
+		"height": "1113px",
+		"source": "https://trak.cs.hut.fi/static/OpenDSA/AV/Development/quicksort2PRO.html",
+		"aplus-url": "https://trak.cs.hut.fi/jsav/exercise/9",
+		"name": "Quicksort"
+	}, {
+		"description": "",
+		"parameters": {
+			"JOP-lang": ["en", "fi"],
+			"JXOP-code": ["", "none", "pseudo"]
+		},
+		"width": "100%",
+		"height": "1321px",
+		"source": "https://trak.cs.hut.fi/static/OpenDSA/AV/Development/radixExchangeSortPRO.html",
+		"aplus-url": "https://trak.cs.hut.fi/jsav/exercise/10",
+		"name": "Radix Exchange Sort"
+	}],
+	"name": "Sorting Algorithms"
+}, {
+	"exercises": [{
+		"description": "",
+		"parameters": {
+			"JOP-lang": ["en"],
+			"JXOP-code": ["", "none", "pseudo"]
+		},
+		"width": "770px",
+		"height": "567px",
+		"source": "https://trak.cs.hut.fi/static/OpenDSA/AV/Binary/btTravLevelorderPRO.html",
+		"aplus-url": "https://trak.cs.hut.fi/jsav/exercise/15",
+		"name": "Level-order Traversal"
+	}, {
+		"description": "",
+		"parameters": {
+			"JOP-lang": ["en"],
+			"JXOP-code": ["", "none", "pseudo"]
+		},
+		"width": "770px",
+		"height": "462px",
+		"source": "https://trak.cs.hut.fi/static/OpenDSA/AV/Binary/btTravPostorderPRO.html",
+		"aplus-url": "https://trak.cs.hut.fi/jsav/exercise/16",
+		"name": "Post-order Traversal"
+	}, {
+		"description": "",
+		"parameters": {
+			"JOP-lang": ["en"],
+			"JXOP-code": ["", "none", "pseudo"]
+		},
+		"width": "770px",
+		"height": "462px",
+		"source": "https://trak.cs.hut.fi/static/OpenDSA/AV/Binary/btTravPreorderPRO.html",
+		"aplus-url": "https://trak.cs.hut.fi/jsav/exercise/17",
+		"name": "Pre-order Traversal"
+	}, {
+		"description": "",
+		"parameters": {
+			"JOP-lang": ["en"],
+			"JXOP-code": ["", "none", "pseudo"]
+		},
+		"width": "770px",
+		"height": "462px",
+		"source": "https://trak.cs.hut.fi/static/OpenDSA/AV/Binary/btTravInorderPRO.html",
+		"aplus-url": "https://trak.cs.hut.fi/jsav/exercise/18",
+		"name": "In-order Traversal"
+	}],
+	"name": "Tree Traversal"
+}, {
+	"exercises": [{
+		"description": "",
+		"parameters": {
+			"JOP-lang": ["en"],
+			"JXOP-code": ["", "none", "pseudo"]
+		},
+		"width": "840px",
+		"height": "725px",
+		"source": "https://trak.cs.hut.fi/static/OpenDSA/AV/Binary/heapbuildPRO.html",
+		"aplus-url": "https://trak.cs.hut.fi/jsav/exercise/11",
+		"name": "Buildheap"
+	}, {
+		"description": "",
+		"parameters": {
+			"JOP-lang": ["en"],
+			"JXOP-code": ["", "none", "pseudo"]
+		},
+		"width": "770px",
+		"height": "707px",
+		"source": "https://trak.cs.hut.fi/static/OpenDSA/AV/Binary/heapinsertPRO.html",
+		"aplus-url": "https://trak.cs.hut.fi/jsav/exercise/12",
+		"name": "Binaryheap Insert"
+	}, {
+		"description": "",
+		"parameters": {
+			"JOP-lang": ["en"],
+			"JXOP-code": ["", "none", "pseudo"]
+		},
+		"width": "770px",
+		"height": "1011px",
+		"source": "https://trak.cs.hut.fi/static/OpenDSA/AV/Binary/heapremovePRO.html",
+		"aplus-url": "https://trak.cs.hut.fi/jsav/exercise/13",
+		"name": "Binaryheap Delete"
+	}, {
+		"description": "",
+		"parameters": {
+			"JOP-lang": ["en"],
+			"JXOP-code": ["", "none", "pseudo"]
+		},
+		"width": "770px",
+		"height": "977px",
+		"source": "https://trak.cs.hut.fi/static/OpenDSA/AV/Sorting/heapsortPRO.html",
+		"aplus-url": "https://trak.cs.hut.fi/jsav/exercise/14",
+		"name": "Heapsort"
+	}],
+	"name": "Priority Queues"
+}, {
+	"exercises": [{
+		"description": "",
+		"parameters": {
+			"JOP-lang": ["en"],
+			"JXOP-code": ["", "none", "processing"]
+		},
+		"width": "770px",
+		"height": "794px",
+		"source": "https://trak.cs.hut.fi/static/OpenDSA/AV/Binary/BSTsearchPRO.html",
+		"aplus-url": "https://trak.cs.hut.fi/jsav/exercise/19",
+		"name": "Binary Search Tree - Search"
+	}, {
+		"description": "",
+		"parameters": {
+			"JOP-lang": ["en"],
+			"JXOP-code": ["", "none", "processing"]
+		},
+		"width": "770px",
+		"height": "794px",
+		"source": "https://trak.cs.hut.fi/static/OpenDSA/AV/Binary/BSTinsertPRO.html",
+		"aplus-url": "https://trak.cs.hut.fi/jsav/exercise/20",
+		"name": "Binary Search Tree - Insert"
+	}, {
+		"description": "",
+		"parameters": {
+			"JOP-lang": ["en"],
+			"JXOP-code": ["", "none", "processing"]
+		},
+		"width": "770px",
+		"height": "669px",
+		"source": "https://trak.cs.hut.fi/static/OpenDSA/AV/Binary/BSTremovePRO.html",
+		"aplus-url": "https://trak.cs.hut.fi/jsav/exercise/21",
+		"name": "Binary Search Tree - Remove"
+	}, {
+		"description": "",
+		"parameters": {
+			"JOP-lang": ["en", "fi"],
+			"JXOP-code": ["", "none", "english", "finnish"]
+		},
+		"width": "100%",
+		"height": "887px",
+		"source": "https://trak.cs.hut.fi/static/OpenDSA/AV/Development/digitalSearchTreePRO.html",
+		"aplus-url": "https://trak.cs.hut.fi/jsav/exercise/22",
+		"name": "Digital Search Tree"
+	}, {
+		"description": "",
+		"parameters": {
+			"JOP-lang": ["en", "fi"],
+			"JXOP-code": ["", "none", "english", "finnish"]
+		},
+		"width": "100%",
+		"height": "953px",
+		"source": "https://trak.cs.hut.fi/static/OpenDSA/AV/Development/radixTriePRO.html",
+		"aplus-url": "https://trak.cs.hut.fi/jsav/exercise/23",
+		"name": "Radix Trie"
+	}, {
+		"description": "",
+		"parameters": {
+			"JOP-lang": ["en", "fi"],
+			"JXOP-code": ["", "none", "pseudo"]
+		},
+		"width": "100%",
+		"height": "1065px",
+		"source": "https://trak.cs.hut.fi/static/OpenDSA/AV/Development/commonTriePRO.html",
+		"aplus-url": "https://trak.cs.hut.fi/jsav/exercise/24",
+		"name": "Common Trie"
+	}],
+	"name": "Dictionaries"
+}, {
+	"exercises": [{
+		"description": "",
+		"parameters": {
+			"JOP-lang": ["en", "fi"],
+			"diff": ["hard", "easy"],
+			"rotation": ["single", "double"],
+			"JXOP-code": ["", "none", "C"]
+		},
+		"width": "100%",
+		"height": "1593px",
+		"source": "https://trak.cs.hut.fi/static/OpenDSA/AV/Development/rotationPRO.html",
+		"aplus-url": "https://trak.cs.hut.fi/jsav/exercise/25",
+		"name": "Rotation"
+	}, {
+		"description": "",
+		"parameters": {
+			"JOP-lang": ["en"],
+			"JXOP-code": ["", "none", "english"]
+		},
+		"width": "100%",
+		"height": "916px",
+		"source": "https://trak.cs.hut.fi/static/OpenDSA/AV/Development/AVLinsertPRO.html",
+		"aplus-url": "https://trak.cs.hut.fi/jsav/exercise/26",
+		"name": "AVL tree Insertion"
+	}, {
+		"description": "",
+		"parameters": {
+			"JOP-lang": ["en"],
+			"JXOP-code": ["", "none", "english"]
+		},
+		"width": "100%",
+		"height": "621px",
+		"source": "https://trak.cs.hut.fi/static/OpenDSA/AV/Development/redBlackTreeColoring.html",
+		"aplus-url": "https://trak.cs.hut.fi/jsav/exercise/27",
+		"name": "Coloring Red-black Tree"
+	}, {
+		"description": "",
+		"parameters": {
+			"JOP-lang": ["en"],
+			"JXOP-code": ["", "none", "english"]
+		},
+		"width": "100%",
+		"height": "1167px",
+		"source": "https://trak.cs.hut.fi/static/OpenDSA/AV/Development/redBlackTreePRO.html",
+		"aplus-url": "https://trak.cs.hut.fi/jsav/exercise/28",
+		"name": "Red-black Tree Insertion"
+	}],
+	"name": "Balanced Search Trees"
+}, {
+	"exercises": [{
+		"description": "",
+		"parameters": {
+			"JOP-lang": ["en", "fi"],
+			"probing": ["quadratic", "linear"]
+		},
+		"width": "100%",
+		"height": "531px",
+		"source": "https://trak.cs.hut.fi/static/OpenDSA/AV/Development/rehashingPRO.html",
+		"aplus-url": "https://trak.cs.hut.fi/jsav/exercise/29",
+		"name": "Rehashing"
+	}, {
+		"description": "",
+		"parameters": {
+			"JOP-lang": ["en", "fi"],
+			"probing": ["linear", "quadratic", "double"]
+		},
+		"width": "100%",
+		"height": "618px",
+		"source": "https://trak.cs.hut.fi/static/OpenDSA/AV/Development/hashingPRO.html",
+		"aplus-url": "https://trak.cs.hut.fi/jsav/exercise/35",
+		"name": "Hashing"
+	}, {
+		"description": "",
+		"parameters": {
+			"JOP-lang": ["en", "fi"]
+		},
+		"width": "100%",
+		"height": "878px",
+		"source": "https://trak.cs.hut.fi/static/OpenDSA/AV/Development/openHashingPRO.html",
+		"aplus-url": "https://trak.cs.hut.fi/jsav/exercise/37",
+		"name": "Open Hashing"
+	}],
+	"name": "Hashing"
+}, {
+	"exercises": [{
+		"description": "",
+		"parameters": {
+			"JOP-lang": ["en"]
+		},
+		"width": "770px",
+		"height": "607px",
+		"source": "https://trak.cs.hut.fi/static/OpenDSA/AV/Development/graphDFSPE.html",
+		"aplus-url": "https://trak.cs.hut.fi/jsav/exercise/30",
+		"name": "Depth First Search"
+	}, {
+		"description": "",
+		"parameters": {
+			"JOP-lang": ["en"]
+		},
+		"width": "770px",
+		"height": "607px",
+		"source": "https://trak.cs.hut.fi/static/OpenDSA/AV/Development/graphBFSPE.html",
+		"aplus-url": "https://trak.cs.hut.fi/jsav/exercise/31",
+		"name": "Breadth First Search"
+	}, {
+		"description": "",
+		"parameters": {
+			"JOP-lang": ["en"]
+		},
+		"width": "770px",
+		"height": "607px",
+		"source": "https://trak.cs.hut.fi/static/OpenDSA/AV/Development/PrimAVPE.html",
+		"aplus-url": "https://trak.cs.hut.fi/jsav/exercise/32",
+		"name": "Prim's algorithm"
+	}, {
+		"description": "",
+		"parameters": {
+			"JOP-lang": ["en"]
+		},
+		"width": "770px",
+		"height": "607px",
+		"source": "https://trak.cs.hut.fi/static/OpenDSA/AV/Development/DijkstraPE.html",
+		"aplus-url": "https://trak.cs.hut.fi/jsav/exercise/33",
+		"name": "Djikstra's Algorithm"
+	}, {
+		"description": "",
+		"parameters": {
+			"JOP-lang": ["en"]
+		},
+		"width": "770px",
+		"height": "607px",
+		"source": "https://trak.cs.hut.fi/static/OpenDSA/AV/Development/KruskalPE.html",
+		"aplus-url": "https://trak.cs.hut.fi/jsav/exercise/34",
+		"name": "Kruskal's Algorithm"
+	}],
+	"name": "Graph Algorithms"
+}]

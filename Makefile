@@ -50,3 +50,60 @@ pull:
 	make -s -C JSAV
 	make -s min
 	cd Doc; make
+
+pullx: pull
+	make testX
+	@cp -fr /home/OpenDSAX/AV /home/OpenDSAX/xblocks/xblock-module/module/public/
+	@cp -fr /home/OpenDSAX/JSAV /home/OpenDSAX/xblocks/xblock-module/module/public/
+	@cp -fr /home/OpenDSAX/lib /home/OpenDSAX/xblocks/xblock-module/module/public/
+	@cp -fr /home/OpenDSAX/Books/testX/html/_static /home/OpenDSAX/xblocks/xblock-module/module/public/
+	@cp -fr /home/OpenDSAX/AV /home/OpenDSAX/xblocks/xblock-jsav/jsav/public/
+	@cp -fr /home/OpenDSAX/JSAV /home/OpenDSAX/xblocks/xblock-jsav/jsav/public/
+	@cp -fr /home/OpenDSAX/lib /home/OpenDSAX/xblocks/xblock-jsav/jsav/public/
+	@cp -fr /home/OpenDSAX/Books/testX/html/_static /home/OpenDSAX/xblocks/xblock-jsav/jsav/public/
+	@cp -fr /home/OpenDSAX/Books/testX/html /home/OpenDSAX/xblocks/xblock-content/content/public/
+
+restart-edxapp:
+	sudo /edx/bin/supervisorctl -c /edx/etc/supervisord.conf restart edxapp:
+	
+install-utils: xblock-utils restart-edxapp
+
+install-jsav: xblock-jsav restart-edxapp
+
+install-testjsav: xblock-testjsav restart-edxapp
+
+install-module: xblock-module restart-edxapp
+
+install-content: xblock-content restart-edxapp
+
+install-all: xblock-utils xblock-jsav xblock-testjsav xblock-module xblock-content restart-edxapp
+
+xblock-utils: 
+	rm -r /edx/app/edxapp/venvs/edxapp/lib/python2.7/site-packages/xblockutils
+	rm -r /edx/app/edxapp/venvs/edxapp/lib/python2.7/site-packages/xblock_utils-0.1a0-py2.7.egg-info
+	cd /edx/app/edxapp
+	sudo -H -u edxapp /edx/bin/pip.edxapp install /home/OpenDSAX/xblocks/xblock-utils/
+
+xblock-jsav: 
+	rm -r /edx/app/edxapp/venvs/edxapp/lib/python2.7/site-packages/jsav
+	rm -r /edx/app/edxapp/venvs/edxapp/lib/python2.7/site-packages/xblock_jsav-0.3-py2.7.egg-info
+	cd /edx/app/edxapp
+	sudo -H -u edxapp /edx/bin/pip.edxapp install /home/OpenDSAX/xblocks/xblock-jsav/
+
+xblock-testjsav: 
+	rm -r /edx/app/edxapp/venvs/edxapp/lib/python2.7/site-packages/testjsav
+	rm -r /edx/app/edxapp/venvs/edxapp/lib/python2.7/site-packages/testjsav_xblock-0.1-py2.7.egg-info
+	cd /edx/app/edxapp
+	sudo -H -u edxapp /edx/bin/pip.edxapp install /home/OpenDSAX/xblocks/xblock-testjsav/
+
+xblock-module: 
+	rm -r /edx/app/edxapp/venvs/edxapp/lib/python2.7/site-packages/module
+	rm -r /edx/app/edxapp/venvs/edxapp/lib/python2.7/site-packages/module_xblock-0.1-py2.7.egg-info
+	cd /edx/app/edxapp
+	sudo -H -u edxapp /edx/bin/pip.edxapp install /home/OpenDSAX/xblocks/xblock-module/
+
+xblock-content: 
+	rm -r /edx/app/edxapp/venvs/edxapp/lib/python2.7/site-packages/content
+	rm -r /edx/app/edxapp/venvs/edxapp/lib/python2.7/site-packages/content_xblock-0.1-py2.7.egg-info
+	cd /edx/app/edxapp
+	sudo -H -u edxapp /edx/bin/pip.edxapp install /home/OpenDSAX/xblocks/xblock-content/

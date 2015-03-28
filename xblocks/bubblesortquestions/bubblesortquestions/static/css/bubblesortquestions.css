@@ -1,0 +1,12 @@
+/* CSS for BubblesortQuestionsXBlock */
+
+.bubblesortquestions_block .nextQuestion {
+	border-radius: 10%;
+	width: 125px;
+	background-color: blue;
+	border: black;
+}
+
+.bubblesortquestions_block p {
+    cursor: pointer;
+}

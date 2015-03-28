@@ -1,0 +1,123 @@
+{
+	"pe": [{
+		"exercises": [{
+			"description": "Quick Sort",
+			"long_name": "Quick Sort",
+			"short_name": "quicksortPRO",
+			"problem_url": "/AV/Sorting/",
+			"js_resources": "",
+			"parameters": {
+				"JOP_lang": ["en", "fi"],
+				"JXOP_code": ["none", "python"],
+				"JXOP_fixmode": ["fix"],
+				"JXOP_feedback": ["continuous"]
+			},
+			"problem_width": "795",
+			"problem_height": "515",
+			"required": true,
+			"threshold": 0.75,
+			"showhide": "show",
+			"weight": 15
+		}],
+		"name": "Sorting"
+	}],
+	"av": [{
+		"exercises": [{
+			"description": "Quick Sort",
+			"long_name": "Quick Sort",
+			"short_name": "quicksortAV",
+			"problem_url": "/AV/Sorting/",
+			"js_resources": "",
+			"parameters": {
+				"JOP_lang": ["en", "fi"],
+				"JXOP_code": ["none", "python"],
+				"JXOP_fixmode": ["fix"],
+				"JXOP_feedback": ["continuous"]
+			},
+			"problem_width": "845",
+			"problem_height": "445",
+			"required": true,
+			"threshold": 0.75,
+			"showhide": "show",
+			"weight": 25
+		}, {
+			"description": "Quick Sort Decompose",
+			"long_name": "Quick Sort Decompose",
+			"short_name": "quicksortDecomposeAV",
+			"problem_url": "/AV/Sorting/",
+			"js_resources": "",
+			"parameters": {
+				"JOP_lang": ["en", "fi"],
+				"JXOP_code": ["none", "python"],
+				"JXOP_fixmode": ["fix"],
+				"JXOP_feedback": ["continuous"]
+			},
+			"problem_width": "815",
+			"problem_height": "780",
+			"required": true,
+			"threshold": 0.75,
+			"showhide": "show",
+			"weight": 26
+
+		}],
+		"name": "Sorting"
+	}],
+	"ss": [{
+		"exercises": [{
+			"description": "Quick Sort Slide Show",
+			"long_name": "Quick Sort",
+			"short_name": "quicksortCON",
+			"problem_url": "/AV/Sorting/",
+			"js_resources": "quicksortCODE.js",
+			"parameters": {
+				"JOP_lang": ["en", "fi"],
+				"JXOP_code": ["none", "python"],
+				"JXOP_fixmode": ["fix"],
+				"JXOP_feedback": ["continuous"]
+			},
+			"problem_width": "500",
+			"problem_height": "500",
+			"required": true,
+			"threshold": 0.75,
+			"showhide": "show",
+			"weight": 35
+		}, {
+			"description": "Quick Sort Slide Show #1",
+			"long_name": "Quick Sort #1",
+			"short_name": "quicksortCON1",
+			"problem_url": "/AV/Sorting/",
+			"js_resources": "quicksortCODE.js",
+			"parameters": {
+				"JOP_lang": ["en", "fi"],
+				"JXOP_code": ["none", "python"],
+				"JXOP_fixmode": ["fix"],
+				"JXOP_feedback": ["continuous"]
+			},
+			"problem_width": "500",
+			"problem_height": "500",
+			"required": true,
+			"threshold": 0.75,
+			"showhide": "show",
+			"weight": 36
+		}, {
+			"description": "Quick Sort Slide Show #2",
+			"long_name": "Quick Sort #2",
+			"short_name": "quicksortCON2",
+			"problem_url": "/AV/Sorting/",
+			"js_resources": "quicksortCODE.js",
+			"parameters": {
+				"JOP_lang": ["en", "fi"],
+				"JXOP_code": ["none", "python"],
+				"JXOP_fixmode": ["fix"],
+				"JXOP_feedback": ["continuous"]
+			},
+			"problem_width": "500",
+			"problem_height": "500",
+			"required": true,
+			"threshold": 0.75,
+			"showhide": "show",
+			"weight": 37
+		}],
+		"name": "Sorting"
+	}]
+}

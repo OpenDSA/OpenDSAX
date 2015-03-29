@@ -24,15 +24,8 @@ class BubblesortQuestionsXBlock(XBlock):
     """
     maxQuestionIndex should be how many questions we have - 1
     """
-    maxQuestionIndex = 3
-
-
-
-    # TO-DO: delete count, and define your own fields.
-    count = Integer(
-        default=0, scope=Scope.user_state,
-        help="A simple counter, to show something happening",
-    )
+    maxQuestionIndex = Integer(help="The highest index for questions", default = 3, scope =Scope.user_state)
+    currentQuestionIndex = Integer(help="What question we are on", default = 0, scope = Scope.user_state)
 
     def resource_string(self, path):
         """Handy helper for getting resources from our kit."""
@@ -51,8 +44,8 @@ class BubblesortQuestionsXBlock(XBlock):
         We can declare an array of html strings, and get an index and random.
         Should we inject the header/score html code prior to the random question?
         """
-
-        questionString = self.questionPool[random.randint(0,self.maxQuestionIndex)]
+        currentQuestionIndex = random.randint(0,self.maxQuestionIndex)
+        questionString = self.questionPool[self.currentQuestionIndex]
 
         html = self.resource_string(questionString)
         frag = Fragment(html.format(self=self))
@@ -72,8 +65,14 @@ class BubblesortQuestionsXBlock(XBlock):
         An example handler, which increments the data.
         """
         # Just to show data coming in...
+        tempInt = random.randint(0,self.maxQuestionIndex)
+        while tempInt == self.currentQuestionIndex:
+            tempInt = random.randint(0,self.maxQuestionIndex)
 
-        questionString = self.questionPool[random.randint(0,self.maxQuestionIndex)]
+        self.currentQuestionIndex = tempInt
+
+        questionString = self.questionPool[self.currentQuestionIndex]
+
         newHTML = self.resource_string(questionString)
         if data['question'] == 'correct':
             self.score = self.score + 1

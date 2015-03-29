@@ -13,12 +13,12 @@ var handlerUrl = runtime.handlerUrl(element, 'increment_score');
         });
     }
 
-var question;
-var a = 0;
-var questions = [];
-var answers = [];
-var submitButton;
-var nextQuestionButton;
+    var question;
+    var a = 0;
+    var questions = [];
+    var answers = [];
+    var submitButton;
+    var nextQuestionButton;
 
     function checkQuestion() {
 
@@ -47,16 +47,14 @@ var nextQuestionButton;
 
     $(function() {
         
-    $('button', element).click(function(eventObject) {
-        checkQuestion();
-    });
+        $('button', element).click(function(eventObject) {
+            checkQuestion();
+        });
 
 
         submitButton = document.getElementById("submit");
         question = document.getElementById("question");
         nextQuestionButton = document.getElementById("nextQuestion");
-        //nextQuestionButton.onclick = function(){ updateQuestion() };
-        //submitButton.onclick = function(){ submitAnswer() };
     });
 
 }

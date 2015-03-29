@@ -10,6 +10,8 @@ The simplest way to do this is to set up the SDK.
 Basic instructions for setting up the SDK:
 (see https://github.com/edx/xblock-sdk).
 
+Linux
+-----
 #. Install Python 2.7. ::
 
 	$ sudo apt-get install python
@@ -49,7 +51,7 @@ Basic instructions for setting up the SDK:
 	$ cd ~/dev
 	$ git clone https://github.com/edx/xblock-sdk.git
 
-#. Install your version of xblock-sdk. ::
+#. Install your version of xblock-sdk. (you need to run these commands in sdk vitrualenv) ::
 
    $ cd ~/dev/xblock-sdk
    $ make install
@@ -71,7 +73,7 @@ Basic instructions for setting up the SDK:
 	   :align: center
 
 
-#. Start creating your new xblock. (you need to run these commands in sdk vitrualenv). ::
+#. Start creating your new xblock. ::
 
 	$ cd ~/dev
 	$ mkdir test
@@ -101,3 +103,78 @@ Basic instructions for setting up the SDK:
    :alt: alternate text
    :align: center
 
+Window
+------
+#. Install git. (see http://git-scm.com/download/win)
+
+#. Install Python 2.7. (see https://www.python.org/downloads/)
+
+#. Install pip. (see https://pip.pypa.io/en/latest/installing.html)
+
+#. Install virtualenv. ::
+   
+	C:\>pip install virtualenv
+
+#. Create the following two directories ::
+
+	C:\>mkdir envs
+	C:\>mkdir dev
+
+#. Create and activate a new virtualenv. ::
+
+	C:\>cd envs
+	C:\envs>virtualenv sdk
+	C:\envs>sdk\Scripts\activate
+	(sdk) C:\envs>
+
+#. Clone repo: https://github.com/edx/xblock-sdk. ::
+
+	C:\>cd dev
+	C:\dev>git clone https://github.com/edx/xblock-sdk.git
+
+#. Install your version of xblock-sdk. (you need to run these commands in sdk vitrualenv) ::
+
+	(sdk) C:\>cd dev\xblock-sdk
+	(sdk) C:\dev\xblock-sdk>make install
+
+#. Run the django development server ::
+
+	(sdk) C:\dev\xblock-sdk>python manage.py runserver
+
+#. You should be able to visit http://127.0.0.1:8000/ and see something like this:
+
+	.. image:: _static/workbench_home.png
+	   :width: 752px
+	   :height: 427px
+	   :alt: alternate text
+	   :align: center
+
+
+#. Start creating your new xblock. ::
+
+	C:\>cd dev
+	C:\dev>mkdir test
+	C:\dev>cd test
+	C:\dev\test>python c:\dev\xblock-sdk\script\startnew.py
+	short name: test
+	Class name: TestXBlock
+
+#. You will need to register your xblock (entry point) in order to be able to see it in workbench (sdk). 
+	create the file requirements.txt in test folder to allow to register the package ::
+	
+	-e .
+
+#. Then run pip to register the test xblock package and allow XBlock to find the entry point (in sdk virtualenv) ::
+
+	(sdk) C:\>cd dev\test
+	(sdk) C:\dev\test>pip install -r requiements.txt
+
+#. Now (re)start the workbench server.
+   
+#. You should be able to visit http://127.0.0.1:8000/ and see your new xblock TestXBlock in the list
+
+.. image:: _static/workbench_test_XBlock.png
+   :width: 650px
+   :height: 488px
+   :alt: alternate text
+   :align: center

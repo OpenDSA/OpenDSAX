@@ -50,11 +50,6 @@ var handlerUrl = runtime.handlerUrl(element, 'increment_score');
         $('button', element).click(function(eventObject) {
             checkQuestion();
         });
-
-
-        submitButton = document.getElementById("submit");
-        question = document.getElementById("question");
-        nextQuestionButton = document.getElementById("nextQuestion");
     });
 
 }

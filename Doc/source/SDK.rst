@@ -177,4 +177,4 @@ Window
    :width: 650px
    :height: 488px
    :alt: alternate text
-   :align: center
+   :align: center 

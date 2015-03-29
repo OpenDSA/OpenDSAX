@@ -53,8 +53,8 @@ Linux
 
 #. Install your version of xblock-sdk. (you need to run these commands in sdk vitrualenv) ::
 
-   $ cd ~/dev/xblock-sdk
-   $ make install
+   (sdk) $ cd ~/dev/xblock-sdk
+   (sdk) $ make install
 
 #. If you encounterd a problem with libxml, you may need to install: ::
 
@@ -62,7 +62,7 @@ Linux
 
 #. Run the django development server ::
 
-	$ python manage.py runserver
+	(sdk) $ python manage.py runserver
 
 #. You should be able to visit http://127.0.0.1:8000/ and see something like this:
 
@@ -90,8 +90,8 @@ Linux
 
 #. Then run pip to register the test xblock package and allow XBlock to find the entry point (in sdk virtualenv) ::
 
-	$ cd ~/dev/test
-	$ pip install -r requiements.txt
+	(sdk) $ cd ~/dev/test
+	(sdk) $ pip install -r requiements.txt
 
 #. Now (re)start the workbench server.
    

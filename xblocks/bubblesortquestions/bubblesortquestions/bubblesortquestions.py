@@ -15,16 +15,17 @@ class BubblesortQuestionsXBlock(XBlock):
 
     # Fields are defined on the class.  You can access them in your code as
     # self.<fieldname>.
+    # maxQuestionIndex should be how many questions we have - 1
+    maxQuestionIndex = Integer(help="The highest index for questions", default = 3, scope =Scope.user_state)
+    # maxPoints should be changed to whatever the maximum points achievable are for this exercise
+    maxPoints = Integer(help="The max points achievable for this exercise", default = 5, scope=Scope.user_state)
+    
     score = Integer(help="Score for the exercise", default = 0, scope=Scope.user_state)
 
     """
     Fill in the question html files here (urls)
     """
     questionPool = ["static/html/bubblesort_Question1.html", "static/html/bubblesort_Question2.html", "static/html/bubblesort_Question3.html", "static/html/bubblesort_Question4.html"]
-    """
-    maxQuestionIndex should be how many questions we have - 1
-    """
-    maxQuestionIndex = Integer(help="The highest index for questions", default = 3, scope =Scope.user_state)
     currentQuestionIndex = Integer(help="What question we are on", default = 0, scope = Scope.user_state)
 
     def resource_string(self, path):
@@ -34,10 +35,6 @@ class BubblesortQuestionsXBlock(XBlock):
 
     # TO-DO: change this view to display your data your own way.
     def student_view(self, context=None):
-        """
-        The primary view of the BubblesortQuestionsXBlock, shown to students
-        when viewing courses.
-        """
 
         """
         Here we need to get a random file from the pool of html strings.
@@ -60,22 +57,19 @@ class BubblesortQuestionsXBlock(XBlock):
     # TO-DO: change this handler to perform your own actions.  You may need more
     # than one handler, or you may not need any handlers at all.
     @XBlock.json_handler
-    def increment_score(self, data, suffix=''):
-        """
-        An example handler, which increments the data.
-        """
-        # Just to show data coming in...
+    def getNewQuestion(self, data, suffix=''):
+
         tempInt = random.randint(0,self.maxQuestionIndex)
         while tempInt == self.currentQuestionIndex:
             tempInt = random.randint(0,self.maxQuestionIndex)
 
         self.currentQuestionIndex = tempInt
-
         questionString = self.questionPool[self.currentQuestionIndex]
 
         newHTML = self.resource_string(questionString)
-        if data['question'] == 'correct':
-            self.score = self.score + 1
+        if data['question'] == 'correct' and data['flag'] == 'false':
+            if self.score < self.maxPoints:
+                self.score = self.score + 1
         return {"html": newHTML, "score": self.score}
 
     # TO-DO: change this to create the scenarios you'd like to see in the

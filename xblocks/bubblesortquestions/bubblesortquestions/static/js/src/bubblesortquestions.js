@@ -1,40 +1,42 @@
 /* Javascript for BubblesortQuestionsXBlock. */
 function BubblesortQuestionsXBlock(runtime, element) {
 
-var handlerUrl = runtime.handlerUrl(element, 'increment_score');
+//Change this to whatever you need for the exercise
+var maxScore = 5;
 
-    function updateCount(result) {
-        
-        console.dir(result);
+
+var handlerUrl = runtime.handlerUrl(element, 'getNewQuestion');
+var flag = "false";
+    function updateQuestion(result) {
         $('.bubblesortquestions_block', element).html(result.html);
+        $('#maxScore').text(maxScore);
+        flag = "false";
         $('.score', element).text(result.score);
         $('button', element).click(function(eventObject) {           
             checkQuestion();
         });
     }
 
-    var question;
-    var a = 0;
-    var questions = [];
-    var answers = [];
-    var submitButton;
-    var nextQuestionButton;
-
+    //Checks to see if the question was answered correctly. Will fetch a new question upon correct answer
     function checkQuestion() {
 
         var selected = $("#solution:checked");
 
+        //Was answer right?
         if (selected.val())
         {
+            //TODO: Have two button-process for correct answer choice
                 $.ajax({
                 type: "POST",
                 url: handlerUrl,
-                data: JSON.stringify({"question": "correct"}),
-                success: updateCount
+                data: JSON.stringify({"question": "correct", "flag": flag}),
+                success: updateQuestion
             });
         }
         else
         {
+            flag = "true";
+            //TODO: style for the shaking button
             alert('incorrect answer');
         }
     }
@@ -43,10 +45,9 @@ var handlerUrl = runtime.handlerUrl(element, 'increment_score');
 
     }
 
-
-
+    //Gets executed once upon first question load
     $(function() {
-        
+        $('#maxScore').text(maxScore);
         $('button', element).click(function(eventObject) {
             checkQuestion();
         });

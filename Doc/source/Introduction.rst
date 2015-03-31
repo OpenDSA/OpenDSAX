@@ -57,7 +57,7 @@ things out.
 
 #. Point your browser to `http://opendsax.cc.vt.edu:18010 <http://opendsax.cc.vt.edu:18010>`_.
 
-#. Register your account and login.
+#. Register for new account and login.
 
 #. Create a new course. Update course Schedule & Details and Grading policy.
 
@@ -87,7 +87,7 @@ things out.
         :alt: alternate text
         :align: center
 
-#. When you click the advanced button a new options will appear JSAV-Based Materials, OpenDSA Content and OpenDSA Module which will allow you to add OoenDSA JSAV Materials, Contents and Modules to your courseware.
+#. When you click the advanced button the following options will appear: JSAV-Based Materials, OpenDSA Content and OpenDSA Module which will allow you to add OpenDSA JSAV Materials, Contents and Modules to your courseware.
    
     .. image:: _static/studio_course_unit_xblocks.png
         :width: 997px

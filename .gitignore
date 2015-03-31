@@ -22,6 +22,9 @@ Books
 # Minified JS and CSS files
 lib/*-min.*
 
+#Ignore live site directories and files that shouldn't be in the repository
+.htaccess
+
 # Distribution / packaging
 .Python
 *.egg-info/

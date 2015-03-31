@@ -12,8 +12,62 @@
 				"JXOP_fixmode": ["fix"],
 				"JXOP_feedback": ["continuous"]
 			},
-			"problem_width": "795",
-			"problem_height": "515",
+			"problem_width": "825",
+			"problem_height": "600",
+			"required": true,
+			"threshold": 0.75,
+			"showhide": "show",
+			"weight": 15
+		}, {
+			"description": "Shellsort",
+			"long_name": "Shellsort",
+			"short_name": "shellsortPRO",
+			"problem_url": "/AV/Sorting/",
+			"js_resources": "",
+			"parameters": {
+				"JOP_lang": ["en", "fi"],
+				"JXOP_code": ["none", "python"],
+				"JXOP_fixmode": ["fix"],
+				"JXOP_feedback": ["continuous"]
+			},
+			"problem_width": "825",
+			"problem_height": "600",
+			"required": true,
+			"threshold": 0.75,
+			"showhide": "show",
+			"weight": 15
+		}, {
+			"description": "Heapsort Proficiency Exercise",
+			"long_name": "Heapsort Proficiency Exercise",
+			"short_name": "heapsortPRO",
+			"problem_url": "/AV/Sorting/",
+			"js_resources": "",
+			"parameters": {
+				"JOP_lang": ["en", "fi"],
+				"JXOP_code": ["none", "python"],
+				"JXOP_fixmode": ["fix"],
+				"JXOP_feedback": ["continuous"]
+			},
+			"problem_width": "825",
+			"problem_height": "600",
+			"required": true,
+			"threshold": 0.75,
+			"showhide": "show",
+			"weight": 15
+		}, {
+			"description": "Mergesort Proficiency Exercise",
+			"long_name": "Mergesort Proficiency Exercise",
+			"short_name": "mergesortPRO",
+			"problem_url": "/AV/Sorting/",
+			"js_resources": "",
+			"parameters": {
+				"JOP_lang": ["en", "fi"],
+				"JXOP_code": ["none", "python"],
+				"JXOP_fixmode": ["fix"],
+				"JXOP_feedback": ["continuous"]
+			},
+			"problem_width": "825",
+			"problem_height": "650",
 			"required": true,
 			"threshold": 0.75,
 			"showhide": "show",
@@ -23,8 +77,8 @@
 	}],
 	"av": [{
 		"exercises": [{
-			"description": "Quick Sort",
-			"long_name": "Quick Sort",
+			"description": "Quick Sort Visualization",
+			"long_name": "Quick Sort Visualization",
 			"short_name": "quicksortAV",
 			"problem_url": "/AV/Sorting/",
 			"js_resources": "",
@@ -41,9 +95,123 @@
 			"showhide": "show",
 			"weight": 25
 		}, {
-			"description": "Quick Sort Decompose",
-			"long_name": "Quick Sort Decompose",
-			"short_name": "quicksortDecomposeAV",
+			"description": "Insertion Sort Visualization",
+			"long_name": "Insertion Sort Visualization",
+			"short_name": "insertionsortAV",
+			"problem_url": "/AV/Sorting/",
+			"js_resources": "",
+			"parameters": {
+				"JOP_lang": ["en", "fi"],
+				"JXOP_code": ["none", "python"],
+				"JXOP_fixmode": ["fix"],
+				"JXOP_feedback": ["continuous"]
+			},
+			"problem_width": "815",
+			"problem_height": "780",
+			"required": true,
+			"threshold": 0.75,
+			"showhide": "show",
+			"weight": 26
+
+		}, {
+			"description": "Bubble Sort Visualization",
+			"long_name": "Bubble Sort Visualization",
+			"short_name": "bubblesortAV",
+			"problem_url": "/AV/Sorting/",
+			"js_resources": "",
+			"parameters": {
+				"JOP_lang": ["en", "fi"],
+				"JXOP_code": ["none", "python"],
+				"JXOP_fixmode": ["fix"],
+				"JXOP_feedback": ["continuous"]
+			},
+			"problem_width": "815",
+			"problem_height": "780",
+			"required": true,
+			"threshold": 0.75,
+			"showhide": "show",
+			"weight": 26
+
+		}, {
+			"description": "Selection Sort Visualization",
+			"long_name": "Selection Sort Visualization",
+			"short_name": "selectionsortAV",
+			"problem_url": "/AV/Sorting/",
+			"js_resources": "",
+			"parameters": {
+				"JOP_lang": ["en", "fi"],
+				"JXOP_code": ["none", "python"],
+				"JXOP_fixmode": ["fix"],
+				"JXOP_feedback": ["continuous"]
+			},
+			"problem_width": "815",
+			"problem_height": "780",
+			"required": true,
+			"threshold": 0.75,
+			"showhide": "show",
+			"weight": 26
+
+		}, {
+			"description": "Shellsort Visualization",
+			"long_name": "Shellsort Visualization",
+			"short_name": "shellsortAV",
+			"problem_url": "/AV/Sorting/",
+			"js_resources": "",
+			"parameters": {
+				"JOP_lang": ["en", "fi"],
+				"JXOP_code": ["none", "python"],
+				"JXOP_fixmode": ["fix"],
+				"JXOP_feedback": ["continuous"]
+			},
+			"problem_width": "815",
+			"problem_height": "780",
+			"required": true,
+			"threshold": 0.75,
+			"showhide": "show",
+			"weight": 26
+
+		}, {
+			"description": "Mergesort Visualization",
+			"long_name": "Mergesort Visualization",
+			"short_name": "mergesortAV",
+			"problem_url": "/AV/Sorting/",
+			"js_resources": "",
+			"parameters": {
+				"JOP_lang": ["en", "fi"],
+				"JXOP_code": ["none", "python"],
+				"JXOP_fixmode": ["fix"],
+				"JXOP_feedback": ["continuous"]
+			},
+			"problem_width": "815",
+			"problem_height": "780",
+			"required": true,
+			"threshold": 0.75,
+			"showhide": "show",
+			"weight": 26
+
+		}, {
+			"description": "Radix Sort Linked Visualization",
+			"long_name": "Radix Sort Linked Visualization",
+			"short_name": "radixLinkAV",
+			"problem_url": "/AV/Sorting/",
+			"js_resources": "",
+			"parameters": {
+				"JOP_lang": ["en", "fi"],
+				"JXOP_code": ["none", "python"],
+				"JXOP_fixmode": ["fix"],
+				"JXOP_feedback": ["continuous"]
+			},
+			"problem_width": "880",
+			"problem_height": "780",
+			"required": true,
+			"threshold": 0.75,
+			"showhide": "show",
+			"weight": 26
+
+		}, {
+			"description": "Radix Sort Array Visualization",
+			"long_name": "Radix Sort Array Visualization",
+			"short_name": "radixArrayAV",
 			"problem_url": "/AV/Sorting/",
 			"js_resources": "",
 			"parameters": {
@@ -82,9 +250,9 @@
 			"showhide": "show",
 			"weight": 35
 		}, {
-			"description": "Quick Sort Slide Show #1",
-			"long_name": "Quick Sort #1",
-			"short_name": "quicksortCON1",
+			"description": "Insertion Sort Slideshow 1",
+			"long_name": "Insertion Sort Slideshow 1",
+			"short_name": "insertionsortS1CON",
 			"problem_url": "/AV/Sorting/",
 			"js_resources": "quicksortCODE.js",
 			"parameters": {
@@ -98,11 +266,11 @@
 			"required": true,
 			"threshold": 0.75,
 			"showhide": "show",
-			"weight": 36
+			"weight": 35
 		}, {
-			"description": "Quick Sort Slide Show #2",
-			"long_name": "Quick Sort #2",
-			"short_name": "quicksortCON2",
+			"description": "Insertion Sort Slideshow 2",
+			"long_name": "Insertion Sort Slideshow 2",
+			"short_name": "insertionsortS2CON",
 			"problem_url": "/AV/Sorting/",
 			"js_resources": "quicksortCODE.js",
 			"parameters": {
@@ -116,7 +284,25 @@
 			"required": true,
 			"threshold": 0.75,
 			"showhide": "show",
-			"weight": 37
+			"weight": 35
+		}, {
+			"description": "Insertion Sort Slideshow 3",
+			"long_name": "Insertion Sort Slideshow 3",
+			"short_name": "insertionsortS3CON",
+			"problem_url": "/AV/Sorting/",
+			"js_resources": "quicksortCODE.js",
+			"parameters": {
+				"JOP_lang": ["en", "fi"],
+				"JXOP_code": ["none", "python"],
+				"JXOP_fixmode": ["fix"],
+				"JXOP_feedback": ["continuous"]
+			},
+			"problem_width": "500",
+			"problem_height": "500",
+			"required": true,
+			"threshold": 0.75,
+			"showhide": "show",
+			"weight": 35
 		}],
 		"name": "Sorting"
 	}]

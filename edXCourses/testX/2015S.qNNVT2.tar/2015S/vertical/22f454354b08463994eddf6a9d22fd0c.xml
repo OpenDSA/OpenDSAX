@@ -1,0 +1,10 @@
+<vertical display_name="Quick Sort">
+  <module url_name="294cd6c767764f34895c5ecf8d1d7e60" xblock-family="xblock.v1">
+    <content url_name="7e5a120dfd1e4d80b06e1356ac8f9da4" xblock-family="xblock.v1" long_name="OpenDSA Navigation Bar" contnet_type="topnav"/>
+    <content url_name="63e1f88fedbd43d1b6fdf371a9cabd5f" xblock-family="xblock.v1" long_name="Quick Sort OpenDSA Content"/>
+    <jsav url_name="b88113cad491420a85d4d416492d8d1b" xblock-family="xblock.v1" problem_width="500" JXOP_code="none" long_name="Quick Sort Slide Show" threshold="0.75" JOP_lang="en" showhide="show" short_name="quicksortCON" js_resources="quicksortCODE.js" weight="35" JXOP_feedback="continuous" JXOP_fixmode="fix" problem_url="/AV/Sorting/" display_name="Quick Sort" required="True" problem_height="500"/>
+    <jsav url_name="4432adcf884f4584ae91b2b56e27f7bb" xblock-family="xblock.v1" problem_width="845" JXOP_code="none" long_name="Quick Sort" threshold="0.75" JOP_lang="en" showhide="show" short_name="quicksortAV" js_resources="" weight="0" JXOP_feedback="continuous" JXOP_fixmode="fix" problem_type="av" problem_url="/AV/Sorting/" display_name="Quick Sort" required="True" problem_height="445"/>
+    <jsav url_name="57b5cccb89e848909041df9ff2d2e37f" xblock-family="xblock.v1" problem_width="795" JXOP_code="none" long_name="Quick Sort Proficiency Exercise" threshold="0.75" JOP_lang="en" showhide="show" short_name="quicksortPRO" js_resources="" weight="15" JXOP_feedback="continuous" JXOP_fixmode="fix" problem_type="pe" problem_url="/AV/Sorting/" display_name="Quick Sort Proficiency Exercise" required="True" problem_height="515"/>
+    <jsav url_name="275bd8a8061f4208982e181cf2546ecb" xblock-family="xblock.v1" problem_width="795" JXOP_code="none" long_name="Quick Sort" threshold="0.75" JOP_lang="en" showhide="show" short_name="quicksortPRO" js_resources="" weight="15" JXOP_feedback="continuous" JXOP_fixmode="fix" problem_type="pe" problem_url="/AV/Sorting/" display_name="Quick Sort" required="True" problem_height="515"/>
+  </module>
+</vertical>

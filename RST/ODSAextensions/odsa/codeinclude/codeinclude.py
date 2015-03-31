@@ -161,7 +161,7 @@ class codeinclude(Directive):
         node_list.append(code_nodes[node_num])
         node_num += 1
 
-    return node_list
+    return node_list + [nodes.raw('', 'ELLIE_CODEINCLUDE', format='edx')]
 
 
   def create_node(self, filename, rel_filename, lang):

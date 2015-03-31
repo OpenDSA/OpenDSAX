@@ -44,7 +44,7 @@ from optparse import OptionParser
 from config_templates import *
 from ODSA_RST_Module import ODSA_RST_Module
 from ODSA_Config import ODSA_Config
-from postprocessor import update_TOC, update_TermDef
+from postprocessor import update_TOC, update_TermDef, make_edx
 
 # List of exercises encountered in RST files that do not appear in the configuration file
 missing_exercises = []
@@ -311,7 +311,6 @@ def initialize_conf_py_options(config, slides, edx):
   options['exercises_root_dir'] = config.exercises_root_dir
   # The relative path between the ebook output directory (where the HTML files are generated) and the root ODSA directory
   options['eb2root'] = config.rel_build_to_odsa_path
-  config.rel_book_output_path = 'oxl/' if edx else config.rel_book_output_path
   options['rel_book_output_path'] = config.rel_book_output_path
   options['slides_lib'] = 'hieroglyph' if slides else ''
 
@@ -328,7 +327,7 @@ def configure(config_file_path, options):
   print "Configuring OpenDSA, using " + config_file_path
 
   # Load and validate the configuration
-  config = ODSA_Config(config_file_path)
+  config = ODSA_Config(config_file_path, to_edx=edx)
 
   # Delete everything in the book's HTML directory, otherwise the post-processor can sometimes append chapter numbers to the existing HTML files, making the numbering incorrect
   html_dir = config.book_dir + config.rel_book_output_path
@@ -408,8 +407,6 @@ def configure(config_file_path, options):
 
   if slides:
     proc = subprocess.Popen(['make', '-C', config.book_dir, 'slides'], stdout=subprocess.PIPE)
-  elif edx:
-    proc = subprocess.Popen(['make', '-C', config.book_dir, 'edx'], stdout=subprocess.PIPE)
   else:
     proc = subprocess.Popen(['make', '-C', config.book_dir], stdout=subprocess.PIPE)
   for line in iter(proc.stdout.readline,''):
@@ -418,13 +415,13 @@ def configure(config_file_path, options):
   # Calls the postprocessor to update chapter, section, and module numbers, and glossary terms definition
   update_TOC(config.book_src_dir, config.book_dir + config.rel_book_output_path, module_chap_map)
   if 'Glossary' in processed_modules:
-    extension = 'xml' if edx else 'html'
+    extension = 'html'
     update_TermDef(config.book_dir + config.rel_book_output_path + 'Glossary.' + extension, cmap_map['concepts'])
 
     # Create the concept map definition file in _static html directory
-    if not edx:
-      with codecs.open(config.book_dir + 'html/_static/GraphDefs.json', 'w', 'utf-8') as graph_defs_file:
-        json.dump(cmap_map, graph_defs_file)
+    with codecs.open(config.book_dir + 'html/_static/GraphDefs.json', 'w', 'utf-8') as graph_defs_file:
+      json.dump(cmap_map, graph_defs_file)
+  make_edx(config.book_dir + config.rel_book_output_path)
 
 # Code to execute when run as a standalone program
 if __name__ == "__main__":

@@ -1,0 +1,9 @@
+<vertical display_name="Unit" parent_url="i4x://VirginiaTech/CS6604/sequential/435a500a3c314c909abc2ccf88674a70" index_in_children_list="0">
+  <module url_name="b7c126bd8e824feaa5595172a039bac2" xblock-family="xblock.v1" display_name="67">
+    <jsav url_name="1d3b39a3ae4e4a72b0d21fe18abfc93b" xblock-family="xblock.v1" problem_width="825" JXOP_code="none" long_name="Shellsort" threshold="0.75" JOP_lang="en" showhide="show" short_name="shellsortPRO" js_resources="" weight="3" JXOP_feedback="continuous" JXOP_fixmode="fix" problem_url="/AV/Sorting/" display_name="Shellsort" required="True" problem_height="600"/>
+    <jsav url_name="d659e46c0a9a4148bef6133aeb7db6ad" xblock-family="xblock.v1" problem_width="880" JXOP_code="none" long_name="Radix Sort Linked Visualization" threshold="0.75" JOP_lang="en" showhide="show" short_name="radixLinkAV" js_resources="" weight="26" JXOP_feedback="continuous" JXOP_fixmode="fix" problem_type="av" problem_url="/AV/Sorting/" display_name="Radix Sort Linked Visualization" required="True" problem_height="780"/>
+  </module>
+  <module url_name="042eadffeed44337a35414df8546bc4e" xblock-family="xblock.v1">
+    <jsav url_name="e9514c252c084a0abbba5ba887d38a72" xblock-family="xblock.v1" problem_width="500" JXOP_code="none" long_name="Quick Sort" threshold="0.75" JOP_lang="en" showhide="show" short_name="quicksortCON" js_resources="quicksortCODE.js" weight="100" JXOP_feedback="continuous" JXOP_fixmode="fix" problem_type="ss" problem_url="/AV/Sorting/" display_name="Quick Sort" required="True" problem_height="500"/>
+  </module>
+</vertical>

@@ -170,6 +170,51 @@ def update_TermDef(glossary_file, terms_dict):
         terms_dict[term] = str(term_def)
         i-= 1
     i += 1
+    
+def update_edx_file(path):
+  # Read contents of module HTML file
+  with open(path, 'r') as html_file:
+    html = html_file.read()
+  
+  # Strip out the script, style, link, and meta tags
+  mod_name = os.path.splitext(os.path.basename(path))[0]
+
+  PATTERNS = {'Scripts': re.compile('<script(.*?)>(.*?)</script>', re.DOTALL),
+              'Links': re.compile('<link(.*?)/>', re.DOTALL),
+              'Styles': re.compile('<style(.*?)>(.*?)</style>', re.DOTALL)}
+  print mod_name
+  for name, pattern in PATTERNS.items():
+    print "\tRemoving ", name
+    html = re.sub(pattern, '', html)
+  
+  import bs4 as bs
+  needle = bs.BeautifulSoup(html).find('div', class_='section').find_all()
+  if needle:
+    lines = [n for n in needle]
+    chunked_html_files = []
+    for line in lines:
+      if line.name == 'div' and 'data-type' in line.attrs and line['data-type'] == 'ss':
+        print "FOUND A Slideshow"
+        chunked_html_files = []
+      elif line.name == 'div' and 'data-type' in line.attrs and line['data-type'] == 'pe':
+        print "FOUND An exercise"
+        chunked_html_files = []
+      else:
+        chunked_html_files.append(line)
+    html = [n.prettify().encode('utf-8') for n in needle]
+  else:
+    print "Failure"
+    html = bs.BeautifulSoup(html).body.prettify()
+  with open(path, 'wb') as html_file: html_file.writelines(html)
+    
+def make_edx(dest_dir):
+  # Iterate through all of the existing files
+  ignore_files = ('index.html', 'Gradebook.html', 'search.html', 
+                  'genindex.html', 'RegisterBook.html', 'Bibliography.html')
+  html_files = [os.path.join(dest_dir, path) for path in os.listdir(dest_dir)
+                    if path.endswith('.html') and path not in ignore_files]
+  for file_path in html_files:
+    update_edx_file(file_path)
 
 def main(argv):
   if len(argv) != 3:

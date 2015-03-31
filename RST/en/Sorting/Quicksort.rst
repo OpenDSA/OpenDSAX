@@ -146,8 +146,8 @@ Function ``partition`` returns the first index of the right
 partition (the place where ``left`` ends at) so that the subarray
 bound for the recursive calls to ``qsort`` can be determined.
 
-.. .. inlineav:: quicksortCON ss
-..    :output: show
+.. inlineav:: quicksortCON ss
+   :output: show
 
 
 .. _PartitionFig:
@@ -172,12 +172,12 @@ match the recursion tree.
 In reality, there is only a single array involved (as you will see in
 the proficiency exercise that follows the visualization).
 
-.. .. avembed:: AV/Sorting/quicksortAV.html ss
+.. avembed:: AV/Sorting/quicksortAV.html ss
 
 Here is a complete proficiency exercise to see how well you understand
 Quicksort.
 
-.. .. avembed:: AV/Sorting/quicksortPRO.html pe
+.. avembed:: AV/Sorting/quicksortPRO.html pe
 
 To analyze Quicksort, we first analyze the ``findpivot`` and
 ``partition`` functions when operating on a subarray of length

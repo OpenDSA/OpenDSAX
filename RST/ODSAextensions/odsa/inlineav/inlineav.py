@@ -193,7 +193,8 @@ class inlineav(Directive):
       return [avss_node]
     else:
       res = SLIDESHOW % self.options
-      return [nodes.raw('', res, format='html')]
+      return [nodes.raw('', res, format='html'),
+              nodes.raw('', "ELLIE_INLINE_AV", format='edx')]
 
 
 source = """\

@@ -455,7 +455,7 @@ class ODSA_Config:
   def __setitem__(self, key, value):
     self.__dict__[key] = value
 
-  def __init__(self, config_file_path):
+  def __init__(self, config_file_path, to_edx=False):
     """Initializes an ODSA_Config object by reading in the JSON config file, setting default values, and validating the configuration"""
     # Throw an error if the specified config files doesn't exist
     if not os.path.exists(config_file_path):
@@ -536,8 +536,12 @@ class ODSA_Config:
     # The directory from which Sphinx will read the RST files
     self.book_src_dir = self.book_dir + 'source/'
 
-    # The directory within the book directory where Sphinx will write the HTML files
-    self.rel_book_output_path = 'html/'
+    if to_edx:
+        # The directory within the book directory where Sphinx will write the HTML files
+        self.rel_book_output_path = 'oxl/'
+    else:
+        # The directory within the book directory where Sphinx will write the HTML files
+        self.rel_book_output_path = 'html/'
 
     # The Unix-style relative path between the build directory and the OpenDSA root directory
     self.rel_build_to_odsa_path = os.path.relpath(self.odsa_dir, self.book_dir + self.rel_book_output_path).replace("\\", "/") + '/'

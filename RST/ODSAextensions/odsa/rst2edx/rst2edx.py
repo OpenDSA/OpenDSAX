@@ -5,14 +5,15 @@ from docutils import nodes
 from docutils.io import StringOutput
 
 from sphinx.builders import Builder
+from sphinx.builders.html import DirectoryHTMLBuilder
 from sphinx.util.osutil import ensuredir, os_path
 from sphinx.writers.xml import XMLWriter, PseudoXMLWriter
 
-class rst2edxBuilder(Builder):
+class rst2edxBuilder(DirectoryHTMLBuilder):
     name = "edx"
     format = 'edx'
-    out_suffix = '.xml'
-    
+    out_suffix = '.html'
+'''
     _writer_class = XMLWriter
     
     def init(self):
@@ -70,7 +71,7 @@ class rst2edxBuilder(Builder):
             self.warn("error writing file %s: %s" % (outfilename, err))
 
     def finish(self):
-        pass
+        pass'''
     
 def setup(app):
     app.add_builder(rst2edxBuilder)

@@ -93,8 +93,7 @@ html:
 	rm Makefile
     
 edx:
-	$(SPHINXBUILD) -b edx source $(HTMLDIR)
-	rm *.json
+	$(SPHINXBUILD) -b html source $(HTMLDIR)
 	@echo
 	@echo "Build finished. The EDX pages are in $(HTMLDIR)."
 	rm Makefile

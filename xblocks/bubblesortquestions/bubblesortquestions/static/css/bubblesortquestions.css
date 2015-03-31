@@ -1,0 +1,21 @@
+/* CSS for BubblesortQuestionsXBlock */
+
+.question {
+	font-family: Arial;
+	font-size: 12pt;
+}
+
+form {
+
+    }
+
+button {
+	background-color: #B8DBFF;
+	border-radius: 6px;
+}
+
+div.bubblesortquestions_block {
+    cursor: pointer;
+    border-radius: 8px;
+    background-color: #E0E0D1;
+}

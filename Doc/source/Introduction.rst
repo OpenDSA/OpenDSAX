@@ -46,3 +46,15 @@ Those roles include:
 #. OpenDSA Infrastructure developer: If you want to help to extend the
    OpenDSA infrastructure, then you will need to understand the
    details of the part of the system that you are targetting.
+
+
+Trying it out
+-------------
+
+The OpenDSA project runs an OpenEdX server at ``opendsax.cc.vt.edu``.
+Here is information on how you can access the server and try some
+things out.
+
+#. Point your browser to ``http://opendsax.cc.vt.edu``.
+
+#. Hosam add instructions here.

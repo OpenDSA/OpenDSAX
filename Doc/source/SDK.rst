@@ -32,7 +32,7 @@ Linux
 
 	$ sudo pip install virtualenv
 
-#. Create the following two directories ::
+#. Create the following envs directories ::
 
 	$ mkdir ~/envs
 	$ mkdir ~/dev
@@ -80,6 +80,8 @@ Linux
 #. Start creating your new xblock. ::
 
 	$ cd ~/dev
+	$ git clone https://github.com/OpenDSA/OpenDSAX.git
+	$ cd OpenDSAX/xblocks
 	$ mkdir test
 	$ cd test
 	$ python ~/dev/xblock-sdk/script/startnew.py
@@ -94,7 +96,7 @@ Linux
 
 #. Then run pip to register the test xblock package and allow XBlock to find the entry point (in sdk virtualenv) ::
 
-	(sdk) $ cd ~/dev/test
+	(sdk) $ cd ~/dev/OpenDSAX/xblocks/test
 	(sdk) $ pip install -r requiements.txt
 
 #. Now (re)start the workbench server.
@@ -162,9 +164,11 @@ GitHub installation.
 #. Start creating your new xblock. ::
 
 	C:\>cd dev
-	C:\dev>mkdir test
-	C:\dev>cd test
-	C:\dev\test>python c:\dev\xblock-sdk\script\startnew.py
+	C:\dev>git clone https://github.com/OpenDSA/OpenDSAX.git
+	C:\dev>cd OpenDSAX\xblocks
+	C:\dev\OpenDSAX\xblocks>mkdir test
+	C:\dev\OpenDSAX\xblocks>cd test
+	C:\dev\OpenDSAX\xblocks\test>python c:\dev\xblock-sdk\script\startnew.py
 	short name: test
 	Class name: TestXBlock
 
@@ -175,8 +179,8 @@ GitHub installation.
 
 #. Then run pip to register the test xblock package and allow XBlock to find the entry point (in sdk virtualenv) ::
 
-	(sdk) C:\>cd dev\test
-	(sdk) C:\dev\test>pip install -r requiements.txt
+	(sdk) C:\>cd dev\OpenDSAX\xblocks\test
+	(sdk) C:\dev\OpenDSAX\xblocks\test>pip install -r requiements.txt
 
 #. Now (re)start the workbench server.
    

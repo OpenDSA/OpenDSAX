@@ -5,13 +5,17 @@ Working with the SDK
 
 For most developers, your primary task will be creating xblocks.
 So you need a way to test that an xblock that you create does work.
-The simplest way to do this is to set up the SDK.
+The simplest way to do this is to set up the xblock SDK.
 
-Basic instructions for setting up the SDK:
+Basic instructions for setting up the SDK are available at the
+xblock-sdk project's GitHub repository
 (see https://github.com/edx/xblock-sdk).
+However, below are detailed instructions for getting this set up under
+Linux or MS Windows.
 
 Linux
 -----
+
 #. Install Python 2.7. ::
 
 	$ sudo apt-get install python
@@ -103,9 +107,14 @@ Linux
    :alt: alternate text
    :align: center
 
-Window
-------
-#. Install git. (see http://git-scm.com/download/win)
+MS Windows 7
+------------
+
+#. We assume that you have installed Git (see
+http://git-scm.com/download/win), and that you have access to
+a command line-based interface.
+We recommend that Bash command line interface that comes with the
+GitHub installation.
 
 #. Install Python 2.7. (see https://www.python.org/downloads/)
 

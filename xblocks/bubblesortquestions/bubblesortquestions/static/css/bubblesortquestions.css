@@ -1,12 +1,21 @@
 /* CSS for BubblesortQuestionsXBlock */
 
-.bubblesortquestions_block .nextQuestion {
-	border-radius: 10%;
-	width: 125px;
-	background-color: blue;
-	border: black;
+.question {
+	font-family: Arial;
+	font-size: 12pt;
 }
 
-.bubblesortquestions_block p {
+form {
+
+    }
+
+button {
+	background-color: #B8DBFF;
+	border-radius: 6px;
+}
+
+div.bubblesortquestions_block {
     cursor: pointer;
+    border-radius: 8px;
+    background-color: #E0E0D1;
 }

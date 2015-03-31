@@ -2,7 +2,7 @@
 	"pe": [{
 		"exercises": [{
 			"description": "Quick Sort",
-			"long_name": "Quick Sort",
+		"long_name": "Quick Sort",
 			"short_name": "quicksortPRO",
 			"problem_url": "/AV/Sorting/",
 			"js_resources": "",
@@ -20,7 +20,7 @@
 			"weight": 15
 		}, {
 			"description": "Shellsort",
-			"long_name": "Shellsort",
+			"long_name": "Shell Sort",
 			"short_name": "shellsortPRO",
 			"problem_url": "/AV/Sorting/",
 			"js_resources": "",
@@ -38,7 +38,7 @@
 			"weight": 15
 		}, {
 			"description": "Heapsort Proficiency Exercise",
-			"long_name": "Heapsort Proficiency Exercise",
+			"long_name": "Heap Sort",
 			"short_name": "heapsortPRO",
 			"problem_url": "/AV/Sorting/",
 			"js_resources": "",
@@ -56,7 +56,7 @@
 			"weight": 15
 		}, {
 			"description": "Mergesort Proficiency Exercise",
-			"long_name": "Mergesort Proficiency Exercise",
+			"long_name": "Merge Sort",
 			"short_name": "mergesortPRO",
 			"problem_url": "/AV/Sorting/",
 			"js_resources": "",
@@ -78,7 +78,7 @@
 	"av": [{
 		"exercises": [{
 			"description": "Quick Sort Visualization",
-			"long_name": "Quick Sort Visualization",
+			"long_name": "Quick Sort",
 			"short_name": "quicksortAV",
 			"problem_url": "/AV/Sorting/",
 			"js_resources": "",
@@ -96,7 +96,7 @@
 			"weight": 25
 		}, {
 			"description": "Insertion Sort Visualization",
-			"long_name": "Insertion Sort Visualization",
+			"long_name": "Insertion Sort",
 			"short_name": "insertionsortAV",
 			"problem_url": "/AV/Sorting/",
 			"js_resources": "",
@@ -115,7 +115,7 @@
 
 		}, {
 			"description": "Bubble Sort Visualization",
-			"long_name": "Bubble Sort Visualization",
+			"long_name": "Bubble Sort",
 			"short_name": "bubblesortAV",
 			"problem_url": "/AV/Sorting/",
 			"js_resources": "",
@@ -134,7 +134,7 @@
 
 		}, {
 			"description": "Selection Sort Visualization",
-			"long_name": "Selection Sort Visualization",
+			"long_name": "Selection Sort",
 			"short_name": "selectionsortAV",
 			"problem_url": "/AV/Sorting/",
 			"js_resources": "",
@@ -153,7 +153,7 @@
 
 		}, {
 			"description": "Shellsort Visualization",
-			"long_name": "Shellsort Visualization",
+			"long_name": "Shell Sort",
 			"short_name": "shellsortAV",
 			"problem_url": "/AV/Sorting/",
 			"js_resources": "",
@@ -172,7 +172,7 @@
 
 		}, {
 			"description": "Mergesort Visualization",
-			"long_name": "Mergesort Visualization",
+			"long_name": "Merge Sort",
 			"short_name": "mergesortAV",
 			"problem_url": "/AV/Sorting/",
 			"js_resources": "",
@@ -191,7 +191,7 @@
 
 		}, {
 			"description": "Radix Sort Linked Visualization",
-			"long_name": "Radix Sort Linked Visualization",
+			"long_name": "Radix Sort Linked",
 			"short_name": "radixLinkAV",
 			"problem_url": "/AV/Sorting/",
 			"js_resources": "",
@@ -210,7 +210,7 @@
 
 		}, {
 			"description": "Radix Sort Array Visualization",
-			"long_name": "Radix Sort Array Visualization",
+			"long_name": "Radix Sort Array",
 			"short_name": "radixArrayAV",
 			"problem_url": "/AV/Sorting/",
 			"js_resources": "",

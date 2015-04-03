@@ -210,4 +210,4 @@ Rerun workbench web server
 
 	C:\>envs\sdk\Scripts\activate.bat
 	(sdk) C:\>cd dev\xblock-sdk
-	(sdk) C:\>python manage.py runserver
+	(sdk) C:\dev\xblock-sdk>python manage.py runserver

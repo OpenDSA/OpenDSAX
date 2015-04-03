@@ -1,5 +1,6 @@
 .. _Introduction:
 
+============
 Introduction
 ============
 
@@ -47,7 +48,7 @@ Those roles include:
    OpenDSA infrastructure, then you will need to understand the
    details of the part of the system that you are targetting.
 
-
+-------------
 Trying it out
 -------------
 

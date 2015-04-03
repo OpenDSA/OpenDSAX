@@ -1,5 +1,6 @@
 .. _SDK:
 
+====================
 Working with the SDK
 ====================
 
@@ -13,9 +14,9 @@ xblock-sdk project's GitHub repository
 However, below are detailed instructions for getting this set up under
 Linux or MS Windows.
 
+-----
 Linux
 -----
-
 #. Install Python 2.7. ::
 
 	$ sudo apt-get install python
@@ -107,9 +108,20 @@ Linux
    :alt: alternate text
    :align: center
 
+#. If things go worng for any reason, remove ``~/envs/sdk`` folder and restart from the begining.
+
+Rerun workbench web server
+==========================
+#. Once you have the workbench installed and you want to rerun it, you have to activate sdk virtualenv first then run the web server. ::
+
+	$ . ~/envs/sdk/bin/activate
+	(sdk) $ cd ~/dev/xblock-sdk
+ 	(sdk) $ sudo python manage.py runserver
+
+
+------------
 MS Windows 7
 ------------
-
 #. We assume that you have installed Git (see
 http://git-scm.com/download/win), and that you have access to
 a command line-based interface.
@@ -133,13 +145,13 @@ GitHub installation.
 
 	C:\>cd envs
 	C:\envs>virtualenv sdk
-	C:\envs>sdk\Scripts\activate
+	C:\envs>sdk\Scripts\activate.bat
 	(sdk) C:\envs>
 
 #. Clone repo: https://github.com/edx/xblock-sdk. ::
 
-	C:\>cd dev
-	C:\dev>git clone https://github.com/edx/xblock-sdk.git
+	(sdk) C:\>cd dev
+	(sdk) C:\dev>git clone https://github.com/edx/xblock-sdk.git
 
 #. Install your version of xblock-sdk. (you need to run these commands in sdk vitrualenv) ::
 
@@ -188,4 +200,14 @@ GitHub installation.
    :width: 650px
    :height: 488px
    :alt: alternate text
-   :align: center 
+   :align: center
+
+#. If things go worng for any reason, remove ``C:\envs\sdk`` folder and restart from the begining.
+
+Rerun workbench web server
+==========================
+#. Once you have the workbench installed and you want to rerun it, you have to activate sdk virtualenv first then run the web server. ::
+
+	C:\>envs\sdk\Scripts\activate.bat
+	(sdk) C:\>cd dev\xblock-sdk
+	(sdk) C:\>python manage.py runserver

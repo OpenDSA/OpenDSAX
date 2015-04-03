@@ -110,15 +110,6 @@ Linux
 
 #. If things go worng for any reason, remove ``~/envs/sdk`` folder and restart from the begining.
 
-Rerun workbench web server
-==========================
-#. Once you have the workbench installed and you want to rerun it, you have to activate sdk virtualenv first then run the web server. ::
-
-	$ . ~/envs/sdk/bin/activate
-	(sdk) $ cd ~/dev/xblock-sdk
- 	(sdk) $ sudo python manage.py runserver
-
-
 ------------
 MS Windows 7
 ------------
@@ -204,10 +195,19 @@ GitHub installation.
 
 #. If things go worng for any reason, remove ``C:\envs\sdk`` folder and restart from the begining.
 
+--------------------------
 Rerun workbench web server
-==========================
-#. Once you have the workbench installed and you want to rerun it, you have to activate sdk virtualenv first then run the web server. ::
+--------------------------
+#. Once you have the workbench installed and you want to rerun it, you have to activate sdk virtualenv first then run the web server. 
 
-	C:\>envs\sdk\Scripts\activate.bat
-	(sdk) C:\>cd dev\xblock-sdk
-	(sdk) C:\dev\xblock-sdk>python manage.py runserver
+	#. Linux ::
+
+		$ . ~/envs/sdk/bin/activate
+		(sdk) $ cd ~/dev/xblock-sdk
+	 	(sdk) $ sudo python manage.py runserver
+
+	#. MS Windows 7 ::
+
+		C:\>envs\sdk\Scripts\activate.bat
+		(sdk) C:\>cd dev\xblock-sdk
+		(sdk) C:\dev\xblock-sdk>python manage.py runserver

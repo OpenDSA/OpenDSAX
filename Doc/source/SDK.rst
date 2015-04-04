@@ -33,7 +33,7 @@ Linux
 
 	$ sudo pip install virtualenv
 
-#. Create the following envs directories ::
+#. Create the following two directories ::
 
 	$ mkdir ~/envs
 	$ mkdir ~/dev
@@ -42,7 +42,6 @@ Linux
 
 	$ cd ~/envs
 	$ virtualenv sdk
-	$ . ~/envs/sdk/bin/activate
 
 	If you have multiple verisons of python installed, use python 2.7 to create the new virtualenv.
 
@@ -50,20 +49,22 @@ Linux
 	/path/to/python2.7
 	$ virtualenv -p /path/to/python2.7 sdk
 
+	$ . ~/envs/sdk/bin/activate
+
 
 #. Clone repo: https://github.com/edx/xblock-sdk. ::
 
-	$ cd ~/dev
-	$ git clone https://github.com/edx/xblock-sdk.git
+	(sdk) $ cd ~/dev
+	(sdk) $ git clone https://github.com/edx/xblock-sdk.git
 
-#. Install your version of xblock-sdk. (you need to run these commands in sdk vitrualenv) ::
+#. Install your version of xblock-sdk. (you need to run these commands while sdk vitrualenv is active) ::
 
    (sdk) $ cd ~/dev/xblock-sdk
    (sdk) $ sudo make install
 
 #. If you encounterd a problem with libxml, you may need to install: ::
 
-	$ sudo apt-get install libxml2-dev libxslt1-dev
+	(sdk) $ sudo apt-get install libxml2-dev libxslt1-dev
 
 #. Run the django development server ::
 
@@ -102,26 +103,29 @@ Linux
    
 #. You should be able to visit http://127.0.0.1:8000/ and see your new xblock TestXBlock in the list
 
-.. image:: _static/workbench_test_XBlock.png
-   :width: 650px
-   :height: 488px
-   :alt: alternate text
-   :align: center
+	.. image:: _static/workbench_test_XBlock.png
+		:width: 650px
+		:height: 488px
+		:alt: alternate text
+		:align: center
 
-#. If things go worng for any reason, remove ``~/envs/sdk`` folder and restart from the begining.
+#. If anything was worng for any reason, remove ``~/envs/sdk`` folder and restart from the begining.
 
 ------------
 MS Windows 7
 ------------
-#. We assume that you have installed Git (see
-http://git-scm.com/download/win), and that you have access to
-a command line-based interface.
-We recommend that Bash command line interface that comes with the
-GitHub installation.
+
+#. We assume that you have installed Git (see http://git-scm.com/download/win), and that you have access to a command line-based interface. We recommend that Bash command line interface that comes with the GitHub installation.
+
+#. **Note for Bash CLI users:** After you install Python, pip, virtualenv you can install workbench using Bash CLI by following the exact same steps described in Linux section (without sudo), and use the activate command path on windows as ``~/envs/sdk/Scripts/activate`` not ``~/envs/sdk/bin/activate``.
+
+**Installtion steps using Windows command Processor:**
 
 #. Install Python 2.7. (see https://www.python.org/downloads/)
 
 #. Install pip. (see https://pip.pypa.io/en/latest/installing.html)
+
+#. Open Windows Command Processor which usually located in ``C:\Windows\System32\cmd.exe``.
 
 #. Install virtualenv. ::
    
@@ -144,7 +148,7 @@ GitHub installation.
 	(sdk) C:\>cd dev
 	(sdk) C:\dev>git clone https://github.com/edx/xblock-sdk.git
 
-#. Install your version of xblock-sdk. (you need to run these commands in sdk vitrualenv) ::
+#. Install your version of xblock-sdk. (you need to run these commands while sdk vitrualenv is active) ::
 
 	(sdk) C:\>cd dev\xblock-sdk
 	(sdk) C:\dev\xblock-sdk>make install
@@ -187,13 +191,13 @@ GitHub installation.
    
 #. You should be able to visit http://127.0.0.1:8000/ and see your new xblock TestXBlock in the list
 
-.. image:: _static/workbench_test_XBlock.png
-   :width: 650px
-   :height: 488px
-   :alt: alternate text
-   :align: center
+	.. image:: _static/workbench_test_XBlock.png
+		:width: 650px
+		:height: 488px
+		:alt: alternate text
+		:align: center
 
-#. If things go worng for any reason, remove ``C:\envs\sdk`` folder and restart from the begining.
+#. If anything was worng for any reason, remove ``C:\envs\sdk`` folder and restart from the begining.
 
 --------------------------
 Rerun workbench web server
@@ -211,3 +215,9 @@ Rerun workbench web server
 		C:\>envs\sdk\Scripts\activate.bat
 		(sdk) C:\>cd dev\xblock-sdk
 		(sdk) C:\dev\xblock-sdk>python manage.py runserver
+
+-----------------------------
+Developing and testing xblock
+-----------------------------
+
+Once you install your XBlock into sdk virtualenv, the workbench will automatically display its scenarios for you to experiment with. Any changes or updates you do to the xblock will be automatically loaded by the workbench when you refresh the browser. So you only need to keep your workbench up and running while you are developing your xblock.

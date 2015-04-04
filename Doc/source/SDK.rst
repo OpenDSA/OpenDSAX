@@ -117,7 +117,7 @@ MS Windows 7
 
 #. We assume that you have installed Git (see http://git-scm.com/download/win), and that you have access to a command line-based interface. We recommend that Bash command line interface that comes with the GitHub installation.
 
-#. **Note for Bash CLI users:** After you install Python, pip, virtualenv you can install workbench using Bash CLI by following the exact same steps described in Linux section (without sudo), and use the activate command path on windows as ``~/envs/sdk/Scripts/activate`` not ``~/envs/sdk/bin/activate``.
+#. **Note for Bash CLI users:** After you install Python, pip and virtualenv you can install workbench using Bash CLI by following the exact same steps described in Linux section (without sudo), and use the activate command path on windows as ``~/envs/sdk/Scripts/activate`` not ``~/envs/sdk/bin/activate``.
 
 **Installtion steps using Windows command Processor:**
 

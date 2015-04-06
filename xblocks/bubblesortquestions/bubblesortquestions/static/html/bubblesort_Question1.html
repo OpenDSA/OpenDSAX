@@ -1,14 +1,14 @@
 <div class="bubblesortquestions_block">
 	<p><span style="font-weight: bold">BubblesortQuestionsXBlock: TEST bubblesort questions</span></p>
-	<p>Score:/5</p>
+	<p>Score:<span class="score">{self.score}</span>/<span id="maxScore"></span></p>
 	<div id="form1">
-		<p id='question'>In which cases are the time complexities the
+		<p class="question" id='question'>In which cases are the time complexities the
 		        same for Bubble Sort (as the algorithm is presented in this module)?</p>
 		<form action="">
 			<input type="radio" name="question1" value="Worst and Best">Worst and Best<br>
 			<input type="radio" name="question1" value="Best and Average">Best and Average<br>
 			<input type="radio" name="question1" value="Worst and Average">Worst and Average<br>
-			<input type="radio" name="question1" id="question1_answer4" value="Worst, Best and Average">Worst, Best and Average
+			<input type="radio" name="question1" id="solution" value="Worst, Best and Average">Worst, Best and Average
 		</form>
 	</div>
 	<button id='submit'>Submit</button>

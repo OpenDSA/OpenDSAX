@@ -38,7 +38,7 @@ class JSAVXBlock(XBlock, LmsCompatibilityMixin, StudioEditableXBlockMixin, Studi
 
     problem_type = String(
         help = "whether slideshow 'ss' or proficiency exercise 'pe'",
-        default = "ss",
+        default = "pe",
         values = ({"value":"pe","display_name":"Proficiency Exercise"}, 
                   {"value":"ss","display_name":"Slide Show"},
                   {"value":"av","display_name":"Algorithm Visualization"}
@@ -53,13 +53,13 @@ class JSAVXBlock(XBlock, LmsCompatibilityMixin, StudioEditableXBlockMixin, Studi
 
     problem_width = Integer(
         help = "width",
-        default = 805,
+        default = 825,
         values = {"min": 100 , "max": 1000, "step": 1},
         scope = Scope.settings)
 
     problem_height = Integer(
         help = "height",
-        default = 515,
+        default = 600,
         values = {"min": 100 , "max": 1000, "step": 1},
         scope = Scope.settings)
 
@@ -83,7 +83,7 @@ class JSAVXBlock(XBlock, LmsCompatibilityMixin, StudioEditableXBlockMixin, Studi
 
     short_name = String(
         help = "Problem short Name",
-        default = "quicksortCON",
+        default = "quicksortPRO",
         scope = Scope.settings)
 
     js_resources = String(

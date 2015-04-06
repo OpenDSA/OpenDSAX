@@ -8,7 +8,7 @@ import os
 import re
 import codecs
 import json
-import bs4 as bs
+from bs4 import BeautifulSoup
 
 __author__ = 'breakid'
 
@@ -172,61 +172,96 @@ def update_TermDef(glossary_file, terms_dict):
         i-= 1
     i += 1
     
-def update_edx_file(path):
+def update_edx_file(path, modules):
   # Read contents of module HTML file
   with open(path, 'r') as html_file:
     html = html_file.read()
   
+  # Get the module name and create its subfolder
   mod_name = os.path.splitext(os.path.basename(path))[0]
   mod_html_folder = os.path.join(os.path.dirname(path), 'html-{}'.format(mod_name))
   if not os.path.exists(mod_html_folder):
     os.mkdir(mod_html_folder)
-  print mod_name, path
+  print mod_name
   
   # Strip out the script, style, link, and meta tags
-  print "Stripping out unnecessary HTML"
+  print "\tStripping out unnecessary HTML"
   PATTERNS = {'Scripts': re.compile('<script(.*?)>(.*?)</script>', re.DOTALL),
               'Links': re.compile('<link(.*?)/>', re.DOTALL),
               'Styles': re.compile('<style(.*?)>(.*?)</style>', re.DOTALL)}
   for name, pattern in PATTERNS.items():
     html = re.sub(pattern, '', html)
+    
+  # Redirect href urls
+  soup = BeautifulSoup(html)
+  for link in soup.find_all('a'):
+    if 'href' not in link.attrs:
+        # Really? No href? Is that even valid HTML?
+        continue
+    href = link['href']
+    # Skip dummy urls redirecting to itself
+    if href == '#':
+      continue
+    elif href.startswith('#'):
+      # Do something with an internal page link
+      continue
+    elif href.startswith('mailto:'):
+      continue
+    elif href.startswith('http://'):
+      continue
+    elif href.endswith('.rst'):
+      continue
+    else:
+      if '#' in href:
+        external, internal = href.split('#', 1)
+      else:
+        external, internal = href, ''
+      if external in modules:
+        print "HASHING", external
+        link['href'] = "ELLIE_IS_GREAT.html"+('#'+internal if internal else '')
+      print "\t", link['href']
   
   # Breaking file into components
-  needle = bs.BeautifulSoup(html).find('div', class_='section').find_all()
-  if needle:
-    lines = [n for n in needle]
+  section_divs = soup.find('div', class_='section').find_all()
+  if section_divs:
     chunked_html_files = []
     found_counter = 0
-    for line in lines:
-      if line.name == 'div' and 'data-type' in line.attrs and line['data-type'] in ('ss', 'pe'):
+    for section in section_divs:
+      # If we find a slideshow or practice exercise, then write it out to a file
+      if section.name == 'div' and 'data-type' in section.attrs and section['data-type'] in ('ss', 'pe'):
         with open(os.path.join(mod_html_folder, '{}.html'.format(found_counter)), 'wb') as o:
           o.writelines(chunked_html_files)
-        name = line['id']
+        name = section['id']
         with open(os.path.join(mod_html_folder, '{}.xml'.format(name)), 'wb') as o:
           o.write(json.dumps({
-            key: line[key] for key in line.attrs
+            key: section[key] for key in section.attrs
           }, indent=2))
         chunked_html_files = []
         found_counter += 1
       else:
-        chunked_html_files.append(line.prettify().encode('utf-8'))
+        chunked_html_files.append(section.prettify().encode('utf-8'))
     else:
       with open(os.path.join(mod_html_folder, '{}.html'.format(found_counter)), 'wb') as o:
         o.writelines(chunked_html_files)
-    html = [n.prettify().encode('utf-8') for n in needle]
+    # TODO: Figure out proper encoding
+    html = [n.prettify().encode('utf-8') for n in section_divs]
   else:
-    print "Failure"
-    html = bs.BeautifulSoup(html).body.prettify()
-  with open(path, 'wb') as html_file: html_file.writelines(html)
+    print "Failed to find any 'div' tags with a 'section' class."
+    html = BeautifulSoup(html).body.prettify()
+  
+  # Post-processing complete, write out the file
+  with open(path, 'wb') as html_file:
+    html_file.writelines(html)
     
 def make_edx(dest_dir):
   # Iterate through all of the existing files
   ignore_files = ('index.html', 'Gradebook.html', 'search.html', 
                   'genindex.html', 'RegisterBook.html', 'Bibliography.html')
-  html_files = [os.path.join(dest_dir, path) for path in os.listdir(dest_dir)
-                    if path.endswith('.html') and path not in ignore_files]
-  for file_path in html_files:
-    update_edx_file(file_path)
+  html_files = [path for path in os.listdir(dest_dir)
+                if path.endswith('.html') and path not in ignore_files]
+  for path in html_files:
+    file_path = os.path.join(dest_dir, path)
+    update_edx_file(file_path, tuple(html_files)+ignore_files)
 
 def main(argv):
   if len(argv) != 3:

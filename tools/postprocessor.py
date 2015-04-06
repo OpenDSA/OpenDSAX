@@ -8,6 +8,7 @@ import os
 import re
 import codecs
 import json
+import bs4 as bs
 
 __author__ = 'breakid'
 
@@ -176,22 +177,21 @@ def update_edx_file(path):
   with open(path, 'r') as html_file:
     html = html_file.read()
   
-  # Strip out the script, style, link, and meta tags
   mod_name = os.path.splitext(os.path.basename(path))[0]
-
+  mod_html_folder = os.path.join(os.path.dirname(path), 'html-{}'.format(mod_name))
+  if not os.path.exists(mod_html_folder):
+    os.mkdir(mod_html_folder)
+  print mod_name, path
+  
+  # Strip out the script, style, link, and meta tags
+  print "Stripping out unnecessary HTML"
   PATTERNS = {'Scripts': re.compile('<script(.*?)>(.*?)</script>', re.DOTALL),
               'Links': re.compile('<link(.*?)/>', re.DOTALL),
               'Styles': re.compile('<style(.*?)>(.*?)</style>', re.DOTALL)}
-  print mod_name, path
-  mod_html_folder = os.path.join(os.path.dirname(path), 'html-{}'.format(mod_name))
-  print mod_html_folder
-  if not os.path.exists(mod_html_folder):
-    os.mkdir(mod_html_folder)
   for name, pattern in PATTERNS.items():
-    print "\tRemoving ", name
     html = re.sub(pattern, '', html)
   
-  import bs4 as bs
+  # Breaking file into components
   needle = bs.BeautifulSoup(html).find('div', class_='section').find_all()
   if needle:
     lines = [n for n in needle]

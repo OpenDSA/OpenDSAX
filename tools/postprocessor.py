@@ -174,7 +174,7 @@ def update_TermDef(glossary_file, terms_dict):
     
 def update_edx_file(path, modules):
   # Read contents of module HTML file
-  with open(path, 'r') as html_file:
+  with codecs.open(path, 'r', 'utf-8') as html_file:
     html = html_file.read()
   
   # Get the module name and create its subfolder
@@ -229,33 +229,35 @@ def update_edx_file(path, modules):
     for section in section_divs:
       # If we find a slideshow or practice exercise, then write it out to a file
       if section.name == 'div' and 'data-type' in section.attrs and section['data-type'] in ('ss', 'pe'):
-        with open(os.path.join(mod_html_folder, '{}.html'.format(found_counter)), 'wb') as o:
+        path_html = os.path.join(mod_html_folder, '{}.html'.format(found_counter))
+        with codecs.open(path_html, 'w', 'utf-8') as o:
           o.writelines(chunked_html_files)
         name = section['id']
-        with open(os.path.join(mod_html_folder, '{}.xml'.format(name)), 'wb') as o:
+        path_xml = os.path.join(mod_html_folder, '{}.xml'.format(name))
+        with codecs.open(path_xml, 'w', 'utf-8') as o:
           o.write(json.dumps({
             key: section[key] for key in section.attrs
           }, indent=2))
         chunked_html_files = []
         found_counter += 1
       else:
-        chunked_html_files.append(section.prettify().encode('utf-8'))
+        chunked_html_files.append(section.prettify())
     else:
-      with open(os.path.join(mod_html_folder, '{}.html'.format(found_counter)), 'wb') as o:
+      path_html = os.path.join(mod_html_folder, '{}.html'.format(found_counter))
+      with codecs.open(path_html, 'w', 'utf-8') as o:
         o.writelines(chunked_html_files)
     # TODO: Figure out proper encoding
-    html = [n.prettify().encode('utf-8') for n in section_divs]
+    html = [n.prettify() for n in section_divs]
   else:
     print "Failed to find any 'div' tags with a 'section' class."
-    html = BeautifulSoup(html).body.prettify()
   
   # Post-processing complete, write out the file
-  with open(path, 'wb') as html_file:
+  with codecs.open(path, 'w', 'utf-8') as html_file:
     html_file.writelines(html)
     
 def make_edx(dest_dir):
   # Iterate through all of the existing files
-  ignore_files = ('index.html', 'Gradebook.html', 'search.html', 
+  ignore_files = ('Gradebook.html', 'search.html', 
                   'genindex.html', 'RegisterBook.html', 'Bibliography.html')
   html_files = [path for path in os.listdir(dest_dir)
                 if path.endswith('.html') and path not in ignore_files]

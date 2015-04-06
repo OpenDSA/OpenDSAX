@@ -266,8 +266,7 @@ class avembed(Directive):
 
     res = CONTAINER_HTML % (self.options)
 
-    return [nodes.raw('', res, format='html'),
-            nodes.raw('', "ELLIE_AVEMBED", format='edx')]
+    return [nodes.raw('', res, format='html')]
 
 
 source = """\

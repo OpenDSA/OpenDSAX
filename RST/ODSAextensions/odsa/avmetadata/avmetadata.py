@@ -54,8 +54,7 @@ class avmetadata(Directive):
     def run(self):
                 
         """ Restructured text extension for collecting  AVs metadata nothing is written in the output html file """
-        return [nodes.raw('', '', format='html'),
-                nodes.raw('', '', format='edx')]
+        return [nodes.raw('', '', format='html')]
 
 
 

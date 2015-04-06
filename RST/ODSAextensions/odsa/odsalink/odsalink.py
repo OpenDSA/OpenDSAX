@@ -43,8 +43,7 @@ class odsalink(Directive):
         """ Restructured text extension for including CSS and other libraries """
         self.options['address'] = os.path.relpath(conf.odsa_path,conf.ebook_path).replace('\\', '/') + '/' + self.arguments[0]
         res = CODE % self.options
-        return [nodes.raw('', res, format='html'),
-                nodes.raw('', "ELLIE_ODSALINK", format='edx')]
+        return [nodes.raw('', res, format='html')]
 
 
 source = """\

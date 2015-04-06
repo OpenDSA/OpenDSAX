@@ -45,8 +45,7 @@ class odsascript(Directive):
         """ Restructured text extension for including CSS and other libraries """
         self.options['address'] = os.path.relpath(conf.av_dir,conf.ebook_path).replace('\\', '/') + '/' + self.arguments[0]
         res = CODE % self.options
-        return [nodes.raw('', res, format='html'),
-                nodes.raw('', 'ELLIE_ODSA_SCRIPT', format='edx')]
+        return [nodes.raw('', res, format='html')]
 
 
 

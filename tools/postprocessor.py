@@ -182,7 +182,11 @@ def update_edx_file(path):
   PATTERNS = {'Scripts': re.compile('<script(.*?)>(.*?)</script>', re.DOTALL),
               'Links': re.compile('<link(.*?)/>', re.DOTALL),
               'Styles': re.compile('<style(.*?)>(.*?)</style>', re.DOTALL)}
-  print mod_name
+  print mod_name, path
+  mod_html_folder = os.path.join(os.path.dirname(path), 'html-{}'.format(mod_name))
+  print mod_html_folder
+  if not os.path.exists(mod_html_folder):
+    os.mkdir(mod_html_folder)
   for name, pattern in PATTERNS.items():
     print "\tRemoving ", name
     html = re.sub(pattern, '', html)
@@ -192,15 +196,23 @@ def update_edx_file(path):
   if needle:
     lines = [n for n in needle]
     chunked_html_files = []
+    found_counter = 0
     for line in lines:
-      if line.name == 'div' and 'data-type' in line.attrs and line['data-type'] == 'ss':
-        print "FOUND A Slideshow"
+      if line.name == 'div' and 'data-type' in line.attrs and line['data-type'] in ('ss', 'pe'):
+        with open(os.path.join(mod_html_folder, '{}.html'.format(found_counter)), 'wb') as o:
+          o.writelines(chunked_html_files)
+        name = line['id']
+        with open(os.path.join(mod_html_folder, '{}.xml'.format(name)), 'wb') as o:
+          o.write(json.dumps({
+            key: line[key] for key in line.attrs
+          }, indent=2))
         chunked_html_files = []
-      elif line.name == 'div' and 'data-type' in line.attrs and line['data-type'] == 'pe':
-        print "FOUND An exercise"
-        chunked_html_files = []
+        found_counter += 1
       else:
-        chunked_html_files.append(line)
+        chunked_html_files.append(line.prettify().encode('utf-8'))
+    else:
+      with open(os.path.join(mod_html_folder, '{}.html'.format(found_counter)), 'wb') as o:
+        o.writelines(chunked_html_files)
     html = [n.prettify().encode('utf-8') for n in needle]
   else:
     print "Failure"

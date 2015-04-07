@@ -218,7 +218,6 @@ def update_edx_file(path, modules):
         external, internal = href, ''
       if external in modules:
         print "HASHING", external
-        link['href'] = "ELLIE_IS_GREAT.html"+('#'+internal if internal else '')
       print "\t", link['href']
   
   # Breaking file into components

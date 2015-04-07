@@ -421,7 +421,7 @@ def configure(config_file_path, options):
     # Create the concept map definition file in _static html directory
     with codecs.open(config.book_dir + 'html/_static/GraphDefs.json', 'w', 'utf-8') as graph_defs_file:
       json.dump(cmap_map, graph_defs_file)
-  make_edx(config.book_dir + config.rel_book_output_path)
+  make_edx(config)
 
 # Code to execute when run as a standalone program
 if __name__ == "__main__":

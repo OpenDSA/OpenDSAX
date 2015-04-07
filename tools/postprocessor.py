@@ -254,7 +254,8 @@ def update_edx_file(path, modules):
   with codecs.open(path, 'w', 'utf-8') as html_file:
     html_file.writelines(html)
     
-def make_edx(dest_dir):
+def make_edx(config):
+  dest_dir = config.book_dir + config.rel_book_output_path
   # Iterate through all of the existing files
   ignore_files = ('Gradebook.html', 'search.html', 
                   'genindex.html', 'RegisterBook.html', 'Bibliography.html')
@@ -263,7 +264,28 @@ def make_edx(dest_dir):
   for path in html_files:
     file_path = os.path.join(dest_dir, path)
     update_edx_file(file_path, tuple(html_files)+ignore_files)
-
+  
+  with open(os.path.join(dest_dir, 'course.xml'), 'w') as out:
+    body = '''<course url_name="{url_name}" 
+                      org="{organization}" 
+                      course="{course}"/>'''.format(
+                      url_name=config.title,
+                      organization='VirginiaTech',
+                      course=config.title)
+    out.write(body)
+  os.mkdir(os.path.join(dest_dir, 'chapter/'))
+  from pprint import pprint
+  for chapter, sections in config.chapters.items():
+    with open(os.path.join(dest_dir, 'chapter', chapter+'.xml'), 'w') as chapter_file:
+        chapter_file.write('<chapter display_name="{chapter}">\n'.format(chapter=chapter))
+        for section, data in sections.items():
+            chapter_file.write('\t<sequential url_name="{section}"/>\n'.format(section=section.replace('/', '_')))
+        chapter_file.write('</chapter>')
+    for section, data in sections.items():
+        print chapter, section, data['long_name']
+        for name, exercise in data['exercises'].items():
+            print(name)
+            pprint(dict(exercise))
 def main(argv):
   if len(argv) != 3:
     print "ERROR. Usage: %s <source directory> <destination directory>\n" % argv[0]

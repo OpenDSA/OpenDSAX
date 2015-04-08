@@ -78,36 +78,11 @@ Linux
 	   :alt: alternate text
 	   :align: center
 
-#. Start creating your new xblock. ::
+#. Clone OpenDSAX repository ::
 
 	$ cd ~/dev
 	$ git clone https://github.com/OpenDSA/OpenDSAX.git
-	$ cd OpenDSAX/xblocks
-	$ mkdir test
-	$ cd test
-	$ python ~/dev/xblock-sdk/script/startnew.py
-	short name: test
-	Class name: TestXBlock
 
-#. You will need to register your xblock (entry point) in order to be able to see it in workbench (sdk). 
-	create the file requirements.txt in test folder to allow to register the package ::
-	
-	-e .
-
-#. Then run pip to register the test xblock package and allow XBlock to find the entry point (in sdk virtualenv) ::
-
-	(sdk) $ cd ~/dev/OpenDSAX/xblocks/test
-	(sdk) $ sudo pip install -r requiements.txt
-
-#. Now (re)start the workbench server.
-   
-#. You should be able to visit http://127.0.0.1:8000/ and see your new xblock TestXBlock in the list
-
-	.. image:: _static/workbench_test_XBlock.png
-		:width: 650px
-		:height: 488px
-		:alt: alternate text
-		:align: center
 
 #. If anything was worng for any reason, remove ``~/envs/sdk`` folder and restart from the begining.
 
@@ -166,38 +141,76 @@ MS Windows 7
 	   :align: center
 
 
-#. Start creating your new xblock. ::
+#. Clone OpenDSAX repository ::
 
 	C:\>cd dev
 	C:\dev>git clone https://github.com/OpenDSA/OpenDSAX.git
-	C:\dev>cd OpenDSAX\xblocks
-	C:\dev\OpenDSAX\xblocks>mkdir test
-	C:\dev\OpenDSAX\xblocks>cd test
-	C:\dev\OpenDSAX\xblocks\test>python c:\dev\xblock-sdk\script\startnew.py
-	short name: test
-	Class name: TestXBlock
-
-#. You will need to register your xblock (entry point) in order to be able to see it in workbench (sdk). 
-	create the file requirements.txt in test folder to allow to register the package ::
-	
-	-e .
-
-#. Then run pip to register the test xblock package and allow XBlock to find the entry point (in sdk virtualenv) ::
-
-	(sdk) C:\>cd dev\OpenDSAX\xblocks\test
-	(sdk) C:\dev\OpenDSAX\xblocks\test>pip install -r requiements.txt
-
-#. Now (re)start the workbench server.
-   
-#. You should be able to visit http://127.0.0.1:8000/ and see your new xblock TestXBlock in the list
-
-	.. image:: _static/workbench_test_XBlock.png
-		:width: 650px
-		:height: 488px
-		:alt: alternate text
-		:align: center
 
 #. If anything was worng for any reason, remove ``C:\envs\sdk`` folder and restart from the begining.
+
+-------------------
+Create a new xblock
+-------------------
+#. Linux
+
+	#. Create a new xblock using a template-based generator for new XBlocks ::
+
+		$ cd ~/dev/OpenDSAX/xblocks
+		$ mkdir test
+		$ cd test
+		$ python ~/dev/xblock-sdk/script/startnew.py
+		short name: test
+		Class name: TestXBlock
+
+	#. Then create the file requirements.txt in test folder to allow to register the package, as well as automatically install other dependencies that your xblock might need: 
+
+	#. For the test xblock you need to write only one line ``-e .`` in requirements.txt. The ``-e .`` option tells to always use the latest files from the development directory, instead of packaging the files when you run the command.
+
+	#. Then run pip to register the test xblock package and allow XBlock to find the entry point (in sdk virtualenv) ::
+
+		(sdk) $ cd ~/dev/OpenDSAX/xblocks/test
+		(sdk) $ sudo pip install -r requiements.txt
+
+	#. Now (re)start the workbench server.
+	   
+	#. You should be able to visit http://127.0.0.1:8000/ and see your new xblock TestXBlock in the list
+
+		.. image:: _static/workbench_test_XBlock.png
+			:width: 650px
+			:height: 488px
+			:alt: alternate text
+			:align: center
+
+#. Windows
+
+	#. Create a new xblock using a template-based generator for new XBlocks ::
+
+		C:\>cd dev\OpenDSAX\xblocks
+		C:\dev\OpenDSAX\xblocks>mkdir test
+		C:\dev\OpenDSAX\xblocks>cd test
+		C:\dev\OpenDSAX\xblocks\test>python c:\dev\xblock-sdk\script\startnew.py
+		short name: test
+		Class name: TestXBlock
+
+	#. Then create the file requirements.txt in test folder to allow to register the package, as well as automatically install other dependencies that your xblock might need: 
+
+	#. For the test xblock you need to write only one line ``-e .`` in requirements.txt. the ``-e .`` option tells to always use the latest files from the development directory, instead of packaging the files when you run the command.
+
+	#. Then run pip to register the test xblock package and allow XBlock to find the entry point (in sdk virtualenv) ::
+
+		(sdk) C:\>cd dev\OpenDSAX\xblocks\test
+		(sdk) C:\dev\OpenDSAX\xblocks\test>pip install -r requiements.txt
+
+	#. Now (re)start the workbench server.
+	   
+	#. You should be able to visit http://127.0.0.1:8000/ and see your new xblock TestXBlock in the list
+
+		.. image:: _static/workbench_test_XBlock.png
+			:width: 650px
+			:height: 488px
+			:alt: alternate text
+			:align: center
+
 
 --------------------------
 Rerun workbench web server

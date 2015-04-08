@@ -153,6 +153,8 @@ MS Windows 7
 	(sdk) C:\>cd dev\xblock-sdk
 	(sdk) C:\dev\xblock-sdk>make install
 
+#. If you run into a problem regarding a missing ``vcvaralls.bat`` file, then go to http://www.microsoft.com/en-us/download/details.aspx?id=44266 and install that version of the Microsoft Visual C++ compiler. Then repeat the ``make install`` command again.
+
 #. Run the django development server ::
 
 	(sdk) C:\dev\xblock-sdk>python manage.py runserver

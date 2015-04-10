@@ -5,9 +5,9 @@ Working with the SDK
 ====================
 
 For most OpenDSAX developers, your primary task will be creating
-xblocks.
-So you need a way to test that an xblock that you create does work.
-The simplest way to do this is to set up the xblock SDK.
+XBlocks.
+So you need a way to test that an XBlock that you create does work.
+The simplest way to do this is to set up the xblock-sdk.
 
 Basic instructions for setting up the SDK are available at the
 xblock-sdk project's GitHub repository
@@ -131,11 +131,6 @@ MS Windows (using Bash)
       (sdk) $ cd ~/dev/xblock-sdk
       (sdk) $ make install
 
-#. If you encountered a problem with libxml, you may need to install
-   it, and then retry ``make install``. ::
-
-      (sdk) $ sudo apt-get install libxml2-dev libxslt1-dev
-
 #. If you run into a problem regarding a missing ``vcvaralls.bat``
    file, then go to
    http://www.microsoft.com/en-us/download/details.aspx?id=44266 and
@@ -151,21 +146,21 @@ MS Windows (using cmd.exe)
 
 #. Create the following two directories ::
 
-      C:\> cd c:\
+      C:\> cd C:\
       C:\> mkdir envs
       C:\> mkdir dev
 
 #. Create and activate a new virtualenv. ::
 
       C:\> cd envs
-      C::\envs> virtualenv sdk
+      C:\envs> virtualenv sdk
       C:\envs> sdk\Scripts\activate.bat
 
 #. Now you are ready to initialize your version of xblock-sdk. You
    need to run these commands while the sdk vitrualenv is active. ::
 
-      (sdk) $ cd ~/dev/xblock-sdk
-      (sdk) $ make install
+      (sdk) C:\> cd dev\xblock-sdk
+      (sdk) C:\dev\xblock-sdk\> make install
 
 #. If you run into a problem regarding a missing ``vcvaralls.bat``
    file, then go to
@@ -181,13 +176,19 @@ Run the workbench web server
 Anytime that you want to run the SDK workbench, you have to activate
 your virtual environment, and then the python web server.
 Note that if you just did the installation steps above, then you
-aready have a virtual environment activated.
+already have a virtual environment activated.
 
-#. Linux, MacOS, MS Windows 7 (Bash) ::
+#. Linux, MacOS ::
 
       $ . ~/envs/sdk/bin/activate
       (sdk) $ cd ~/dev/xblock-sdk
       (sdk) $ sudo python manage.py runserver
+
+#. MS Windows 7 (Bash) ::
+
+      $ . ~/envs/sdk/Scripts/activate
+      (sdk) $ cd ~/dev/xblock-sdk
+      (sdk) $ python manage.py runserver
 
 #. MS Windows 7 (cmd.exe) ::
 
@@ -210,29 +211,27 @@ You should be able to visit http://127.0.0.1:8000/ and see something like this:
 
 
 -------------------
-Create a new xblock
+Create a new XBlock
 -------------------
 #. Linux
 
-   #. Create a new xblock using a template-based generator for new XBlocks ::
+   #. Create a new XBlock using a template-based generator for new XBlocks ::
 
          $ cd ~/dev/OpenDSAX/xblocks
-         $ mkdir test
-         $ cd test
          $ python ~/dev/xblock-sdk/script/startnew.py
          short name: test
          Class name: TestXBlock
 
    #. Then create the file requirements.txt in test folder to allow to
       register the package, as well as automatically install other
-      dependencies that your xblock might need.
+      dependencies that your XBlock might need.
 
-   #. For the test xblock you need to write only one line ``-e .`` in
+   #. For the test XBlock you need to write only one line ``-e .`` in
       requirements.txt. The ``-e .`` option tells to always use the
       latest files from the development directory, instead of
       packaging the files when you run the command.
 
-   #. Then run pip to register the test xblock package and allow
+   #. Then run pip to register the test XBlock package and allow
       XBlock to find the entry point (in sdk virtualenv) ::
 
          (sdk) $ cd ~/dev/OpenDSAX/xblocks/test
@@ -241,7 +240,7 @@ Create a new xblock
    #. Now (re)start the workbench server.
 	   
    #. You should be able to visit http://127.0.0.1:8000/ and see your
-      new xblock TestXBlock in the list
+      new XBlock TestXBlock in the list
 
          .. image:: _static/workbench_test_XBlock.png
             :width: 650px
@@ -251,25 +250,23 @@ Create a new xblock
 
 #. Windows
 
-   #. Create a new xblock using a template-based generator for new XBlocks ::
+   #. Create a new XBlock using a template-based generator for new XBlocks ::
 
          C:\> cd dev\OpenDSAX\xblocks
-         C:\dev\OpenDSAX\xblocks> mkdir test
-         C:\dev\OpenDSAX\xblocks>cd test
-         C:\dev\OpenDSAX\xblocks\test>python c:\dev\xblock-sdk\script\startnew.py
+         C:\dev\OpenDSAX\xblocks\>python c:\dev\xblock-sdk\script\startnew.py
          short name: test
          Class name: TestXBlock
 
    #. Then create the file requirements.txt in test folder to allow to
       register the package, as well as automatically install other
-      dependencies that your xblock might need:
+      dependencies that your XBlock might need:
 
-#. For the test xblock you need to write only one line ``-e .`` in
+#. For the test XBlock you need to write only one line ``-e .`` in
    requirements.txt. the ``-e .`` option tells to always use the
    latest files from the development directory, instead of packaging
    the files when you run the command.
 
-#. Then run pip to register the test xblock package and allow XBlock
+#. Then run pip to register the test XBlock package and allow XBlock
    to find the entry point (in sdk virtualenv) ::
 
       (sdk) C:\>cd dev\OpenDSAX\xblocks\test
@@ -278,7 +275,7 @@ Create a new xblock
 #. Now (re)start the workbench server.
 	   
 #. You should be able to visit http://127.0.0.1:8000/ and see your new
-   xblock TestXBlock in the list
+   XBlock TestXBlock in the list
 
       .. image:: _static/workbench_test_XBlock.png
          :width: 650px
@@ -288,12 +285,12 @@ Create a new xblock
 
 
 -----------------------------
-Developing and testing xblock
+Developing and testing XBlock
 -----------------------------
 
 Once you install your XBlock into sdk virtualenv, the workbench will
 automatically display its scenarios for you to experiment with. Any
-changes or updates you do to the xblock will be automatically loaded
+changes or updates you do to the XBlock will be automatically loaded
 by the workbench when you refresh the browser. So you only need to
 keep your workbench up and running while you are developing your
-xblock.
+XBlock.

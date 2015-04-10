@@ -156,6 +156,12 @@ MS Windows (using cmd.exe)
       C:\envs> virtualenv sdk
       C:\envs> sdk\Scripts\activate.bat
 
+#. Clone the two repositories. ::
+
+      C:\> cd dev
+      C:\dev> git clone https://github.com/edx/xblock-sdk.git
+      C:\dev> git clone https://github.com/OpenDSA/OpenDSAX.git
+
 #. Now you are ready to initialize your version of xblock-sdk. You
    need to run these commands while the sdk vitrualenv is active. ::
 

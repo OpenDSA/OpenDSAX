@@ -69,6 +69,7 @@ Linux, MacOS
 #. Create and activate a new virtualenv. We are going to call it
    "sdk", but really you could use any name that you like.::
 
+      $ cd ~/envs
       First find where your version of python 2.7 is installed.
 
       $ which python
@@ -109,6 +110,7 @@ MS Windows (using Bash)
 #. Create and activate a new virtualenv. We are going to call it
    "sdk", but really you could use any name that you like. ::
 
+      $ cd ~/envs
       First find where your version of python 2.7 is installed.
 
       $ which python
@@ -117,6 +119,7 @@ MS Windows (using Bash)
       Now you create your virtual environment for use later.
 
       $ virtualenv -p /path/to/python2.7 sdk
+
 
 #. Clone the two repositories. ::
 
@@ -129,6 +132,7 @@ MS Windows (using Bash)
 
       $ . ~/envs/sdk/Scripts/activate
       (sdk) $ cd ~/dev/xblock-sdk
+      (sdk) $ pip install --upgrade setuptools
       (sdk) $ make install
 
 #. If you run into a problem regarding a missing ``vcvaralls.bat``
@@ -166,6 +170,7 @@ MS Windows (using cmd.exe)
    need to run these commands while the sdk vitrualenv is active. ::
 
       (sdk) C:\> cd dev\xblock-sdk
+      (sdk) C:\dev\xblock-sdk\> pip install --upgrade setuptools
       (sdk) C:\dev\xblock-sdk\> make install
 
 #. If you run into a problem regarding a missing ``vcvaralls.bat``
@@ -180,27 +185,19 @@ Run the workbench web server
 ----------------------------
 
 Anytime that you want to run the SDK workbench, you have to activate
-your virtual environment, and then the python web server.
+your virtual environment, and then the python web server. 
 Note that if you just did the installation steps above, then you
 already have a virtual environment activated.
 
-#. Linux, MacOS ::
+Type the following command to get workbench up and running in a single step.
 
-      $ . ~/envs/sdk/bin/activate
-      (sdk) $ cd ~/dev/xblock-sdk
-      (sdk) $ sudo python manage.py runserver
+#. Linux, MacOS and MS Windows 7 (Bash) ::
 
-#. MS Windows 7 (Bash) ::
-
-      $ . ~/envs/sdk/Scripts/activate
-      (sdk) $ cd ~/dev/xblock-sdk
-      (sdk) $ python manage.py runserver
+      $ . ~/dev/openDSAX/run-sdk
 
 #. MS Windows 7 (cmd.exe) ::
 
-      C:\> envs\sdk\Scripts\activate.bat
-      (sdk) C:\> cd dev\xblock-sdk
-      (sdk) C:\dev\xblock-sdk> python manage.py runserver
+      C:\> C:\dev\OpenDSAX\run-sdk.bat
 
 
 --------------------------
@@ -259,7 +256,7 @@ Create a new XBlock
    #. Create a new XBlock using a template-based generator for new XBlocks ::
 
          C:\> cd dev\OpenDSAX\xblocks
-         C:\dev\OpenDSAX\xblocks\>python c:\dev\xblock-sdk\script\startnew.py
+         C:\dev\OpenDSAX\xblocks>python C:\dev\xblock-sdk\script\startnew.py
          short name: test
          Class name: TestXBlock
 

@@ -1,0 +1,40 @@
+# This script will activate sdk virtualenv and then run xblock-sdk web server
+# The script assumes that sdk virtualenv can be found in ~/envs/sdk
+# and xblock-sdk can be found in ~/dev/xblock-sdk
+flashred="\033[5;31;40m"
+red="\033[31;40m"
+none="\033[0m"
+greentext="\033[32m"
+bold="\033[1m"
+normal="\033[0m"
+
+# check if ~/envs/sdk and ~/dev/xblock-sdk exists
+sdkenvpath=~/envs/sdk
+xblocksdkpath=~/dev/xblock-sdk
+
+if [ ! -d "$sdkenvpath" ]; then
+	echo -e $flashred"ERROR: "$none$red"Directory $sdkenvpath cannot be found!, create sdk virtualenv first."$none
+	return
+else
+	echo -e $greentext"Directory Found: "$normal"$sdkenvpath"$normal
+fi
+if [ ! -d "$xblocksdkpath" ]; then
+	echo -e $flashred"ERROR: "$none$red"Directory $xblocksdkpath cannot be found!"$none
+	return
+else
+	echo -e $greentext"Directory Found: "$normal"$xblocksdkpath"$normal
+fi
+home=$(echo "$HOME" | awk -F'/' '{print $2}')
+
+# activate sdk virtualenv
+# activate acript path is in different locations based on unix based or windows operating systems.
+if [[ $home == "home" ||  $home == "Users" ]]; then
+	. $sdkenvpath/bin/activate
+else
+	. $sdkenvpath/Scripts/activate
+fi
+# run xblock-sdk web server
+# By default, the server runs on port 8000 on the IP address 127.0.0.1. 
+# You can pass in an IP address and port number explicitly.
+cd $xblocksdkpath
+python manage.py runserver

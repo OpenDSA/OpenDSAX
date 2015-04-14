@@ -1,0 +1,9 @@
+/* CSS for MCQOrderedXBlock */
+
+.mcq_ordered_block .count {
+    font-weight: bold;
+}
+
+.mcq_ordered_block p {
+    cursor: pointer;
+}

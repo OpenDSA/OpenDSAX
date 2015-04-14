@@ -8,6 +8,9 @@ import os
 import re
 import codecs
 import json
+import xml.dom.minidom as minidom
+from pprint import pprint
+from xml.etree.ElementTree import ElementTree, SubElement, Element
 from bs4 import BeautifulSoup
 
 __author__ = 'breakid'
@@ -254,6 +257,13 @@ def update_edx_file(path, modules):
   with codecs.open(path, 'w', 'utf-8') as html_file:
     html_file.writelines(html)
     
+def pretty_print_xml(data, file_path):
+    ElementTree(data).write(file_path)
+    xml = minidom.parse(file_path)
+    with open(file_path, 'w') as resaved_file:
+        # [23:] omits the stupid xml header
+        resaved_file.write(xml.toprettyxml()[23:])
+    
 def make_edx(config):
   dest_dir = config.book_dir + config.rel_book_output_path
   # Iterate through all of the existing files
@@ -265,27 +275,55 @@ def make_edx(config):
     file_path = os.path.join(dest_dir, path)
     update_edx_file(file_path, tuple(html_files)+ignore_files)
   
-  with open(os.path.join(dest_dir, 'course.xml'), 'w') as out:
-    body = '''<course url_name="{url_name}" 
-                      org="{organization}" 
-                      course="{course}"/>'''.format(
-                      url_name=config.title,
-                      organization='VirginiaTech',
-                      course=config.title)
-    out.write(body)
+  # Create the directories
   os.mkdir(os.path.join(dest_dir, 'chapter/'))
-  from pprint import pprint
-  for chapter, sections in config.chapters.items():
-    with open(os.path.join(dest_dir, 'chapter', chapter+'.xml'), 'w') as chapter_file:
-        chapter_file.write('<chapter display_name="{chapter}">\n'.format(chapter=chapter))
-        for section, data in sections.items():
-            chapter_file.write('\t<sequential url_name="{section}"/>\n'.format(section=section.replace('/', '_')))
-        chapter_file.write('</chapter>')
-    for section, data in sections.items():
-        print chapter, section, data['long_name']
-        for name, exercise in data['exercises'].items():
-            print(name)
-            pprint(dict(exercise))
+  os.mkdir(os.path.join(dest_dir, 'sequential/'))
+  
+  # Create the course.xml toplevel file
+  course_file_path = os.path.join(dest_dir, 'course.xml')
+  course_xml = Element('course', {'url_name': config.title,
+                                   'org': 'VirginiaTech',
+                                   'course': config.title})
+  pretty_print_xml(course_xml, course_file_path)
+  # Course -> Chapter -> Sequential -> Vertical -> Module -> Exercise
+  # Create the chapter files
+  for chapter_name, sections in config.chapters.items():
+    chapter_file_path = os.path.join(dest_dir, 'chapter', chapter_name+'.xml')
+    chapter_xml = Element('chapter', {'display_name': chapter_name})
+    # Create the sequential files
+    for section_name, section_data in sections.items():
+        sequential_name = section_name.replace('/', '_')
+        sequential_file_path = os.path.join(dest_dir, 'sequential', sequential_name+'.xml')
+        SubElement(chapter_xml, 'sequential', {'url_name': sequential_name})
+        sequential_xml = Element('sequential', {'display_name': sequential_name})
+        vertical_xml = SubElement(sequential_xml, 'vertical', {'url_name': sequential_name+'_vertical'})
+        module_xml = SubElement(vertical_xml, 'module', {'url_name': sequential_name+'_module'})
+        # Add in each exercise
+        for name, exercise in section_data['exercises'].items():
+            exer_options = exercise.get('exer_options', {})
+            SubElement(module_xml, 'jsav',
+                       {'url_name': name,
+                        'xblock-family': "xblock.v1",
+                        # TODO: width/height comes from where?
+                        'problem_width': str(exercise.get('width', 825)),
+                        'problem_height': str(exercise.get('height', 600)),
+                        # TODO: Check on all of these properties
+                        'threshold': str(exercise.get('threshold', 0.9)),
+                        'points': str(exercise.get('weight', 2.0)),
+                        'required': str(exercise.get('required', True)),
+                        'long_name': exercise.get('long_name', "No Long Name"),
+                        'display_name': exercise.get('long_name', "No Long Name"),
+                        'JOP_lang': exercise.get('long_name', "en"),
+                        'js_resources': exercise.get('js_resources', ""),
+                        'problem_url': exercise.get('problem_url', "/AV/"+chapter_name),
+                        'short_name': name,
+                        'showhide': str(exercise.get('required', "none")),
+                        'JXOP_feedback': exer_options.get('JXOP-feedback', "continuous"),
+                        'JXOP_fixmode': exer_options.get('JXOP-fixmode', "fix"),
+                        'JXOP_code': exer_options.get('JXOP-code', "none")
+                        })
+        pretty_print_xml(sequential_xml, sequential_file_path)
+    pretty_print_xml(chapter_xml, chapter_file_path)
 def main(argv):
   if len(argv) != 3:
     print "ERROR. Usage: %s <source directory> <destination directory>\n" % argv[0]

@@ -50,11 +50,11 @@ class MCQRandomTemplateXBlock(XBlock):
                     "answers": json.dumps(data["question"]["answers"]),
                     "solution_index": data["question"]["solution_index"]
                       })
-        js_template = Template(self.resource_string("static/js/src/bubblesortquestions.js"))
+        js_template = Template(self.resource_string("static/js/src/mcq_random_template.js"))
         js_str = js_template.render(js_context)
         frag.add_javascript(js_str)
-        frag.add_css(self.resource_string("static/css/bubblesortquestions.css"))
-        frag.initialize_js('BubblesortQuestionsXBlock')
+        frag.add_css(self.resource_string("static/css/mcq_random_template.css"))
+        frag.initialize_js('MCQRandomTemplateXBlock')
         return frag
 
 

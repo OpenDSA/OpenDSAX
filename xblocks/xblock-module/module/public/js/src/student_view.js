@@ -204,6 +204,33 @@ function ModuleXBlock(runtime, element) {
         }
     }
 
+    function sendLogData(){
+      //console.dir(localStorage);
+      //console.log(ODSA.SETTINGS.LOGGING_SERVER);
+
+      var handlerUrl = runtime.handlerUrl(element, 'storeLogData');
+
+      //There is Something to Send to the server
+      if(localStorage.length !== 0){
+
+        $.ajax({
+                type: "POST",
+                url: handlerUrl,
+                data: JSON.stringify(localStorage),
+                success: logDataStored,
+                error: function (data){
+                    console.error("Error sending data to server");
+                }
+              });
+      }
+    }
+
+    function logDataStored(data){
+      //console.log(data);
+      console.log("Logging Data of size "+ data +" Was Sent and Successfully Sent to server");
+      localStorage.clear();
+    } 
+
     $(document).ready(function () {
         //remove extraneous listeners
         // $(window).off("message")
@@ -213,5 +240,8 @@ function ModuleXBlock(runtime, element) {
         });
         $(".total_problem_score", element).text(Math.round($(".total_problem_score", element).text()));
         $(".total_problem_weight", element).text(Math.round($(".total_problem_weight", element).text()));
+
+        //Timer to flush the data in localStorage to EDX server
+        window.setInterval(sendLogData, 5000);
     });
 }

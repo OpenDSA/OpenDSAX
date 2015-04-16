@@ -158,7 +158,10 @@ class ModuleXBlock(XBlock, LmsCompatibilityMixin, StudioEditableXBlockMixin, Stu
         fragment.add_javascript_url(self.runtime.local_resource_url(self, 'public/lib/odsaUtils-min.js'))
         fragment.add_javascript_url(self.runtime.local_resource_url(self, 'public/lib/odsaMOD-min.js'))
         fragment.add_javascript_url(self.runtime.local_resource_url(self, 'public/lib/conceptMap.js'))
-
+    
+    @XBlock.json_handler
+    def storeLogData(self, data, suffix=''):
+        return len(data.values());
 
     # workbench while developing your XBlock.
         # <content short_name="Quicksort"/>

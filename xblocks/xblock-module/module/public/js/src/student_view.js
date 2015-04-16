@@ -195,11 +195,11 @@ function ModuleXBlock(runtime, element) {
             // Save the event in localStorage
             if (!data.logged) {
                 delete data.logged; // In case it explicitly says 'false'
-                odsaUtils.logEvent(data);
+                //odsaUtils.logEvent(data);
             }
 
             if (flush) {
-                flushStoredData();
+                //flushStoredData();
             }
         }
     }

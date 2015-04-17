@@ -227,7 +227,7 @@ function ModuleXBlock(runtime, element) {
 
     function logDataStored(data){
       //console.log(data);
-      console.log("Logging Data of size "+ data +" Was Sent and Successfully Sent to server");
+      console.log("Event data of size "+data+" are logged and successfully saved on server");
       localStorage.clear();
     } 
 

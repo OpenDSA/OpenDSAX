@@ -86,7 +86,7 @@ Knowledge background
 - troubles on windows
 	- symlinks
 	- coffe scipt generation
-	- 
+	- if connection to github is inturrepted use vagrant up, vagrant provision
 - run devstack
 - LMS work flow
 - Studio work flow

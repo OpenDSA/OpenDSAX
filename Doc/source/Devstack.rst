@@ -79,6 +79,7 @@ Knowledge background
 - Introduction (birch, takes long time, background information)
 - tools chain (cURL)
 - One time installation (run as administrator)
+	- setx env-var named-release
 	- Installation validation
 	- what about ports forwarding and shared folders issue.
 	- the provisiong setp should be completed sucessfully, use provision option to reprovision the

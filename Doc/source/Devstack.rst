@@ -25,7 +25,7 @@ The Devstack configuration has the following components:
 
 This document contains instructions for instaling the most recent named release of OpenEdX Devstack called ``Birch``.
 
-For more information on ``Birch`` see `release note <https://open.edx.org/announcements/open-edx-release-birch-release-february-24-2015>`_.
+For more information on ``Birch`` see `Birch release announcement <https://open.edx.org/announcements/open-edx-release-birch-release-february-24-2015>`_.
 
 ----------------------
 Software Prerequisites
@@ -33,12 +33,12 @@ Software Prerequisites
 To install and run Devstack, you must first install the following required software.
 
 #. Linux:
-     #) VirtualBox 4.3.12 or higher
-     #) Vagrant 1.6.5 or higher
+     #) `VirtualBox 4.3.12 <https://www.virtualbox.org/wiki/Downloads>`_ or higher
+     #) `Vagrant 1.6.5 <http://www.vagrantup.com/downloads.html>`_ or higher
 
 #. MS Windows 7:
-     #) VirtualBox version 4.3.20
-     #) Vagrant version 1.6.5
+     #) `VirtualBox version 4.3.20 <http://dlc-cdn.sun.com/virtualbox/4.3.20/VirtualBox-4.3.20-96997-Win.exe>`_
+     #) `Vagrant version 1.6.5 <https://dl.bintray.com/mitchellh/vagrant/vagrant_1.6.5.msi>`_
      #) See below for installing cURL on windows
 
 
@@ -47,7 +47,7 @@ One-time Installation
 ---------------------
 Devstack Installation will require downloading a vitrual box and many repositories from edx github account. Make sure you have reliable Internet connection to be able to complete the installation steps successfully.
 
-For a complete installation manual see `here <http://edx.readthedocs.org/projects/edx-installing-configuring-and-running/en/latest/index.html>`_. However we also provide a step by step instructions and show solutions to the most common problems we faced during the installation process.
+For a complete installation manual see `here <http://edx.readthedocs.org/projects/edx-installing-configuring-and-running/en/latest/index.html>`_. However we also provide a step by step instructions and show solutions to the most common problems faced during the installation process.
 
 In addition, this `wiki page <https://github.com/edx/configuration/wiki/Vagrant-troubleshooting>`_ shows different issues that could happen during vagrant installation and how to solve them.
 
@@ -64,13 +64,13 @@ Linux
 	$ export OPENEDX_RELEASE="named-release/birch"
 	$ vagrant up
 
-MS Windows (using Bash) {TODO}
+[TODO] MS Windows (using Bash) 
 ------------------------------
 
 MS Window 7
 -----------
 
-#. Download OpenEdX ``Birch`` virtual box and prepare for provisioning step: Open CLI (cmd) with "run as administrator" (Thats right click the CMD program/icon and choose "Run as Administrator".) ::
+#. Download OpenEdX ``Birch`` virtual box and prepare for provisioning step: Open CLI (cmd) with "run as administrator" (Right click the CMD program/icon and choose "Run as Administrator") ::
 
 	C:\> mkdir devstack
 	C:\> cd devstack
@@ -78,7 +78,7 @@ MS Window 7
 	C:\devstack> vagrant plugin install vagrant-vbguest
 	C:\devstack> SETX OPENEDX_RELEASE "named-release/birch"
 
-2- Provisioning step: You have to open a new CLI (cmd) because SETX command we executed in the previous step writes variables to the master environment in the registry, edits will only take effect when a new command window is opened - they do not affect the current CMD or PowerShell session. Then execute the following command. ::
+2- Provisioning step: You have to open a new CLI (cmd) because SETX command we've executed in the previous step writes variables to the master environment in the registry, edits will only take effect when a new command window is opened - they do not affect the current CMD or PowerShell session. Then execute the following command. ::
 
 	C:\devstack> vagrant up
 
@@ -92,40 +92,69 @@ MS Window 7
 Using the OpenEdX devstack
 --------------------------
 
-Follow the instructions `here <https://github.com/edx/configuration/wiki/edX-Developer-Stack#lms-workflow>`_ to bring the VM up and start running OpenEdX LMS and Studio.
+Follow the instructions `On this wiki page <https://github.com/edx/configuration/wiki/edX-Developer-Stack#lms-workflow>`_ to bring the VM up and start running OpenEdX LMS and Studio.
 
 ------------------------------------
 Deploying OpenDSAX xblocks on devstack
 ------------------------------------
 
-#. To use OpenDSAX xblocks in the Studio and LMS, there are two things you need to do:
-     #) Make sure the ALLOW_ALL_ADVANCED_COMPONENTS feature flag is set to True
-     #) Install OpenDSAX xblocks into the virtual environment you are running the studio from
+#. To use OpenDSAX xblocks (or any other xblocks) in the Studio and LMS, there are three things you need to do:
+	#) Clone OpenDSAX repository (prefered to be inside devstack folder).
+	#) Make sure the ALLOW_ALL_ADVANCED_COMPONENTS feature flag is set to True
+	#) Install OpenDSAX xblocks into the virtual environment you are running the studio from
 
-#. This is how you can do them:
-     #) ALLOW_ALL_ADVANCED_COMPONENTS is set to True by default in the devstack environment, so this part is already taken care of.
-     #) The easiest way to install OpenDSAX xblocks is to make OpenDSAX folder available to the devstack machine. You can do that by adding the following lines to your Vagrantfile and restarting the machine: ::
+#. This is how you can do these steps:
+	#) Clone OpenDSAX repository
+		#. Linux ::
 
-		config.vm.synced_folder "/path/to/OpenDSAX/xblocks/xblock-jsav", "/edx/xblock-jsav", create: true, nfs: true
-		config.vm.synced_folder "/path/to/OpenDSAX/xblocks/xblock-module", "/edx/xblock-module", create: true, nfs: true
-		config.vm.synced_folder "/path/to/OpenDSAX/xblocks/xblock-content", "/edx/xblock-content", create: true, nfs: true
-		config.vm.synced_folder "/path/to/OpenDSAX/xblocks/xblock-utils", "/edx/xblock-utils", create: true, nfs: true
+			$ cd ~
+			$ git clone https://github.com/OpenDSA/OpenDSAX.git
+			$ cd OpenDSAX
+			$ make pull
 
-#. Then SSH into the devstack machine. ::
+		#. MS Wiindows 7 ::
 
+			C:\> cd devstack
+			C:\devstack> git clone https://github.com/OpenDSA/OpenDSAX.git
+			C:\devstack> cd OpenDSAX
+			C:\devstack\OpenDSAX> make pull
+
+	#) ALLOW_ALL_ADVANCED_COMPONENTS is set to True by default in the devstack environment, so this part is already taken care of.
+	#) The easiest way to install OpenDSAX xblocks is to make OpenDSAX folder available to the devstack machine. You can do that by adding the following lines to your Vagrantfile:
+
+		#. Linux ::
+
+			config.vm.synced_folder "/path/to/OpenDSAX", "/edx/OpenDSAX", create: true, nfs: true
+
+		#. MS Windows 7 ::
+
+			config.vm.synced_folder "C:/path/to/OpenDSAX", "/edx/OpenDSAX", create: true, nfs: true
+
+#. Then restart the machine and SSH into it. ::
+
+	$ vagrant halt
+	$ vagrant up
 	$ vagrant ssh
-	note: passphrase is "vagrant"
+	note: "vagrant" is the passphrase and the password
+
+#. Becasue OpenDSAX xblocks were developed to allow OpenDSA eBooks to be implemented in 
+OpenEdX platform, You have to build an OpenDSA ebook first. For that sake, OpenDSAX 
+reporsitory comes with a sample eBook called ``testX`` ::
+
+	$ sudo su edxapp
+	$ cd /edx/OpenDSAX
+	$ make testXEDX	
 
 #. Install the xblocks to the edxapp environment using pip: ::
 
 	$ sudo su edxapp
-	$ cd /edx/xblock-utils
+	$ cd /edx/OpenDSAX
 	$ pip install -r requirements.txt
-	$ cd /edx/xblock-module
+	$ cd /edx/xblocks/xblock-module
 	$ pip install -r requirements.txt
-	$ cd /edx/xblock-jsav
+	$ cd /edx/xblocks/xblock-jsav
 	$ pip install -r requirements.txt
-	$ cd /edx/xblock-content
+	$ cd /edx/xblocks/xblock-content
 	$ pip install -r requirements.txt
 
 #. Start the studio ::

@@ -219,10 +219,12 @@ def update_edx_file(path, modules):
         external, internal = href.split('#', 1)
       else:
         external, internal = href, ''
-      if external in modules:
-        print "HASHING", external
-      print "\t", link['href']
+      # Do something with the actual href
   
+  
+  '''
+  TODO: Add the references to these broken-up files in the final course zip
+  '''
   # Breaking file into components
   section_divs = soup.find('div', class_='section').find_all()
   if section_divs:
@@ -267,7 +269,7 @@ def pretty_print_xml(data, file_path):
 def make_edx(config):
   dest_dir = config.book_dir + config.rel_book_output_path
   # Iterate through all of the existing files
-  ignore_files = ('Gradebook.html', 'search.html', 
+  ignore_files = ('Gradebook.html', 'search.html', 'conceptMap.html',
                   'genindex.html', 'RegisterBook.html', 'Bibliography.html')
   html_files = [path for path in os.listdir(dest_dir)
                 if path.endswith('.html') and path not in ignore_files]

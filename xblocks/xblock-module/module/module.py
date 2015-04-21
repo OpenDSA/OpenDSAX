@@ -161,9 +161,12 @@ class ModuleXBlock(XBlock, LmsCompatibilityMixin, StudioEditableXBlockMixin, Stu
     
     @XBlock.json_handler
     def storeLogData(self, data, suffix=''):
-        for event in data.values():
+        event_list = []
+        for e in data.values():
+            event = e.replace("\\", "")
             self.runtime.publish(self, "event", event)
-        return data.values()
+            event_list.append(event)
+        return event_list
 
     # workbench while developing your XBlock.
         # <content short_name="Quicksort"/>

@@ -219,10 +219,12 @@ def update_edx_file(path, modules):
         external, internal = href.split('#', 1)
       else:
         external, internal = href, ''
-      if external in modules:
-        print "HASHING", external
-      print "\t", link['href']
+      # Do something with the actual href
   
+  
+  '''
+  TODO: Add the references to these broken-up files in the final course zip
+  '''
   # Breaking file into components
   section_divs = soup.find('div', class_='section').find_all()
   if section_divs:

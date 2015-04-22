@@ -268,7 +268,7 @@ def pretty_print_xml(data, file_path):
 def make_edx(config):
   dest_dir = config.book_dir + config.rel_book_output_path
   # Iterate through all of the existing files
-  ignore_files = ('Gradebook.html', 'search.html', 
+  ignore_files = ('Gradebook.html', 'search.html', 'conceptMap.html',
                   'genindex.html', 'RegisterBook.html', 'Bibliography.html')
   html_files = [path for path in os.listdir(dest_dir)
                 if path.endswith('.html') and path not in ignore_files]

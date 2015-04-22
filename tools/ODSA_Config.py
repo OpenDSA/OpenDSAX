@@ -538,7 +538,7 @@ class ODSA_Config:
 
     if to_edx:
         # The directory within the book directory where Sphinx will write the HTML files
-        self.rel_book_output_path = 'oxl/'
+        self.rel_book_output_path = 'html/'
     else:
         # The directory within the book directory where Sphinx will write the HTML files
         self.rel_book_output_path = 'html/'

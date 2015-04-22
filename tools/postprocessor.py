@@ -12,6 +12,8 @@ import xml.dom.minidom as minidom
 from pprint import pprint
 from xml.etree.ElementTree import ElementTree, SubElement, Element
 from bs4 import BeautifulSoup
+import tarfile
+import shutil
 
 __author__ = 'breakid'
 
@@ -182,9 +184,6 @@ def update_edx_file(path, modules):
   
   # Get the module name and create its subfolder
   mod_name = os.path.splitext(os.path.basename(path))[0]
-  mod_html_folder = os.path.join(os.path.dirname(path), 'html-{}'.format(mod_name))
-  if not os.path.exists(mod_html_folder):
-    os.mkdir(mod_html_folder)
   print mod_name
   
   # Strip out the script, style, link, and meta tags
@@ -233,21 +232,21 @@ def update_edx_file(path, modules):
     for section in section_divs:
       # If we find a slideshow or practice exercise, then write it out to a file
       if section.name == 'div' and 'data-type' in section.attrs and section['data-type'] in ('ss', 'pe'):
-        path_html = os.path.join(mod_html_folder, '{}.html'.format(found_counter))
+        path_html = os.path.join(os.path.dirname(path), '{}-{}.html'.format(mod_name, found_counter))
         with codecs.open(path_html, 'w', 'utf-8') as o:
           o.writelines(chunked_html_files)
         name = section['id']
-        path_xml = os.path.join(mod_html_folder, '{}.xml'.format(name))
-        with codecs.open(path_xml, 'w', 'utf-8') as o:
-          o.write(json.dumps({
-            key: section[key] for key in section.attrs
-          }, indent=2))
+        #path_xml = os.path.join(mod_html_folder, '{}.xml'.format(name))
+        #with codecs.open(path_xml, 'w', 'utf-8') as o:
+        #  o.write(json.dumps({
+        #    key: section[key] for key in section.attrs
+        #  }, indent=2))
         chunked_html_files = []
         found_counter += 1
       else:
         chunked_html_files.append(section.prettify())
     else:
-      path_html = os.path.join(mod_html_folder, '{}.html'.format(found_counter))
+      path_html = os.path.join(os.path.dirname(path), '{}.html'.format(mod_name, found_counter))
       with codecs.open(path_html, 'w', 'utf-8') as o:
         o.writelines(chunked_html_files)
     # TODO: Figure out proper encoding
@@ -256,8 +255,8 @@ def update_edx_file(path, modules):
     print "Failed to find any 'div' tags with a 'section' class."
   
   # Post-processing complete, write out the file
-  with codecs.open(path, 'w', 'utf-8') as html_file:
-    html_file.writelines(html)
+  #with codecs.open(path, 'w', 'utf-8') as html_file:
+    #html_file.writelines(html)
     
 def pretty_print_xml(data, file_path):
     ElementTree(data).write(file_path)
@@ -294,6 +293,7 @@ def make_edx(config):
     chapter_xml = Element('chapter', {'display_name': chapter_name})
     # Create the sequential files
     for section_name, section_data in sections.items():
+        subsection_name = section_name.split('/')[-1]
         sequential_name = section_name.replace('/', '_')
         sequential_file_path = os.path.join(dest_dir, 'sequential', sequential_name+'.xml')
         SubElement(chapter_xml, 'sequential', {'url_name': sequential_name})
@@ -301,7 +301,12 @@ def make_edx(config):
         vertical_xml = SubElement(sequential_xml, 'vertical', {'url_name': sequential_name+'_vertical'})
         module_xml = SubElement(vertical_xml, 'module', {'url_name': sequential_name+'_module'})
         # Add in each exercise
-        for name, exercise in section_data['exercises'].items():
+        SubElement(module_xml, 'content', {
+                        'url_name': '{}-0'.format(subsection_name),
+                        'xblock-family': "xblock.v1",
+                        'long_name': "{} OpenDSA Content".format(section_name)
+                        })
+        for index, (name, exercise) in enumerate(section_data['exercises'].items(), 1):
             exer_options = exercise.get('exer_options', {})
             SubElement(module_xml, 'jsav',
                        {'url_name': name,
@@ -324,8 +329,28 @@ def make_edx(config):
                         'JXOP_fixmode': exer_options.get('JXOP-fixmode', "fix"),
                         'JXOP_code': exer_options.get('JXOP-code', "none")
                         })
+            SubElement(module_xml, 'content', {
+                        'url_name': '{}-{}'.format(subsection_name, index),
+                        'xblock-family': "xblock.v1",
+                        'long_name': "{} OpenDSA Content".format(section_name)
+                        })
         pretty_print_xml(sequential_xml, sequential_file_path)
     pretty_print_xml(chapter_xml, chapter_file_path)
+    
+    mod_name = os.path.join(dest_dir, os.path.splitext(os.path.basename(path))[0]+'.tar.gz')
+    print mod_name
+    with tarfile.open(mod_name, 'w:gz') as tar:
+        tar.addfile(tarfile.TarInfo('course.xml'),
+                file(os.path.join(dest_dir, 'course.xml')))
+        for a_directory in ('chapter', 'sequential'):
+            for a_path in os.listdir(os.path.join(dest_dir, a_directory)):
+                a_full_path = os.path.join(a_directory, a_path)
+                tar.addfile(tarfile.TarInfo(a_full_path),
+                        file(os.path.join(dest_dir, a_full_path)))
+    #shutil.rmtree(os.path.join(dest_dir, 'chapter/'))
+    #shutil.rmtree(os.path.join(dest_dir, 'sequential/'))
+    #os.remove(os.path.join(dest_dir, 'course.xml'))
+    
 def main(argv):
   if len(argv) != 3:
     print "ERROR. Usage: %s <source directory> <destination directory>\n" % argv[0]

@@ -202,6 +202,7 @@ def update_edx_file(path, modules):
         # Really? No href? Is that even valid HTML?
         continue
     href = link['href']
+    #TODO: Check if we need to add chapter folders to the URL
     # Skip dummy urls redirecting to itself
     if href == '#':
       continue
@@ -212,6 +213,8 @@ def update_edx_file(path, modules):
       continue
     elif href.startswith('http://'):
       continue
+    elif href.startswith('../'):
+      continue
     elif href.endswith('.rst'):
       continue
     else:
@@ -219,6 +222,9 @@ def update_edx_file(path, modules):
         external, internal = href.split('#', 1)
       else:
         external, internal = href, ''
+      if external.endswith('.html'):
+        link['href'] = '#'.join((external[:-5],internal))
+        
       # Do something with the actual href
   
   
@@ -228,9 +234,9 @@ def update_edx_file(path, modules):
   # Breaking file into components
   section_divs = soup.find('div', class_='section').find_all()
   exercise_data = {}
+  found_counter = 0
   if section_divs:
     chunked_html_files = []
-    found_counter = 0
     for section in section_divs:
       # If we find a slideshow or practice exercise, then write it out to a file
       if section.name == 'div' and 'data-type' in section.attrs and section['data-type'] in ('ss', 'pe'):
@@ -239,23 +245,21 @@ def update_edx_file(path, modules):
           o.writelines(chunked_html_files)
         name = section['id']
         exercise_data[name] = {key: section[key] for key in section.attrs}
-        #path_xml = os.path.join(os.path.dirname(path), '{}.xml'.format(name))
-        #with codecs.open(path_xml, 'w', 'utf-8') as o:
-          #o.write(json.dumps({
-            #key: section[key] for key in section.attrs
-          #}, indent=2))
         chunked_html_files = []
         found_counter += 1
       else:
         chunked_html_files.append(section.prettify())
     else:
-      path_html = os.path.join(os.path.dirname(path), '{}.html'.format(mod_name, found_counter))
+      path_html = os.path.join(os.path.dirname(path), '{}-{}.html'.format(mod_name, found_counter))
       with codecs.open(path_html, 'w', 'utf-8') as o:
         o.writelines(chunked_html_files)
     # TODO: Figure out proper encoding
     html = [n.prettify() for n in section_divs]
   else:
     print "Failed to find any 'div' tags with a 'section' class."
+    path_html = os.path.join(os.path.dirname(path), '{}-{}.html'.format(mod_name, found_counter))
+    with codecs.open(path_html, 'w', 'utf-8') as o:
+      o.writelines(html)
   
   # Post-processing complete, write out the file
   #with codecs.open(path, 'w', 'utf-8') as html_file:

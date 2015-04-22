@@ -14,6 +14,7 @@ from xml.etree.ElementTree import ElementTree, SubElement, Element
 from bs4 import BeautifulSoup
 import tarfile
 import shutil
+import urlparse
 
 __author__ = 'breakid'
 
@@ -226,6 +227,7 @@ def update_edx_file(path, modules):
   '''
   # Breaking file into components
   section_divs = soup.find('div', class_='section').find_all()
+  exercise_data = {}
   if section_divs:
     chunked_html_files = []
     found_counter = 0
@@ -236,11 +238,12 @@ def update_edx_file(path, modules):
         with codecs.open(path_html, 'w', 'utf-8') as o:
           o.writelines(chunked_html_files)
         name = section['id']
-        #path_xml = os.path.join(mod_html_folder, '{}.xml'.format(name))
+        exercise_data[name] = {key: section[key] for key in section.attrs}
+        #path_xml = os.path.join(os.path.dirname(path), '{}.xml'.format(name))
         #with codecs.open(path_xml, 'w', 'utf-8') as o:
-        #  o.write(json.dumps({
-        #    key: section[key] for key in section.attrs
-        #  }, indent=2))
+          #o.write(json.dumps({
+            #key: section[key] for key in section.attrs
+          #}, indent=2))
         chunked_html_files = []
         found_counter += 1
       else:
@@ -257,6 +260,9 @@ def update_edx_file(path, modules):
   # Post-processing complete, write out the file
   #with codecs.open(path, 'w', 'utf-8') as html_file:
     #html_file.writelines(html)
+  # Delete the file on the way out
+  os.remove(path)
+  return exercise_data
     
 def pretty_print_xml(data, file_path):
     ElementTree(data).write(file_path)
@@ -272,9 +278,10 @@ def make_edx(config):
                   'genindex.html', 'RegisterBook.html', 'Bibliography.html')
   html_files = [path for path in os.listdir(dest_dir)
                 if path.endswith('.html') and path not in ignore_files]
+  exercises = {}
   for path in html_files:
     file_path = os.path.join(dest_dir, path)
-    update_edx_file(file_path, tuple(html_files)+ignore_files)
+    exercises[path] = update_edx_file(file_path, tuple(html_files)+ignore_files)
   
   # Create the directories
   os.mkdir(os.path.join(dest_dir, 'chapter/'))
@@ -288,6 +295,7 @@ def make_edx(config):
   pretty_print_xml(course_xml, course_file_path)
   # Course -> Chapter -> Sequential -> Vertical -> Module -> Exercise
   # Create the chapter files
+  
   for chapter_name, sections in config.chapters.items():
     chapter_file_path = os.path.join(dest_dir, 'chapter', chapter_name+'.xml')
     chapter_xml = Element('chapter', {'display_name': chapter_name})
@@ -307,27 +315,30 @@ def make_edx(config):
                         'long_name': "{} OpenDSA Content".format(section_name)
                         })
         for index, (name, exercise) in enumerate(section_data['exercises'].items(), 1):
+            pdata = exercises[subsection_name+'.html'][name]
+            params = urlparse.parse_qs(pdata.get('data-frame-src','?').split('?', 1)[1])
+            params = {k: v[0] for k, v in params.items()}
             exer_options = exercise.get('exer_options', {})
             SubElement(module_xml, 'jsav',
                        {'url_name': name,
                         'xblock-family': "xblock.v1",
-                        # TODO: width/height comes from where?
-                        'problem_width': str(exercise.get('width', 825)),
-                        'problem_height': str(exercise.get('height', 600)),
-                        # TODO: Check on all of these properties
-                        'threshold': str(exercise.get('threshold', 0.9)),
-                        'points': str(exercise.get('weight', 2.0)),
-                        'required': str(exercise.get('required', True)),
-                        'long_name': exercise.get('long_name', "No Long Name"),
-                        'display_name': exercise.get('long_name', "No Long Name"),
-                        'JOP_lang': exercise.get('long_name', "en"),
-                        'js_resources': exercise.get('js_resources', ""),
-                        'problem_url': exercise.get('problem_url', "/AV/"+chapter_name),
+                        'problem_width': pdata.get('data-frame-width', ''),
+                        'problem_height': pdata.get('data-frame-height', ''),
+                        'threshold': pdata.get('data-threshold', ''),
+                        'points': pdata.get('data-points', ''),
+                        'required': pdata.get('data-required', ''),
+                        'long_name': pdata.get('data-long-name', ""),
+                        'display_name': pdata.get('data-long-name', ""),
+                        # TODO: where do js_resources come from?
+                        'js_resources': pdata.get('js_resources', ""),
+                        'problem_url': pdata.get('problem_url', "/AV/"+chapter_name),
                         'short_name': name,
-                        'showhide': str(exercise.get('required', "none")),
-                        'JXOP_feedback': exer_options.get('JXOP-feedback', "continuous"),
-                        'JXOP_fixmode': exer_options.get('JXOP-fixmode', "fix"),
-                        'JXOP_code': exer_options.get('JXOP-code', "none")
+                        'showhide': pdata.get('data-showhide', ""),
+                        # JXOP-debug?
+                        'JOP_lang': str(params.get('JOP-lang', "")),
+                        'JXOP_feedback': str(params.get('JXOP-feedback', "")),
+                        'JXOP_fixmode': str(params.get('JXOP-fixmode', "")),
+                        'JXOP_code': str(params.get('JXOP-code', ""))
                         })
             SubElement(module_xml, 'content', {
                         'url_name': '{}-{}'.format(subsection_name, index),
@@ -337,19 +348,18 @@ def make_edx(config):
         pretty_print_xml(sequential_xml, sequential_file_path)
     pretty_print_xml(chapter_xml, chapter_file_path)
     
-    mod_name = os.path.join(dest_dir, os.path.splitext(os.path.basename(path))[0]+'.tar.gz')
-    print mod_name
-    with tarfile.open(mod_name, 'w:gz') as tar:
-        tar.addfile(tarfile.TarInfo('course.xml'),
-                file(os.path.join(dest_dir, 'course.xml')))
-        for a_directory in ('chapter', 'sequential'):
-            for a_path in os.listdir(os.path.join(dest_dir, a_directory)):
-                a_full_path = os.path.join(a_directory, a_path)
-                tar.addfile(tarfile.TarInfo(a_full_path),
-                        file(os.path.join(dest_dir, a_full_path)))
-    #shutil.rmtree(os.path.join(dest_dir, 'chapter/'))
-    #shutil.rmtree(os.path.join(dest_dir, 'sequential/'))
-    #os.remove(os.path.join(dest_dir, 'course.xml'))
+  mod_name = os.path.join(dest_dir, '..', os.path.splitext(os.path.basename(path))[0]+'.tar.gz')
+  with tarfile.open(mod_name, 'w:gz') as tar:
+      tar.addfile(tarfile.TarInfo('course.xml'),
+              file(os.path.join(dest_dir, 'course.xml')))
+      for a_directory in ('chapter', 'sequential'):
+          for a_path in os.listdir(os.path.join(dest_dir, a_directory)):
+              a_full_path = os.path.join(a_directory, a_path)
+              tar.addfile(tarfile.TarInfo(a_full_path),
+                      file(os.path.join(dest_dir, a_full_path)))
+  shutil.rmtree(os.path.join(dest_dir, 'chapter/'))
+  shutil.rmtree(os.path.join(dest_dir, 'sequential/'))
+  os.remove(os.path.join(dest_dir, 'course.xml'))
     
 def main(argv):
   if len(argv) != 3:

@@ -1,0 +1,60 @@
+.. _ToDo:
+
+.. raw:: html
+
+   <script>ODSA.SETTINGS.DISP_MOD_COMP = False;ODSA.SETTINGS.MODULE_NAME = "ToDo";ODSA.SETTINGS.MODULE_LONG_NAME = "ToDo";ODSA.SETTINGS.MODULE_CHAPTER = ""; ODSA.SETTINGS.BUILD_DATE = "2015-04-23 03:17:15"; ODSA.SETTINGS.BUILD_CMAP = true;</script>
+
+
+.. |--| unicode:: U+2013   .. en dash
+.. |---| unicode:: U+2014  .. em dash, trimming surrounding whitespace
+   :trim:
+
+
+.. index:: ! todo
+
+TODO List
+=========
+
+.. raw:: html
+
+   <hr /><h1>Exercise</h1><hr />
+
+.. raw:: html
+
+   <h2><a href="Quicksort.html#todo1">source: Quicksort</a></h2>
+
+.. TODO::
+
+   :type: Exercise
+
+   Consider the Quicksort implementation for this module, where the
+   pivot is selected as the middle value of the partition.
+   Give a permutation for the values 0 through 7 that will cause
+   Quicksort to have its worst-case behavior.
+
+   There are a number of possible correct answers. To assess the
+   answer, will need to run Quicksort over student's
+   partition, and verify that at each step it will generate new
+   partitions of size 6, 5, 4, 3, 2, then 1.
+
+.. raw:: html
+
+   <hr /><h1>Slideshow</h1><hr />
+
+.. raw:: html
+
+   <h2><a href="Quicksort.html#todo0">source: Quicksort</a></h2>
+
+.. TODO::
+
+   :type: Slideshow
+
+   Explain here why the cost of Partition is linear.
+   The basic idea is that, in the worst case, there is no inward
+   movement of the ``left`` and ``right`` indices until a swap is
+   performed, at which point each has to move inward a step. So at
+   most n/2 iterations of swap and inward movement can
+   occur. Alternatively, a given inner while loop can move its pointer
+   inward multiple steps, but then that will reduce the future
+   movement that is possible.
+

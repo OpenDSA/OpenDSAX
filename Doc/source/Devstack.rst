@@ -4,8 +4,6 @@
 Working with the Devstack
 =========================
 
-This section provides complete instructions for setting up OpenEdX Devstack.
-
 ------------
 Introduction
 ------------
@@ -25,7 +23,7 @@ The Devstack configuration has the following components:
 
 This document contains instructions for instaling the most recent named release of OpenEdX Devstack called ``Birch``.
 
-For more information on ``Birch`` see `Birch release announcement <https://open.edx.org/announcements/open-edx-release-birch-release-february-24-2015>`_.
+For more information about ``Birch`` see `Birch release announcement <https://open.edx.org/announcements/open-edx-release-birch-release-february-24-2015>`_.
 
 ----------------------
 Software Prerequisites
@@ -39,7 +37,7 @@ To install and run Devstack, you must first install the following required softw
 #. MS Windows 7:
      #) `VirtualBox version 4.3.20 <http://dlc-cdn.sun.com/virtualbox/4.3.20/VirtualBox-4.3.20-96997-Win.exe>`_
      #) `Vagrant version 1.6.5 <https://dl.bintray.com/mitchellh/vagrant/vagrant_1.6.5.msi>`_
-     #) See below for installing cURL on windows
+     #) See below for installing cURL on windows [TODO: put a link]
 
 
 ---------------------

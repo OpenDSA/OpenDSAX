@@ -66,7 +66,7 @@ pull:
 	$(CP) $(XBLOCKS_HOME)/lib $(XBLOCK_JSAV)/public/
 	$(CP) $(XBLOCKS_HOME)/JSAV $(XBLOCK_JSAV)/public/
 
-install-xblocks: install-utils install-module install-jsav install-content
+install-xblocks: install-utils install-module install-jsav install-content install-binsortmcq
 
 install-utils:
 	cd $(XBLOCKS_HOME)/xblocks/xblock-utils && $(PIP)
@@ -79,3 +79,6 @@ install-jsav:
 
 install-content:
 	cd $(XBLOCKS_HOME)/xblocks/xblock-content && $(PIP)
+
+install-binsortmcq:
+	cd $(XBLOCKS_HOME)/xblocks/binsortmcq && $(PIP)

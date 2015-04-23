@@ -1,14 +1,22 @@
 import pkg_resources
+import json, urllib2
+import inspect
 import random
-import json
+import string  # pylint: disable=W0402
+import time
+import logging
 
 from django.template import Context, Template
+
+from lms_mixin import LmsCompatibilityMixin
+from xblockutils.studio_editable import StudioEditableXBlockMixin, StudioContainerXBlockMixin
 from xblock.core import XBlock
-from xblock.fields import Scope, Integer
+from xblock.fields import Scope, String, Boolean, Integer, Float, List
 from xblock.fragment import Fragment
+from xblock.exceptions import JsonHandlerError
+from xblock.validation import Validation
 
-
-class BinSortMCQXBlock(XBlock):
+class BinSortMCQXBlock(XBlock,LmsCompatibilityMixin, StudioEditableXBlockMixin):
     # Fields are defined on the class.  You can access them in your code as
     # self.<fieldname>.
     # maxQuestionIndex should be how many questions we have - 1

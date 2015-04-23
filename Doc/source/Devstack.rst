@@ -196,3 +196,11 @@ Complete all the steps as following:
 
 curl executable  > Win64  > Generic  > Any  > x86_64
 you will end up in `this page <http://www.confusedbycode.com/curl/>`_ download (With Administrator Privileges (free)) verion.
+
+-----------------------------------------
+Developing and testing XBlock on Devstack
+-----------------------------------------
+
+Once you install your XBlocks into Devstack, any changes or updates you 
+do to the XBlock will be automatically loaded by Devstack when you refresh the browser. 
+So you only need to keep Devstack up and running while you are developing and testing your XBlock.

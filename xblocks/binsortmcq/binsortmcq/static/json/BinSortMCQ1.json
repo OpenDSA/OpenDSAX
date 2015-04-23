@@ -1,0 +1,14 @@
+{
+"max_shown_answers": "4",
+"num_possible_answers": "4",
+"question" : {
+		"problem" : "Which of these inputs will cost the most for Shellsort when using divide-by-twos increments on an array with a size where n is a power of 2?",
+		"answers": [
+			"A sorted array.",
+			"An array where even positions store values 1 to n/2 and odd positions store values n/2+1 to n.",
+			"An array with random input.",
+			"A reverse sorted array."
+			],
+		"solution_index" : "1"		
+	}
+}

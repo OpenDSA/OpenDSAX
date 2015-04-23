@@ -71,7 +71,7 @@ class ContentXBlock(XBlock, LmsCompatibilityMixin, StudioEditableXBlockMixin):
 
     short_name = String(
         help = "OpenDSA contnet name, html file name",
-        default = "Quicksort",
+        default = "Quicksort-0",
         scope = Scope.settings)
 
     editable_fields = ('contnet_type', 'short_name', 'long_name','next_link','next_name',

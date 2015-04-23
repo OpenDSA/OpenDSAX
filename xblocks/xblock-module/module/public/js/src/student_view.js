@@ -65,7 +65,7 @@ function ModuleXBlock(runtime, element) {
 
                 for (var i = 0; i < children.length; i++) {
                     var child = children[i];
-                    console.log("student completed the problem, child.seed: " + child.seed + " data.seed: " + data.seed);
+                    // console.log("student completed the problem, child.seed: " + child.seed + " data.seed: " + data.seed);
                     if (child.seed === data.seed) {
                         callIfExists(child, 'reportProgress', data);
                         break;

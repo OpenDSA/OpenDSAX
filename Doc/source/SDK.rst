@@ -193,7 +193,7 @@ Type the following command to get workbench up and running in a single step.
 
 #. Linux, MacOS and MS Windows 7 (Bash) ::
 
-      $ . ~/dev/openDSAX/run-sdk
+      $ . ~/dev/OpenDSAX/run-sdk
 
 #. MS Windows 7 (cmd.exe) ::
 

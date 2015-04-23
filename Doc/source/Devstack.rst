@@ -84,6 +84,8 @@ MS Windows 7 (using cmd.exe)
 	C:\devstack> vagrant up
 	C:\devstack> vagrant provision
 
+.. _using_devstack:
+
 --------------------------
 Using the OpenEdX Devstack
 --------------------------
@@ -119,18 +121,18 @@ Linux
 
 See :ref:`both` section for remaining instructions
 
-MS Windows 7
-------------
+MS Windows 7 (using Bash)
+-------------------------
 #. Clone OpenDSAX repository ::
 
-	C:\> cd devstack
-	C:\devstack> git clone https://github.com/OpenDSA/OpenDSAX.git
-	C:\devstack> cd OpenDSAX
-	C:\devstack\OpenDSAX> make pull
+	$ cd ~/devstack
+	$ git clone https://github.com/OpenDSA/OpenDSAX.git
+	$ cd ~/devstack/OpenDSAX
+	$ make pull
 
 #. The easiest way to install OpenDSAX xblocks is to make OpenDSAX folder in your host machine available to the Devstack virtual machine. You can do that by adding the following line to your Vagrantfile ::
 
-	config.vm.synced_folder "C:/devstack/OpenDSAX", "/edx/OpenDSAX", create: true, nfs: true
+	config.vm.synced_folder "C:/path/to/devstack/OpenDSAX", "/edx/OpenDSAX", create: true, nfs: true
 
 	note: you need to put the previous line just after the following line in Vagrantfile
 	config.vm.synced_folder "#{ora_mount_dir}", "/edx/app/ora/ora", create: true, nfs: true
@@ -160,11 +162,7 @@ Both
 	$ cd /edx/OpenDSAX
 	$ make testX	
 
-#. Start the studio and LMS::
-
-	$ cd /edx/app/edxapp/edx-platform
-	$ paver devstack studio
-	$ paver devstack lms
+#. Refer to :ref:`using_devstack` to start the studio and LMS::
 
 #. To use OpenDSAX XBlocks in a course, follow the instuction `in this page <http://opendsax.readthedocs.org/en/latest/Introduction.html#trying-it-out>`_ starting from point #4.
 

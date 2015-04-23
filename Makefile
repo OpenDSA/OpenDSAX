@@ -16,9 +16,7 @@ MINIMIZE = java -jar tools/yuicompressor-2.4.7.jar --nomunge
 
 .PHONY: all clean min testX
 
-
 all: testX
-
 
 clean:
 	- $(RM) *~
@@ -37,7 +35,7 @@ min: nomin
 testX: min
 	python $(CONFIG_SCRIPT) --edx config/$@.json
 	$(CP) $(XBLOCKS_HOME)/Books/$@/html $(XBLOCK_CONTENT)/public/
-	make install-xblocks
+	$(MAKE) install-xblocks
 
 allBooks: testX
 
@@ -59,8 +57,8 @@ pull:
 	git pull
 	git submodule init
 	git submodule update
-	make -s -C JSAV
-	make -s min
+	$(MAKE) -s -C JSAV
+	$(MAKE) -s min
 	cd Doc && $(MAKE)
 	$(CP) $(XBLOCKS_HOME)/lib $(XBLOCK_MODULE)/public/
 	$(CP) $(XBLOCKS_HOME)/JSAV $(XBLOCK_MODULE)/public/
@@ -68,8 +66,6 @@ pull:
 	$(CP) $(XBLOCKS_HOME)/lib $(XBLOCK_JSAV)/public/
 	$(CP) $(XBLOCKS_HOME)/JSAV $(XBLOCK_JSAV)/public/
 
-
-# install-jsav install-module install-content
 install-xblocks: install-utils install-module install-jsav install-content
 
 install-utils:

@@ -14,7 +14,7 @@ TARGET = build
 CSSLINTFLAGS = --quiet --errors=empty-rules,import,errors --warnings=duplicate-background-images,compatible-vendor-prefixes,display-property-grouping,fallback-colors,duplicate-properties,shorthand,gradients,font-sizes,floats,overqualified-elements,import,regex-selectors,rules-count,unqualified-attributes,vendor-prefix,zero-units
 MINIMIZE = java -jar tools/yuicompressor-2.4.7.jar --nomunge
 
-.PHONY: all clean min testX test
+.PHONY: all clean min testX
 
 
 all: testX
@@ -28,12 +28,6 @@ clean:
 	- $(RM) Doc/*~
 	- $(RM) Scripts/*~
 	- $(RM) config/*~
-
-test:
-	echo $(XBLOCKS_HOME)
-	echo $(XBLOCK_MODULE)
-	echo $(XBLOCK_JSAV)
-	echo $(XBLOCK_CONTENT)
 
 min: nomin
 

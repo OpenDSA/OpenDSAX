@@ -1,0 +1,21 @@
+{
+	"problems": [{
+		"problem": {
+			"Id": "unique identifier",
+			"problem_weight": "Integer Number",
+			"problem_statment": "here is the problem definition"
+		},
+		"vars": [{
+			"Id": "var name",
+			"data-ensure": "var restrictions",
+			"var_vallue": "javascript code"
+		}],
+		"question": {
+			"question_statment": "that will use the vars defined earlier"
+		},
+		"solution": {
+
+		},
+		"hints": ""
+	}, ]
+}

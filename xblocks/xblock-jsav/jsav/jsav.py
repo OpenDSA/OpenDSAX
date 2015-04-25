@@ -212,7 +212,7 @@ class JSAVXBlock(XBlock, LmsCompatibilityMixin, StudioEditableXBlockMixin, Studi
 
 
     def studio_view(self, context):
-        fragment = super(JSAVXBlock, self).studio_view(context)
+        fragment = super(JSAVXBlock, self).studio_view(context, override=True)
         # fragment = Fragment()
         jsav_based_info = json.load(urllib2.urlopen("http://algoviz.org/OpenDSAX/AV/jsav_based_materials_list.json"))
 

@@ -1,14 +1,14 @@
 .. _Fullstack:
 
-=========================================
-Working with the Devstack (DRAFT VERSION)
-=========================================
+=======================================================================
+Working with the Fullstack using Vagrant and Virtualbox (DRAFT VERSION)
+=======================================================================
 
 ------------
 Introduction
 ------------
 
-While Devstack uses development servers (e.g. django) and Destack uses EdX core repositories checked out to your development host machine (and shared to the VM). The Fullstack (still VM) uses production web servers (e.g. gunicorn, not django development server) and Fullstack checkes out the "production" code from EdX repositories into its VM (no development shared folders with the host machine).
+While Devstack uses development web server (e.g. django) and Destack uses EdX core repositories checked out to your development host machine (and shared to the VM). The Fullstack (still VM) uses production web server (e.g. gunicorn, not django development server) and Fullstack checkes out the "production" code from EdX repositories into its VM (no development shared folders with the host machine).
 
 You may need a Fullstack VM to test your edx-platform changes you made using devstack, test a running course using a new edx-platform release before production deployment.
 
@@ -106,8 +106,6 @@ To use OpenDSAX xblocks (or any other xblock) in Fullstack Studio and LMS, there
 
 	$ cd /edx/app/edxapp/OpenDSAX
 	$ make fs-testX
-
-#. Refer to :ref:`using_fullstack` to start the studio and LMS::
 
 #. To use OpenDSAX XBlocks in a course, follow the instuction `in this page <http://opendsax.readthedocs.org/en/latest/Introduction.html#trying-it-out>`_ starting from point #4.
 

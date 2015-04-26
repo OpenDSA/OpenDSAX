@@ -115,7 +115,7 @@ class ContentXBlock(XBlock, LmsCompatibilityMixin, StudioEditableXBlockMixin):
 
 
     def studio_view(self, context):
-        fragment = super(ContentXBlock, self).studio_view(context, , override=True)
+        fragment = super(ContentXBlock, self).studio_view(context, override=True)
         fragment.add_javascript_url(self.runtime.local_resource_url(self, 'public/js/src/studio_edit_content.js'))
         fragment.initialize_js('StudioEditableXBlockContent')
         return fragment

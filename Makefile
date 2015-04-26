@@ -8,6 +8,7 @@ XBLOCKS_HOME := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 XBLOCK_MODULE = $(XBLOCKS_HOME)/xblocks/xblock-module/module
 XBLOCK_JSAV = $(XBLOCKS_HOME)/xblocks/xblock-jsav/jsav
 XBLOCK_CONTENT = $(XBLOCKS_HOME)/xblocks/xblock-content/content
+SITE_PKG_HOME = /edx/app/edxapp/venvs/edxapp/lib/python2.7/site-packages
 CONFIG_SCRIPT = tools/configure.py
 PIP = pip install -r requirements.txt
 TARGET = build
@@ -32,10 +33,16 @@ min: nomin
 # testX: min
 # 	python $(CONFIG_SCRIPT) config/testX.json
     
-testX: min
+testX:
 	python $(CONFIG_SCRIPT) --edx config/$@.json
 	$(CP) $(XBLOCKS_HOME)/Books/$@/html $(XBLOCK_CONTENT)/public/
+
+ds-testX: min testX
 	$(MAKE) install-xblocks
+
+fs-testX: min testX
+	$(MAKE) fs-install-xblocks
+
 
 allBooks: testX
 
@@ -82,3 +89,26 @@ install-content:
 
 install-binsortmcq:
 	cd $(XBLOCKS_HOME)/xblocks/binsortmcq && $(PIP)
+
+# Fullstack xblock installation targets
+fs-install-xblocks: fs-install-utils fs-install-module fs-install-jsav fs-install-content
+
+fs-install-jsav:	
+	$(RM) SITE_PKG_HOME/jsav
+	$(RM) SITE_PKG_HOME/xblock_jsav-0.3-py2.7.egg-info
+	sudo -H -u edxapp /edx/bin/pip.edxapp install $(XBLOCKS_HOME)/xblocks/xblock-jsav/
+
+fs-install-module:	
+	$(RM) SITE_PKG_HOME/module
+	$(RM) SITE_PKG_HOME/module_xblock-0.1-py2.7.egg-info
+	sudo -H -u edxapp /edx/bin/pip.edxapp install $(XBLOCKS_HOME)/xblocks/xblock-module/
+
+fs-install-content:	
+	$(RM) SITE_PKG_HOME/content
+	$(RM) SITE_PKG_HOME/content_xblock-0.1-py2.7.egg-info
+	sudo -H -u edxapp /edx/bin/pip.edxapp install $(XBLOCKS_HOME)/xblocks/xblock-content/
+
+fs-install-utils:	
+	$(RM) SITE_PKG_HOME/xblockutils
+	$(RM) SITE_PKG_HOME/xblock_utils-0.1a0-py2.7.egg-info
+	sudo -H -u edxapp /edx/bin/pip.edxapp install $(XBLOCKS_HOME)/xblocks/xblock-utils/

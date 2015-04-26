@@ -90,7 +90,7 @@ MS Windows 7 (using cmd.exe)
 Using the OpenEdX Devstack
 --------------------------
 
-Follow the instructions `On this wiki page <https://github.com/edx/configuration/wiki/edX-Developer-Stack#using-the-edx-devstack>`_ to bring the VM up and start running OpenEdX Studio and LMS.
+Follow the instructions `in this wiki page <https://github.com/edx/configuration/wiki/edX-Developer-Stack#using-the-edx-devstack>`_ to bring the VM up and start running OpenEdX Studio and LMS.
 
 --------------------------------------
 Deploying OpenDSAX xblocks on Devstack
@@ -160,7 +160,7 @@ Both
 
 	$ sudo su edxapp
 	$ cd /edx/OpenDSAX
-	$ make testX	
+	$ make ds-testX
 
 #. Refer to :ref:`using_devstack` to start the studio and LMS::
 

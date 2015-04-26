@@ -15,6 +15,8 @@ xblock-sdk project's GitHub repository
 However, below are detailed instructions for getting this set up under
 Linux or MS Windows.
 
+.. _toolchain:
+
 ------------------------
 Setting up the toolchain
 ------------------------
@@ -33,6 +35,7 @@ virtualenv. ::
    $ sudo apt-get install python-pip
    $ sudo pip install virtualenv
 
+
 MS Windows 7
 ============
 
@@ -45,6 +48,15 @@ MS Windows 7
 #. Install virtualenv. From a command line interface. ::
 
       C:\> pip install virtualenv
+
+#. cURL installation
+
+On the cURL `download <http://curl.haxx.se/download.html>`_  
+page there's a link to the download `wizard <http://curl.haxx.se/dlwiz/>`_
+Complete all the steps as following:
+
+curl executable  > Win64  > Generic  > Any  > x86_64
+you will end up in `this page <http://www.confusedbycode.com/curl/>`_ download (With Administrator Privileges (free)) verion.
 
 
 ---------------------

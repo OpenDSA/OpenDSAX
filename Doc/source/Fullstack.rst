@@ -20,19 +20,7 @@ For more information about ``Birch`` see `Birch release announcement <https://op
 ----------------------
 Software Prerequisites
 ----------------------
-To install and run Fullstack, you must first install the following required software.
-
-Linux
------
-#. `VirtualBox 4.3.12 <https://www.virtualbox.org/wiki/Downloads>`_ or higher
-#. `Vagrant 1.6.5 <http://www.vagrantup.com/downloads.html>`_ or higher
-
-
-MS Windows 7
-------------
-#. `VirtualBox version 4.3.20 <http://dlc-cdn.sun.com/virtualbox/4.3.20/VirtualBox-4.3.20-96997-Win.exe>`_
-#. `Vagrant version 1.6.5 <https://dl.bintray.com/mitchellh/vagrant/vagrant_1.6.5.msi>`_
-#. See :ref:`curl_installation` below
+Refer to :ref:`Software_Prerequisites`. 
    
 ---------------------
 One-time Installation
@@ -125,17 +113,3 @@ anything went wrong you can delete the VM and start from the begining.
 
 		C:\fullstack> vagrant halt
 		C:\fullstack> vagrant destroy
-
-
-.. _curl_installation:
-
-----------------------------------
-cURL installation for MS Windows 7
-----------------------------------
-
-On the curl `download <http://curl.haxx.se/download.html>`_  
-page there's a link to the download `wizard <http://curl.haxx.se/dlwiz/>`_
-Complete all the steps as following:
-
-curl executable  > Win64  > Generic  > Any  > x86_64
-you will end up in `this page <http://www.confusedbycode.com/curl/>`_ download (With Administrator Privileges (free)) verion.

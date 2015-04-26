@@ -25,10 +25,12 @@ This document contains instructions for instaling the most recent named release 
 
 For more information about ``Birch`` see `Birch release announcement <https://open.edx.org/announcements/open-edx-release-birch-release-february-24-2015>`_.
 
+.. _Software_Prerequisites:
+
 ----------------------
 Software Prerequisites
 ----------------------
-To install and run Devstack, you must first install the following required software.
+To install and run Devstack/Fullstack, you must first install the following required software.
 
 Linux
 -----
@@ -40,7 +42,7 @@ MS Windows 7
 ------------
 #. `VirtualBox version 4.3.20 <http://dlc-cdn.sun.com/virtualbox/4.3.20/VirtualBox-4.3.20-96997-Win.exe>`_
 #. `Vagrant version 1.6.5 <https://dl.bintray.com/mitchellh/vagrant/vagrant_1.6.5.msi>`_
-#. See :ref:`curl_installation` below
+#. See :ref:`toolchain` for cURL installation. 
    
 ---------------------
 One-time Installation
@@ -183,19 +185,6 @@ anything went wrong you can delete the VM and start from the begining.
 		C:\devstack> vagrant destroy
 
 In addition, this `wiki page <https://github.com/edx/configuration/wiki/Vagrant-troubleshooting>`_ shows different issues that could happen during vagrant installation and how to solve them.
-
-.. _curl_installation:
-
-----------------------------------
-cURL installation for MS Windows 7
-----------------------------------
-
-On the curl `download <http://curl.haxx.se/download.html>`_  
-page there's a link to the download `wizard <http://curl.haxx.se/dlwiz/>`_
-Complete all the steps as following:
-
-curl executable  > Win64  > Generic  > Any  > x86_64
-you will end up in `this page <http://www.confusedbycode.com/curl/>`_ download (With Administrator Privileges (free)) verion.
 
 -----------------------------------------
 Developing and testing XBlock on Devstack

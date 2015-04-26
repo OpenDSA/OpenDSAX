@@ -14,4 +14,3 @@ Table of Contents
    SDK
    Devstack
    Fullstack
-   

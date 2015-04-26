@@ -1,8 +1,8 @@
 .. _Fullstack:
 
-=======================================================================
-Working with the Fullstack using Vagrant and Virtualbox (DRAFT VERSION)
-=======================================================================
+==========================================
+Working with the Fullstack (DRAFT VERSION)
+==========================================
 
 ------------
 Introduction
@@ -13,6 +13,7 @@ While Devstack uses development web server (e.g. django) and Destack uses EdX co
 You may need a Fullstack VM to test your edx-platform changes you made using devstack, test a running course using a new edx-platform release before production deployment.
 
 This document contains instructions for instaling the most recent named release of OpenEdX Fullstack called ``Birch``.
+We will install Birch Fullstack using Vagrant and Virtualbox.
 
 For more information about ``Birch`` see `Birch release announcement <https://open.edx.org/announcements/open-edx-release-birch-release-february-24-2015>`_.
 

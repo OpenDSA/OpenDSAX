@@ -1,19 +1,18 @@
 .. _Fullstack:
 
-==========================================
-Working with the Fullstack (DRAFT VERSION)
-==========================================
+==========================
+Working with the Fullstack
+==========================
 
 ------------
 Introduction
 ------------
 
-While Devstack uses development web server (e.g. django), Also Destack uses EdX core repositories checked out to your development host machine (and shared to the VM). The Fullstack (still VM) uses production web server (e.g. gunicorn, not django development server) and Fullstack checkes out the "production" code from EdX repositories into its VM (no development shared folders with the host machine).
+While Devstack uses development web server (e.g. django), and Destack uses EdX core repositories checked out to your development host machine (and shared to the VM). The Fullstack (still VM) uses production web server (e.g. gunicorn, not django development server) and Fullstack checkes out the "production" code from EdX repositories into its VM (no development shared folders with the host machine).
 
-You may need a Fullstack VM to test your edx-platform changes you made using devstack, test a running course using a new edx-platform release before production deployment.
+You may need a Fullstack VM to test your edx-platform changes you made using Devstack, test a running course using a new edx-platform release before production deployment.
 
-This document contains instructions for instaling the most recent named release of OpenEdX Fullstack called ``Birch``.
-We will install Birch Fullstack using Vagrant and Virtualbox.
+This document contains instructions for instaling the most recent named release of OpenEdX Fullstack called ``Birch``. We will install Birch Fullstack using Vagrant and Virtualbox.
 
 For more information about ``Birch`` see `Birch release announcement <https://open.edx.org/announcements/open-edx-release-birch-release-february-24-2015>`_.
 
@@ -87,12 +86,8 @@ To use OpenDSAX xblocks (or any other xblock) in Fullstack Studio and LMS, there
 	$ sudo nano /edx/app/edxapp/cms.env.json
 	add ("ALLOW_ALL_ADVANCED_COMPONENTS": true) under "FEATURES" attribute. Exit and save your change.
 
-	Once the file is updated, you need to reboot to reload the settings. Exit the VM session and execute the following commans from host machine
-	$ cd ~/fullstack
-	$ vagrant halt
-	$ vagrant up
-
-#. To allow advanced components follow the instructions `here <https://github.com/edx/edx-platform/wiki/Installing-a-new-XBlock#allow-all-advanced-components-first-time-only>`_.
+	Once the file is updated, you need to restart the services to reload the settings. 
+	$ sudo /edx/bin/supervisorctl restart edxapp:
 
 #. Before you clone the OpenDSAX repository you need to install sphinx in the VM. Refer to :ref:`Software_Prerequisites` in Devstack section for sphinx installation command. 	
 
@@ -102,21 +97,19 @@ To use OpenDSAX xblocks (or any other xblock) in Fullstack Studio and LMS, there
 	$ sudo -u edxapp git clone https://github.com/OpenDSA/OpenDSAX.git
 	$ cd OpenDSAX
 	$ sudo make pull
-	$ cd /edx/app/edxapp/OpenDSAX
 	$ sudo make fs-install-xblocks
 
 #. Becasue OpenDSAX xblocks were developed to allow OpenDSA eBooks to be implemented in OpenEdX platform, You have to build an OpenDSA eBook first. For that sake, OpenDSAX reporsitory comes with a sample eBook called ``testX`` :: 
 
 	$ cd /edx/app/edxapp/OpenDSAX
-	$ make fs-testX
+	$ sudo make fs-testX
 
 #. To use OpenDSAX XBlocks in a course, follow the instuction `in this page <http://opendsax.readthedocs.org/en/latest/Introduction.html#trying-it-out>`_ starting from point #4.
 
 --------------------
 When things go wrong
 --------------------
-If you couldn't download the virtual box or the provisioing step did't finish or 
-anything went wrong you can delete the VM and start from the begining.
+If you couldn't download the virtual box anything went wrong you can delete the VM and start from the begining.
 
 #. Linux: ::
 

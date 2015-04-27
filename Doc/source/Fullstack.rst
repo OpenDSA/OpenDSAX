@@ -81,7 +81,7 @@ To use OpenDSAX xblocks (or any other xblock) in Fullstack Studio and LMS, there
 	#) Install OpenDSAX xblocks into the virtual environment you are running the studio from.
 
 
-#. To allow advanced components ssh to the VM and do the following: ::
+#. To allow advanced components ssh to the VM (vagrant ssh) and do the following: ::
 
 	$ sudo nano /edx/app/edxapp/cms.env.json
 	add ("ALLOW_ALL_ADVANCED_COMPONENTS": true) under "FEATURES" attribute. Exit and save your change.
@@ -89,7 +89,7 @@ To use OpenDSAX xblocks (or any other xblock) in Fullstack Studio and LMS, there
 	Once the file is updated, you need to restart the services to reload the settings. 
 	$ sudo /edx/bin/supervisorctl restart edxapp:
 
-#. Before you clone the OpenDSAX repository you need to install sphinx in the VM. Refer to :ref:`Software_Prerequisites` in Devstack section for sphinx installation command. 	
+#. Before you clone the OpenDSAX repository you need to install sphinx in the VM. Refer to :ref:`toolchain` for sphinx installation command. 	
 
 #. Clone OpenDSAX repository (inside the Fullstack VM) ::
 
@@ -98,6 +98,9 @@ To use OpenDSAX xblocks (or any other xblock) in Fullstack Studio and LMS, there
 	$ cd OpenDSAX
 	$ sudo make pull
 	$ sudo make fs-install-xblocks
+
+	In some cases, rebooting is necessary to use the XBlock.
+	$ sudo /edx/bin/supervisorctl restart edxapp:
 
 #. Becasue OpenDSAX xblocks were developed to allow OpenDSA eBooks to be implemented in OpenEdX platform, You have to build an OpenDSA eBook first. For that sake, OpenDSAX reporsitory comes with a sample eBook called ``testX`` :: 
 

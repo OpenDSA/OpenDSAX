@@ -27,12 +27,13 @@ for the actual installation, and for doing work later.
 Linux
 =====
 
-Install what you don't already have of Python 2.7, git, pip, and
+Install what you don't already have of Python 2.7, git, pip, sphinx and
 virtualenv. ::
 
    $ sudo apt-get install python
    $ sudo apt-get install git
    $ sudo apt-get install python-pip
+   $ sudo apt-get install python-sphinx
    $ sudo pip install virtualenv
 
 
@@ -44,6 +45,8 @@ MS Windows 7
 #. Install Python 2.7. (see https://www.python.org/downloads/)
 
 #. Install pip. (see https://pip.pypa.io/en/latest/installing.html)
+
+#. Install sphinx. (see http://sphinx-doc.org/latest/install.html#windows-install-python-and-sphinx)
 
 #. Install virtualenv. From a command line interface. ::
 

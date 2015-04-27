@@ -94,21 +94,21 @@ install-binsortmcq:
 fs-install-xblocks: fs-install-utils fs-install-module fs-install-jsav fs-install-content
 
 fs-install-jsav:	
-	$(RM) SITE_PKG_HOME/jsav
-	$(RM) SITE_PKG_HOME/xblock_jsav-0.3-py2.7.egg-info
+	$(RM) $(SITE_PKG_HOME)/jsav
+	$(RM) $(SITE_PKG_HOME)/xblock_jsav-0.3-py2.7.egg-info
 	sudo -H -u edxapp /edx/bin/pip.edxapp install $(XBLOCKS_HOME)/xblocks/xblock-jsav/
 
 fs-install-module:	
-	$(RM) SITE_PKG_HOME/module
-	$(RM) SITE_PKG_HOME/module_xblock-0.1-py2.7.egg-info
+	$(RM) $(SITE_PKG_HOME)/module
+	$(RM) $(SITE_PKG_HOME)/module_xblock-0.1-py2.7.egg-info
 	sudo -H -u edxapp /edx/bin/pip.edxapp install $(XBLOCKS_HOME)/xblocks/xblock-module/
 
 fs-install-content:	
-	$(RM) SITE_PKG_HOME/content
-	$(RM) SITE_PKG_HOME/content_xblock-0.1-py2.7.egg-info
+	$(RM) $(SITE_PKG_HOME)/content
+	$(RM) $(SITE_PKG_HOME)/content_xblock-0.1-py2.7.egg-info
 	sudo -H -u edxapp /edx/bin/pip.edxapp install $(XBLOCKS_HOME)/xblocks/xblock-content/
 
 fs-install-utils:	
-	$(RM) SITE_PKG_HOME/xblockutils
-	$(RM) SITE_PKG_HOME/xblock_utils-0.1a0-py2.7.egg-info
+	$(RM) $(SITE_PKG_HOME)/xblockutils
+	$(RM) $(SITE_PKG_HOME)/xblock_utils-0.1a0-py2.7.egg-info
 	sudo -H -u edxapp /edx/bin/pip.edxapp install $(XBLOCKS_HOME)/xblocks/xblock-utils/

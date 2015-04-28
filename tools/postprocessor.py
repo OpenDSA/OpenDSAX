@@ -290,6 +290,7 @@ def make_edx(config):
   # Create the directories
   os.mkdir(os.path.join(dest_dir, 'chapter/'))
   os.mkdir(os.path.join(dest_dir, 'sequential/'))
+  os.mkdir(os.path.join(dest_dir, 'course/'))
   
   # Create the course.xml toplevel file
   course_file_path = os.path.join(dest_dir, 'course.xml')
@@ -297,12 +298,20 @@ def make_edx(config):
                                    'org': 'VirginiaTech',
                                    'course': config.title})
   pretty_print_xml(course_xml, course_file_path)
+  
+  top_file_path = os.path.join(dest_dir, 'course', config.title+'.xml')
+  top_xml = Element('course', {'advanced_modules': 
+                               "[&quot;jsav&quot;, &quot;module&quot;, &quot;content&quot;]",
+                               'display_name': config.title,
+                               'start': "2015-01-01T00:00:00Z"})
+  
   # Course -> Chapter -> Sequential -> Vertical -> Module -> Exercise
   # Create the chapter files
   
   for chapter_name, sections in config.chapters.items():
     chapter_file_path = os.path.join(dest_dir, 'chapter', chapter_name+'.xml')
     chapter_xml = Element('chapter', {'display_name': chapter_name})
+    SubElement(top_xml, 'chapter', {'url_name': chapter_name})
     # Create the sequential files
     for section_name, section_data in sections.items():
         subsection_name = section_name.split('/')[-1]
@@ -351,16 +360,17 @@ def make_edx(config):
                         })
         pretty_print_xml(sequential_xml, sequential_file_path)
     pretty_print_xml(chapter_xml, chapter_file_path)
+  pretty_print_xml(top_xml, top_file_path)
     
   mod_name = os.path.join(dest_dir, '..', os.path.splitext(os.path.basename(path))[0]+'.tar.gz')
   with tarfile.open(mod_name, 'w:gz') as tar:
-      tar.addfile(tarfile.TarInfo('course.xml'),
-              file(os.path.join(dest_dir, 'course.xml')))
-      for a_directory in ('chapter', 'sequential'):
+      tar.add(os.path.join(dest_dir, 'course.xml'),
+              arcname = '2015S/course.xml')
+      for a_directory in ('chapter', 'sequential', 'course'):
           for a_path in os.listdir(os.path.join(dest_dir, a_directory)):
               a_full_path = os.path.join(a_directory, a_path)
-              tar.addfile(tarfile.TarInfo(a_full_path),
-                      file(os.path.join(dest_dir, a_full_path)))
+              tar.add(os.path.join(dest_dir, a_full_path),
+                      arcname=os.path.join('2015S', a_directory, a_path))
   shutil.rmtree(os.path.join(dest_dir, 'chapter/'))
   shutil.rmtree(os.path.join(dest_dir, 'sequential/'))
   os.remove(os.path.join(dest_dir, 'course.xml'))

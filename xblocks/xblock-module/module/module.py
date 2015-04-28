@@ -158,7 +158,15 @@ class ModuleXBlock(XBlock, LmsCompatibilityMixin, StudioEditableXBlockMixin, Stu
         fragment.add_javascript_url(self.runtime.local_resource_url(self, 'public/lib/odsaUtils-min.js'))
         fragment.add_javascript_url(self.runtime.local_resource_url(self, 'public/lib/odsaMOD-min.js'))
         fragment.add_javascript_url(self.runtime.local_resource_url(self, 'public/lib/conceptMap.js'))
-
+    
+    @XBlock.json_handler
+    def storeLogData(self, data, suffix=''):
+        event_list = []
+        for e in data.values():
+            event = e.replace("\\", "")
+            self.runtime.publish(self, "event", event)
+            event_list.append(event)
+        return event_list
 
     # workbench while developing your XBlock.
         # <content short_name="Quicksort"/>

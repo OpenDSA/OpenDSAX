@@ -1,12 +1,13 @@
 (function () {
 	// "use strict";
 	var settings = {};
+	var server = "EDX";
 	//@efouh: added this variable back because it is needed by gradebook.html
 	settings.BOOK_NAME = "testX";
 	settings.BOOK_LANG = "en";
-	settings.EXERCISE_SERVER = "";
-	settings.LOGGING_SERVER = "";
-	settings.SCORE_SERVER = "";
+	settings.EXERCISE_SERVER = server;
+	settings.LOGGING_SERVER = server;
+	settings.SCORE_SERVER = server;
 	settings.MODULE_ORIGIN = "http://opendsax.local";
 	settings.EXERCISE_ORIGIN = "http://opendsax.local";
 	settings.AV_ORIGIN = "http://opendsax.local";

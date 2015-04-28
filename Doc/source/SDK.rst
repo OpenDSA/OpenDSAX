@@ -15,6 +15,8 @@ xblock-sdk project's GitHub repository
 However, below are detailed instructions for getting this set up under
 Linux or MS Windows.
 
+.. _toolchain:
+
 ------------------------
 Setting up the toolchain
 ------------------------
@@ -25,13 +27,15 @@ for the actual installation, and for doing work later.
 Linux
 =====
 
-Install what you don't already have of Python 2.7, git, pip, and
+Install what you don't already have of Python 2.7, git, pip, sphinx and
 virtualenv. ::
 
    $ sudo apt-get install python
    $ sudo apt-get install git
    $ sudo apt-get install python-pip
+   $ sudo apt-get install python-sphinx
    $ sudo pip install virtualenv
+
 
 MS Windows 7
 ============
@@ -42,9 +46,20 @@ MS Windows 7
 
 #. Install pip. (see https://pip.pypa.io/en/latest/installing.html)
 
+#. Install sphinx. (see http://sphinx-doc.org/latest/install.html#windows-install-python-and-sphinx)
+
 #. Install virtualenv. From a command line interface. ::
 
       C:\> pip install virtualenv
+
+#. cURL installation
+
+On the cURL `download <http://curl.haxx.se/download.html>`_  
+page there's a link to the download `wizard <http://curl.haxx.se/dlwiz/>`_
+Complete all the steps as following:
+
+curl executable  > Win64  > Generic  > Any  > x86_64
+you will end up in `this page <http://www.confusedbycode.com/curl/>`_ download (With Administrator Privileges (free)) verion.
 
 
 ---------------------

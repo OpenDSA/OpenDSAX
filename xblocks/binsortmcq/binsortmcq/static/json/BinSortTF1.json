@@ -1,0 +1,12 @@
+{
+"max_shown_answers": "2",
+"num_possible_answers": "2",
+"question" : {
+		"problem" : "Binsort's time complexity depends on the initial ordering of the keys in the input array.",
+		"answers": [
+			"True",
+			"False"
+			],
+		"solution_index" : "1"		
+	}
+}

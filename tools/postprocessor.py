@@ -301,7 +301,7 @@ def make_edx(config):
   
   top_file_path = os.path.join(dest_dir, 'course', config.title+'.xml')
   top_xml = Element('course', {'advanced_modules': 
-                               "['jsav';, 'module', 'content']",
+                               '["jsav", "module", "content"]',
                                'display_name': config.title,
                                'start': "2015-01-01T00:00:00Z"})
   

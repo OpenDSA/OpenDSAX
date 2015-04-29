@@ -1,4 +1,4 @@
-/* Javascript for the MCQ Random Template XBlock. */
+/* TODO: change the class name to your xblock. This is Javascript for the MCQ Random Template XBlock. */
 function MCQRandomTemplateXBlock(runtime, element) {
 
 var handlerUrl = runtime.handlerUrl(element, 'getNewQuestion');
@@ -9,13 +9,36 @@ var possibleAnswers = {{numberOfPossibleAnswers}};
 
 //Gets executed once per question
 function updateQuestion(result) {
-        $('.bubblesortquestions_block', element).html(result.html);
+        answers = result.answers;
+        possibleAnswers = result.answers.length
+        solutionIndex = result.solution_index;
+        var answerString = "";
+        var j = 0;
+        var prev_j = [];
+        var temp_j = 0;
+        for (var i = 0; i < possibleAnswers; i ++)
+        {      
+            temp_j = getRandomInt(0, possibleAnswers);
+            while(prev_j.indexOf(temp_j) != -1)
+            {
+                temp_j = getRandomInt(0, possibleAnswers);
+            }
+            prev_j.push(temp_j);
+            if (temp_j == solutionIndex)
+            {
+                answerString += "<input type='radio' id='sol' name='answerChoice' value='" + i.toString() + "'>" + answers[temp_j] + "<br>";
+            }
+            else
+            {
+                answerString += "<input type='radio' name='answerChoice' value='" + i.toString() + "'>" + answers[temp_j] + "<br>";
+            }
+        }
+        $('#answerChoices').html(answerString);
+
+
         flag = "false";
-        answers = result.wrongAnswers;
+        $('#question').text(result.question_title);
         $('.score', element).text(result.score);
-        $('button', element).click(function(eventObject) {           
-            checkQuestion();
-        });
     }
 
     //Checks to see if the question was answered correctly. Will fetch a new question upon correct answer
@@ -26,7 +49,7 @@ function updateQuestion(result) {
         //Was answer right?
         if (selected.val())
         {
-            //TODO: Have two button-process for correct answer choice
+            //Need to Have two button-process for correct answer choice
                 $.ajax({
                 type: "POST",
                 url: handlerUrl,
@@ -37,7 +60,7 @@ function updateQuestion(result) {
         else
         {
             flag = "true";
-            //TODO: style for the shaking button
+            // style for the shaking button
             alert('incorrect answer');
         }
     }

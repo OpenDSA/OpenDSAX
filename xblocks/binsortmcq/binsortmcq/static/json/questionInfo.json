@@ -1,0 +1,12 @@
+{
+	"xblockName" : "BinSortMCQXBlock",
+	"cssString" : "static/css/binsortmcq.css",
+	"jsString" : "static/js/src/binsortmcq.js",
+	"htmlString" : "static/html/binsortmcq.html",
+	"maxPointsForExercise" : 10,
+	"numQuestionsForExercise" : 2,
+	"questionUrls": [
+		"static/json/BinSortMCQ1.json", 
+		"static/json/BinSortTF1.json"
+		]
+}

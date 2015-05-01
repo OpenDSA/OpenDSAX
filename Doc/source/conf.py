@@ -19,6 +19,10 @@ import os
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #sys.path.insert(0, os.path.abspath('.'))
+sys.path.insert(0, os.path.abspath('../../xblocks/xblock-module'))
+sys.path.insert(0, os.path.abspath('../../xblocks/xblock-module'))
+sys.path.insert(0, os.path.abspath('../../xblocks/xblock-jsav'))
+sys.path.insert(0, os.path.abspath('../../xblocks/xblock-utils'))
 
 # -- General configuration ------------------------------------------------
 
@@ -28,11 +32,13 @@ import os
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = [
-    'sphinx.ext.todo',
-    'sphinx.ext.mathjax',
-    'sphinx.ext.ifconfig',
-]
+extensions = ['sphinx.ext.todo',
+              'sphinx.ext.mathjax',
+              'sphinx.ext.ifconfig',
+              'sphinx.ext.autodoc',
+              'sphinx.ext.doctest',
+              'sphinx.ext.pngmath',
+              'sphinx.ext.viewcode']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -121,7 +127,7 @@ html_title = "OpenDSAX System Documentation"
 
 # The name of an image file (relative to this directory) to place at the top
 # of the sidebar.
-html_logo =  "_static/AlgoVizLogo.gif" 
+html_logo = "_static/AlgoVizLogo.gif"
 
 # The name of an image file (within the static path) to use as favicon of the
 # docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
@@ -186,22 +192,22 @@ htmlhelp_basename = 'OpenDSAXdoc'
 # -- Options for LaTeX output ---------------------------------------------
 
 latex_elements = {
-# The paper size ('letterpaper' or 'a4paper').
-#'papersize': 'letterpaper',
+    # The paper size ('letterpaper' or 'a4paper').
+    #'papersize': 'letterpaper',
 
-# The font size ('10pt', '11pt' or '12pt').
-#'pointsize': '10pt',
+    # The font size ('10pt', '11pt' or '12pt').
+    #'pointsize': '10pt',
 
-# Additional stuff for the LaTeX preamble.
-#'preamble': '',
+    # Additional stuff for the LaTeX preamble.
+    #'preamble': '',
 }
 
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  ('index', 'OpenDSAX.tex', u'OpenDSAX Documentation',
-   u'OpenDSAX Project Contributors', 'manual'),
+    ('index', 'OpenDSAX.tex', u'OpenDSAX Documentation',
+     u'OpenDSAX Project Contributors', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -244,9 +250,9 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'OpenDSAX', u'OpenDSAX Documentation',
-   u'Cliff Shaffer and Hosam Shahin', 'OpenDSAX', 'One line description of project.',
-   'Miscellaneous'),
+    ('index', 'OpenDSAX', u'OpenDSAX Documentation',
+     u'Cliff Shaffer and Hosam Shahin', 'OpenDSAX', 'One line description of project.',
+     'Miscellaneous'),
 ]
 
 # Documents to append as an appendix to all manuals.

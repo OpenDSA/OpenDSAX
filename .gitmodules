@@ -4,3 +4,6 @@
 [submodule "xblocks/xblock-utils"]
 	path = xblocks/xblock-utils
 	url = https://github.com/hosamshahin/xblock-utils.git
+[submodule "xblocks/XBlock"]
+	path = xblocks/XBlock
+	url = https://github.com/edx/XBlock.git

@@ -1,5 +1,3 @@
-.. _xblocks:
-
 OpenDSAX XBlocks Reference Manual
 =================================
 
@@ -8,4 +6,6 @@ OpenDSAX XBlocks Reference Manual
    :maxdepth: 3
 
    xblock_utils
-
+   xblock_module
+   xblock_jsav
+   xblock_content

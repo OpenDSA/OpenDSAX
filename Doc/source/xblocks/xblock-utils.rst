@@ -1,5 +1,3 @@
-.. _xblock_utils:
-
 ============
 xblock-utils
 ============

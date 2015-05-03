@@ -4,8 +4,7 @@ from xblock.fragment import Fragment
 from django.template import Context, Template
 import pkg_resources
 from lms_mixin import LmsCompatibilityMixin
-from xblockutils.studio_editable import StudioEditableXBlockMixin,
-StudioContainerXBlockMixin
+from xblockutils.studio_editable import StudioEditableXBlockMixin, StudioContainerXBlockMixin
 
 
 class ModuleXBlock(XBlock, LmsCompatibilityMixin, StudioEditableXBlockMixin,

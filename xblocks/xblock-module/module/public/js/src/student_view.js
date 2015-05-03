@@ -77,8 +77,8 @@ function ModuleXBlock(runtime, element) {
 
     // Handle data from events generated on the module page or received from embedded pages
     function JSAVEventHandler(data) {
-        console.log("JSAVEventHandler");
-        console.dir(data);
+        //console.log("JSAVEventHandler");
+        //console.dir(data);
         var flush = false;
 
         // Filter out events we aren't interested in
@@ -147,7 +147,7 @@ function ModuleXBlock(runtime, element) {
 
                     for (var i = 0; i < children.length; i++) {
                         var child = children[i];
-                        console.log("student completed the problem, child.shortName " + child.shortName + " data.av: " + data.av);
+                        //console.log("student completed the problem, child.shortName " + child.shortName + " data.av: " + data.av);
                         if (child.shortName === data.av) {
                             callIfExists(child, 'reportProgress', data);
                             break;
@@ -195,14 +195,59 @@ function ModuleXBlock(runtime, element) {
             // Save the event in localStorage
             if (!data.logged) {
                 delete data.logged; // In case it explicitly says 'false'
-                odsaUtils.logEvent(data);
+                //odsaUtils.logEvent(data);
             }
 
             if (flush) {
-                flushStoredData();
+                //flushStoredData();
             }
         }
     }
+
+    function sendLogData(){
+      //console.dir(localStorage);
+      //console.log(ODSA.SETTINGS.LOGGING_SERVER);
+
+      var handlerUrl = runtime.handlerUrl(element, 'storeLogData');
+
+      //Cleanning localStorage from uneccessary events
+
+      for (var i = 0; i < localStorage.length; i++){
+      	 var key = localStorage.key(i).toString();
+      	 if (key.indexOf("event") === -1){
+      	 	localStorage.removeItem(key);
+      	 } 
+      }
+
+      //There is Something to Send to the server
+      if(localStorage.length !== 0){
+
+        $.ajax({
+                type: "POST",
+                url: handlerUrl,
+                data: JSON.stringify(localStorage),
+                success: logDataStored,
+                error: function (data){
+                    console.error("Error sending data to server");
+                }
+              });
+      }
+    }
+
+    function logDataStored(data){
+      //console.log(data);
+      //console.log("Event data of size "+data+" are logged and successfully saved on server");
+      
+      var response = "The following events are logged and stored on server\n";
+      response += "-------------------------------------------------------\n";
+      for (var i = 0; i < data.length; i++){
+      	response += "(" + (i+1) + ") " + data[i] + "\n";
+      	response += "-------------------------------\n";
+      }
+      console.log(response);
+      
+      localStorage.clear();
+    } 
 
     $(document).ready(function () {
         //remove extraneous listeners
@@ -213,5 +258,8 @@ function ModuleXBlock(runtime, element) {
         });
         $(".total_problem_score", element).text(Math.round($(".total_problem_score", element).text()));
         $(".total_problem_weight", element).text(Math.round($(".total_problem_weight", element).text()));
+
+        //Timer to flush the data in localStorage to EDX server
+        window.setInterval(sendLogData, 5000);
     });
 }

@@ -1,0 +1,30 @@
+#! /bin/sh
+
+# Fail immediately on errors
+set -e
+
+# Display commands as they execute
+set -x
+
+# Cache pip downloads
+export PIP_DOWNLOAD_CACHE=${PIP_DOWNLOAD_CACHE-.pip_cache}
+
+# Install requirements
+pip install -r requirements.txt
+pip install -r django_requirements.txt
+
+# Run the tests
+coverage run -m nose
+
+# Compute coverage
+coverage html
+coverage xml -o coverage.xml
+diff-cover coverage.xml --html-report diff_cover.html
+
+# Compute quality
+diff-quality --violations=pep8 --html-report diff_quality_pep8.html
+diff-quality --violations=pylint --html-report diff_quality_pylint.html
+
+# Compute style violations
+pep8 > pep8.report || echo "Not pep8 clean"
+pylint -f parseable xblock > pylint.report || echo "Not pylint clean"

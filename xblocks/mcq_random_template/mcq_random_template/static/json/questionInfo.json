@@ -1,0 +1,12 @@
+{
+	"xblockName" : "MCQ_RANDOM_TEMPLATE",
+	"cssString" : "static/css/questionCss.css",
+	"jsString" : "static/js/src/questionJs.js",
+	"htmlString" : "static/html/questionHtml.html",
+	"maxPointsForExercise" : 10,
+	"numQuestionsForExercise" : 2,
+	"questionUrls": [
+		"static/json/BinSortMCQ1.json", 
+		"static/json/BinSortTF1.json"
+		]
+}

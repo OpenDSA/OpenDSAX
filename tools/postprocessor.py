@@ -225,7 +225,7 @@ def update_edx_file(path, modules):
       else:
         external, internal = href, ''
       if external.endswith('.html'):
-        link['href'] = '#'.join((external[:-5],internal))
+        link['href'] = '../'+'#'.join((external[:-5],internal))
         
       # Do something with the actual href
   

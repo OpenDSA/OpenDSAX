@@ -189,15 +189,16 @@ def update_edx_file(path, modules):
   print mod_name
   
   # Strip out the script, style, link, and meta tags
-  print "\tStripping out unnecessary HTML"
-  PATTERNS = {'Scripts': re.compile('<script(.*?)>(.*?)</script>', re.DOTALL),
-              'Links': re.compile('<link(.*?)/>', re.DOTALL),
-              'Styles': re.compile('<style(.*?)>(.*?)</style>', re.DOTALL)}
-  for name, pattern in PATTERNS.items():
-    pass #html = re.sub(pattern, '', html)
     
-  # Redirect href urls
+  
   soup = BeautifulSoup(html)
+  
+  # Strip out Script, Style, and Link tags
+  for tag in ('script', 'link', 'style'):
+    for s in soup(tag):
+      s.extract()
+  
+  # Redirect href urls
   for link in soup.find_all('a'):
     if 'href' not in link.attrs:
         # Really? No href? Is that even valid HTML?

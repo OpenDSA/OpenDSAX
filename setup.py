@@ -1,11 +1,11 @@
 from setuptools import setup
 
 setup(
-    name='opendsax',
+    name='OpenDSAX',
     version='0.1',
     description='OpenDSAX',
     packages=[
-        'opendsax',
+        'OpenDSAX',
     ],
     install_requires=[
         'XBlock',

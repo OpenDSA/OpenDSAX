@@ -1,22 +1,23 @@
 from xblock.core import XBlock
-from xblock.fields import Scope, String, Boolean, Integer, Float, List
+from xblock.fields import Scope, String, Boolean
 from xblock.fragment import Fragment
 from django.template import Context, Template
 import pkg_resources
 from lms_mixin import LmsCompatibilityMixin
-from xblockutils.studio_editable import StudioEditableXBlockMixin, StudioContainerXBlockMixin
+from xblockutils.studio_editable import StudioEditableXBlockMixin, \
+    StudioContainerXBlockMixin
 
 
 class ModuleXBlock(XBlock, LmsCompatibilityMixin, StudioEditableXBlockMixin,
                    StudioContainerXBlockMixin):
 
     """
-    Module xbllock is a parent/container xblock. It will provide javascript
-    recources  (e.g. JSAV, odsaMOD and odsaUtils) as well as css resources
-    (e.g. JSAV, odsaStyle and sphinx default theme haiku) to its children.
+    Module xblock is a parent/container xblock. It will provide javascript
+    recources  (e.g. JSAV, odsaMOD and odsaUtils) as well as CSS resources
+    (e.g. JSAV, odsaStyle and sphinx default theme 'haiku') to its children.
     Module xblock student_view method will render all the children xblocks's
-    students views. It will also show the over all student progress in module
-    problems in terms of total_student_score / total_weight.
+    student_view(s). It will also show the over all student progress in
+    module's problems in terms of total_student_score / total_weight.
     """
 
     has_children = True
@@ -95,7 +96,7 @@ class ModuleXBlock(XBlock, LmsCompatibilityMixin, StudioEditableXBlockMixin,
     def author_preview_view(self, context):
         """
         A custom preview shown to authors in Studio when not editing Module block's children.
-        the view will show a list of children xblocks' names.
+        The view will show a list of children xblocks' names.
         """
 
         result = Fragment()

@@ -180,6 +180,7 @@ def update_TermDef(glossary_file, terms_dict):
     
 def update_edx_file(path, modules):
   # Read contents of module HTML file
+  print path
   with codecs.open(path, 'r', 'utf-8') as html_file:
     html = html_file.read()
   
@@ -193,7 +194,7 @@ def update_edx_file(path, modules):
               'Links': re.compile('<link(.*?)/>', re.DOTALL),
               'Styles': re.compile('<style(.*?)>(.*?)</style>', re.DOTALL)}
   for name, pattern in PATTERNS.items():
-    html = re.sub(pattern, '', html)
+    pass #html = re.sub(pattern, '', html)
     
   # Redirect href urls
   soup = BeautifulSoup(html)
@@ -232,7 +233,7 @@ def update_edx_file(path, modules):
   TODO: Add the references to these broken-up files in the final course zip
   '''
   # Breaking file into components
-  section_divs = soup.find('div', class_='section').find_all()
+  section_divs = soup.find('div', class_='section').find_all(recursive=False)
   exercise_data = {}
   found_counter = 0
   if section_divs:
@@ -249,21 +250,16 @@ def update_edx_file(path, modules):
         found_counter += 1
       else:
         chunked_html_files.append(section.prettify())
-    else:
-      path_html = os.path.join(os.path.dirname(path), '{}-{}.html'.format(mod_name, found_counter))
-      with codecs.open(path_html, 'w', 'utf-8') as o:
-        o.writelines(chunked_html_files)
-    # TODO: Figure out proper encoding
-    html = [n.prettify() for n in section_divs]
+    path_html = os.path.join(os.path.dirname(path), '{}-{}.html'.format(mod_name, found_counter))
+    with codecs.open(path_html, 'w', 'utf-8') as o:
+      o.writelines(chunked_html_files)
+    chunked_html_files = []
   else:
     print "Failed to find any 'div' tags with a 'section' class."
     path_html = os.path.join(os.path.dirname(path), '{}-{}.html'.format(mod_name, found_counter))
     with codecs.open(path_html, 'w', 'utf-8') as o:
       o.writelines(html)
-  
-  # Post-processing complete, write out the file
-  #with codecs.open(path, 'w', 'utf-8') as html_file:
-    #html_file.writelines(html)
+      
   # Delete the file on the way out
   os.remove(path)
   return exercise_data

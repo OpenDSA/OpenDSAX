@@ -14,4 +14,4 @@ Table of Contents
    SDK
    Devstack
    Fullstack
-   xblock-jsav/OpenDSAX_XBlocks
+   xblocks/OpenDSAX_XBlocks

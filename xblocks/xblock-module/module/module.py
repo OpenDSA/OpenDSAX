@@ -188,10 +188,15 @@ class ModuleXBlock(XBlock, LmsCompatibilityMixin, StudioEditableXBlockMixin,
         """A canned scenario for display in the workbench."""
         return [
             ("ModuleXBlock",
-             """<module>
+             """
+                <module>
                     <content short_name="Quicksort"/>
                     <jsav problem_type="ss" problem_url="/AV/Sorting/" short_name="quicksortCON"></jsav>
-                    <jsav problem_type="pe" problem_url="/AV/Sorting/" problem_width="805" problem_height="515" required="True" threshold="0.5" short_name="quicksortPRO" long_name="Quick Sort" weight="100" showhide="hide" JXOP_fixmode="fix" JXOP_code="none" JXOP_feedback="continuous" JOP_lang="en"></jsav>
+                    <jsav problem_type="pe" problem_url="/AV/Sorting/" problem_width="805" 
+                        problem_height="515" required="True" threshold="0.5" short_name="quicksortPRO" 
+                        long_name="Quick Sort" weight="100" showhide="hide" JXOP_fixmode="fix" JXOP_code="none" 
+                        JXOP_feedback="continuous" JOP_lang="en">
+                    </jsav>
                 </module>
              """),
         ]

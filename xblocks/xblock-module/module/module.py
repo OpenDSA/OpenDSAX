@@ -12,11 +12,11 @@ class ModuleXBlock(XBlock, LmsCompatibilityMixin, StudioEditableXBlockMixin,
                    StudioContainerXBlockMixin):
 
     """
-    Module xblock is a parent/container xblock. It will provide javascript
-    recources  (e.g. JSAV, odsaMOD and odsaUtils) as well as CSS resources
+    Module xblock is a parent/container xblock. It provides javascript
+    resources  (e.g. JSAV, odsaMOD and odsaUtils) as well as CSS resources
     (e.g. JSAV, odsaStyle and sphinx default theme 'haiku') to its children.
-    Module xblock student_view method will render all the children xblocks's
-    student_view(s). It will also show the over all student progress in
+    Module xblock student_view method renders all the children xblocks'
+    student_view(s). It also shows the over all student progress in
     module's problems in terms of total_student_score / total_weight.
     """
 

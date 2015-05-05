@@ -48,52 +48,41 @@ shows the main components for each XBlock.
 How it works
 ------------
 
-When a Module XBlock is loaded into EdX LMS it will contain one or more JSAV XBlock. Each client side javascript of JSAV XBlock will trigger events as student starts to interact with it. Events might contains scoring or logging data. JSAV XBlock will trigger the a message event in case of profieciency exercises and algorithem visualization because these  ...
+When a Module XBlock is loaded into LMS it will contain one or more JSAV
+XBlocks. Each client side JavaScript of JSAV XBlock will trigger events as
+student starts to interact with it. Depends on the JSAV XBlock instance type,
+events might be "message" events (which are triggered by IFramed profieciency
+exercises and AVs) or "jsav-log-event" events (which are triggered by slide
+shows). Module XBlock client side JavaScript will listen for these events and
+handle them, scoring events will be filtered and validated before Module
+XBlock calls 'reportProgress' function of the correspoding JSAV XBlock in
+order to report the score back to JSAV XBlock server side via AJAX request.
+Server side can have more evaluation rules than the client side, Actually only
+server side can decide whether the student will be awarded profeciency and
+given the problem points or not. Server side decision will be sent back via
+AJAX response and JSAV and Module XBlocks client side will update proficiency
+and score indicator(s) based on server response.
 
-"""Problem XBlock, and friends.
+Here below a sequance diagram that present interactions happening between
+Module and JSAV XBlocks and between client and server sides as well.
 
-These implement a general mechanism for problems containing input fields
-and checkers, wired together in interesting ways.
+    .. figure:: _static/OpenDSAX-SeqDiagram.svg
+       :scale: 100%
+       :alt: OpenDSAX XBlocks interactions.
+       :align: center    
 
-This code is in the XBlock layer.
-
-A rough sequence diagram::
-
-      BROWSER (Javascript)                 SERVER (Python)
-
-    Problem    Input     Checker          Problem    Input    Checker
-       |         |          |                |         |         |
-       | submit()|          |                |         |         |
-       +-------->|          |                |         |         |
-       |<--------+  submit()|                |         |         |
-       +------------------->|                |         |         |
-       |<-------------------+                |         |         |
-       |         |          |     "check"    |         |         |
-       +------------------------------------>| submit()|         |
-       |         |          |                +-------->|         |
-       |         |          |                |<--------+  check()|
-       |         |          |                +------------------>|
-       |         |          |                |<------------------|
-       |<------------------------------------+         |         |
-       | handleSubmit()     |                |         |         |
-       +-------->| handleCheck()             |         |         |
-       +------------------->|                |         |         |
-       |         |          |                |         |         |
-
-"""
+       Fig 2: OpenDSAX XBlocks sequence diagram.
 
 
-.. list-table::
+.. list-table:: suggested subtopics
    :widths: 800
    :header-rows: 1
 
    * - Subtopics
-   * - XBlocks interaction with each other (activity diagram/ sequence diagram)
    * - XBlocks interaction with EdX
-   * - Scoring
-   * - About grades and grade book
+   * - Scoring (About grades and grade book)
    * - Code layout
    * - Restrictions and limitations
-   * - On going work
+   * - Ongoing work
    * - How to contribute
    * - Nice to have: ``Programming detail hints``

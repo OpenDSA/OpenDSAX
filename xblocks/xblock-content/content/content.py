@@ -55,7 +55,7 @@ class ContentXBlock(XBlock, LmsCompatibilityMixin, StudioEditableXBlockMixin):
         default=0)
 
     content_type = String(
-        help="whether OpenDSA contnet , header, footer or navigation bar",
+        help="whether OpenDSA content , header, footer or navigation bar",
         default="content",
         values=({"value": "content", "display_name": "OpenDSA Content"},
                 {"value": "header", "display_name": "OpenDSA Header"},
@@ -69,7 +69,7 @@ class ContentXBlock(XBlock, LmsCompatibilityMixin, StudioEditableXBlockMixin):
         scope=Scope.settings)
 
     short_name = String(
-        help="OpenDSA contnet name, html file name",
+        help="OpenDSA content name, html file name",
         default="Quicksort-0",
         scope=Scope.settings)
 

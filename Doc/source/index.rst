@@ -15,4 +15,5 @@ Table of Contents
    Devstack
    Fullstack
    xblocks/OpenDSAX_XBlocks
-   Notes
+   Architecture
+   Notes	

@@ -54,7 +54,7 @@ class ContentXBlock(XBlock, LmsCompatibilityMixin, StudioEditableXBlockMixin):
         scope=Scope.user_state,
         default=0)
 
-    contnet_type = String(
+    content_type = String(
         help="whether OpenDSA contnet , header, footer or navigation bar",
         default="content",
         values=({"value": "content", "display_name": "OpenDSA Content"},
@@ -73,7 +73,7 @@ class ContentXBlock(XBlock, LmsCompatibilityMixin, StudioEditableXBlockMixin):
         default="Quicksort-0",
         scope=Scope.settings)
 
-    editable_fields = ('contnet_type', 'short_name', 'long_name', 'next_link',
+    editable_fields = ('content_type', 'short_name', 'long_name', 'next_link',
                        'next_name', 'prev_link', 'prev_name', 'toc_link',
                        'source_link')
 
@@ -87,7 +87,7 @@ class ContentXBlock(XBlock, LmsCompatibilityMixin, StudioEditableXBlockMixin):
         The primary view of the ContentXBlock, shown to students
         when viewing courses.
         """
-        if self.contnet_type == "content":
+        if self.content_type == "content":
             result = Fragment()
             url = "public/html/" + self.short_name + ".html"
             fragment = Fragment(self.resource_string(url))
@@ -97,7 +97,7 @@ class ContentXBlock(XBlock, LmsCompatibilityMixin, StudioEditableXBlockMixin):
             html_str = html_template.render(html_context)
             result.add_content(html_str)
             return result
-        elif self.contnet_type == "topnav":
+        elif self.content_type == "topnav":
             html_context = Context({"source_link": self.source_link,
                                     "prev_link": self.prev_link,
                                     "prev_name": self.prev_name,
@@ -109,9 +109,9 @@ class ContentXBlock(XBlock, LmsCompatibilityMixin, StudioEditableXBlockMixin):
                 self.resource_string("templates/student_view_topnav.html"))
             fragment = Fragment(html_template.render(html_context))
             return fragment
-        elif self.contnet_type == "header":
+        elif self.content_type == "header":
             return
-        elif self.contnet_type == "footer":
+        elif self.content_type == "footer":
             return
 
     def studio_view(self, context):

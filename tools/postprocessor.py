@@ -225,7 +225,7 @@ def update_edx_file(path, modules):
       else:
         external, internal = href, ''
       if external.endswith('.html'):
-        link['href'] = '../'+'#'.join((external[:-5],internal))
+        link['href'] = '../../'+'#'.join((external[:-5],internal))
         
       # Do something with the actual href
   
@@ -234,7 +234,8 @@ def update_edx_file(path, modules):
   TODO: Add the references to these broken-up files in the final course zip
   '''
   # Breaking file into components
-  section_divs = soup.find('div', class_='section').find_all(recursive=False)
+  section_divs = [i for l in soup.find_all('div', class_='section') 
+                    for i in l.find_all(recursive=False)]
   exercise_data = {}
   found_counter = 0
   if section_divs:
@@ -276,7 +277,8 @@ def make_edx(config):
   dest_dir = config.book_dir + config.rel_book_output_path
   # Iterate through all of the existing files
   ignore_files = ('Gradebook.html', 'search.html', 'conceptMap.html',
-                  'genindex.html', 'RegisterBook.html', 'Bibliography.html')
+                  'genindex.html', 
+                  'RegisterBook.html', 'Bibliography.html')
   html_files = [path for path in os.listdir(dest_dir)
                 if path.endswith('.html') and path not in ignore_files]
   exercises = {}
@@ -302,9 +304,44 @@ def make_edx(config):
                                'display_name': config.title,
                                'start': "2015-01-01T00:00:00Z"})
   
+  # Index
+  book_index = {'Table of Contents': {'next': '', 'prev': ''}}
+  previous_name = 'Table of Contents'
+  for chapter_name, sections in config.chapters.items():
+    for section_name, section_data in sections.items():
+      sequential_name = section_name.replace('/', '_')
+      book_index[sequential_name] = {
+        'prev': previous_name
+      }
+      book_index[previous_name]['next'] = sequential_name
+      previous_name = sequential_name
+  book_index[previous_name]['next'] = ""
+  
+  # Create table-of-contents
+  SubElement(top_xml, 'chapter', {'url_name': 'Table_of_Contents'})
+  chapter_xml = Element('chapter', {'display_name': 'Table of Contents'})
+  SubElement(chapter_xml, 'sequential', {'url_name': 'Table_of_Contents'})
+  sequential_xml = Element('sequential', {'display_name': 'Table of Contents'})
+  vertical_xml = SubElement(sequential_xml, 'vertical', {'url_name': 'Table_of_Contents_vertical'})
+  module_xml = SubElement(vertical_xml, 'module', {'url_name': 'Table_of_Contents_module'})
+  SubElement(module_xml, 'content', {
+                    'xblock-family': "xblock.v1",
+                    'long_name': "OpenDSA Navigation Bar",
+                    "content_type": "topnav",
+                    "prev_link": book_index['Table of Contents']['prev'],
+                    "next_link": book_index['Table of Contents']['next'],
+                    "toc_link": 'Table_of_Contents'
+                    })
+  SubElement(module_xml, 'content', {
+                        'url_name': '{}-0'.format('index'),
+                        'xblock-family': "xblock.v1",
+                        'long_name': "{} OpenDSA Content".format('Table of Contents')
+                        })
+  pretty_print_xml(sequential_xml, os.path.join(dest_dir, 'sequential', 'Table_of_Contents.xml'))
+  pretty_print_xml(chapter_xml, os.path.join(dest_dir, 'chapter', 'Table_of_Contents.xml'))
+  
   # Course -> Chapter -> Sequential -> Vertical -> Module -> Exercise
   # Create the chapter files
-  
   for chapter_name, sections in config.chapters.items():
     chapter_file_path = os.path.join(dest_dir, 'chapter', chapter_name+'.xml')
     chapter_xml = Element('chapter', {'display_name': chapter_name})
@@ -319,6 +356,14 @@ def make_edx(config):
         vertical_xml = SubElement(sequential_xml, 'vertical', {'url_name': sequential_name+'_vertical'})
         module_xml = SubElement(vertical_xml, 'module', {'url_name': sequential_name+'_module'})
         # Add in each exercise
+        SubElement(module_xml, 'content', {
+                    'xblock-family': "xblock.v1",
+                    'long_name': "OpenDSA Navigation Bar",
+                    "content_type": "topnav",
+                    "prev_link": book_index[sequential_name]['prev'],
+                    "next_link": book_index[sequential_name]['next'],
+                    "toc_link": 'toc'
+                    })
         SubElement(module_xml, 'content', {
                         'url_name': '{}-0'.format(subsection_name),
                         'xblock-family': "xblock.v1",
@@ -370,6 +415,7 @@ def make_edx(config):
                       arcname=os.path.join('2015S', a_directory, a_path))
   shutil.rmtree(os.path.join(dest_dir, 'chapter/'))
   shutil.rmtree(os.path.join(dest_dir, 'sequential/'))
+  shutil.rmtree(os.path.join(dest_dir, 'course/'))
   os.remove(os.path.join(dest_dir, 'course.xml'))
     
 def main(argv):

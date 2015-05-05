@@ -38,6 +38,8 @@ function ModuleXBlock(runtime, element) {
         }
     }
 
+    // handle message events from embeded iframe and check for exercise-grade realted
+    // event type to report student progress and send score object to server side handler.
     function embededJSAVMsgHandler(e) {
         var score,
             complete;
@@ -48,8 +50,6 @@ function ModuleXBlock(runtime, element) {
         //     return;
         // }
         var data = e.originalEvent.data;
-        // console.log("type: " + data.type + " uiid: " + data.uiid + " seed: " + data.seed);
-        // console.dir(data);
 
         if (data.type === "jsav-exercise-grade-change" || data.type === "jsav-exercise-grade" || data.type === "jsav-exercise-step-fixed") {
             score = roundPercent(data.score.correct / data.score.total);
@@ -58,14 +58,16 @@ function ModuleXBlock(runtime, element) {
             data.desc.complete = complete;
 
             // Prevent event data from being transmitted on every step
-            // This makes better use of the buffering mechanism and overall reduces the network traffic (removed overhead of individual requests), but it takes a while to complete and while its sending the log data isn't saved in local storage, if the user closes the page before the request completes and it fails the data will be lost
+            // This makes better use of the buffering mechanism and overall reduces the network traffic 
+            // (removed overhead of individual requests), but it takes a while to complete and while its 
+            // sending the log data isn't saved in local storage, if the user closes the page before 
+            // the request completes and it fails the data will be lost
             if (complete === 1) {
                 // Store the user's score when they complete the exercise
                 // loop for each children and call reportProgress function on corrent child
 
                 for (var i = 0; i < children.length; i++) {
                     var child = children[i];
-                    // console.log("student completed the problem, child.seed: " + child.seed + " data.seed: " + data.seed);
                     if (child.seed === data.seed) {
                         callIfExists(child, 'reportProgress', data);
                         break;
@@ -77,8 +79,6 @@ function ModuleXBlock(runtime, element) {
 
     // Handle data from events generated on the module page or received from embedded pages
     function JSAVEventHandler(data) {
-        //console.log("JSAVEventHandler");
-        //console.dir(data);
         var flush = false;
 
         // Filter out events we aren't interested in
@@ -204,54 +204,52 @@ function ModuleXBlock(runtime, element) {
         }
     }
 
-    function sendLogData(){
-      //console.dir(localStorage);
-      //console.log(ODSA.SETTINGS.LOGGING_SERVER);
+    function sendLogData() {
+        //console.dir(localStorage);
+        //console.log(ODSA.SETTINGS.LOGGING_SERVER);
 
-      var handlerUrl = runtime.handlerUrl(element, 'storeLogData');
+        var handlerUrl = runtime.handlerUrl(element, 'storeLogData');
 
-      //Cleanning localStorage from uneccessary events
+        //Cleanning localStorage from uneccessary events
 
-      for (var i = 0; i < localStorage.length; i++){
-      	 var key = localStorage.key(i).toString();
-      	 if (key.indexOf("event") === -1){
-      	 	localStorage.removeItem(key);
-      	 } 
-      }
+        for (var i = 0; i < localStorage.length; i++) {
+            var key = localStorage.key(i).toString();
+            if (key.indexOf("event") === -1) {
+                localStorage.removeItem(key);
+            }
+        }
 
-      //There is Something to Send to the server
-      if(localStorage.length !== 0){
+        //There is Something to Send to the server
+        if (localStorage.length !== 0) {
 
-        $.ajax({
+            $.ajax({
                 type: "POST",
                 url: handlerUrl,
                 data: JSON.stringify(localStorage),
                 success: logDataStored,
-                error: function (data){
+                error: function (data) {
                     console.error("Error sending data to server");
                 }
-              });
-      }
+            });
+        }
     }
 
-    function logDataStored(data){
-      //console.log(data);
-      //console.log("Event data of size "+data+" are logged and successfully saved on server");
-      
-      var response = "The following events are logged and stored on server\n";
-      response += "-------------------------------------------------------\n";
-      for (var i = 0; i < data.length; i++){
-      	response += "(" + (i+1) + ") " + data[i] + "\n";
-      	response += "-------------------------------\n";
-      }
-      console.log(response);
-      
-      localStorage.clear();
-    } 
+    function logDataStored(data) {
+        //console.log(data);
+        //console.log("Event data of size "+data+" are logged and successfully saved on server");
+
+        var response = "The following events are logged and stored on server\n";
+        response += "-------------------------------------------------------\n";
+        for (var i = 0; i < data.length; i++) {
+            response += "(" + (i + 1) + ") " + data[i] + "\n";
+            response += "-------------------------------\n";
+        }
+        console.log(response);
+
+        localStorage.clear();
+    }
 
     $(document).ready(function () {
-        //remove extraneous listeners
-        // $(window).off("message")
         $(window).on("message", embededJSAVMsgHandler);
         $("body").on("jsav-log-event", function (e, data) {
             JSAVEventHandler(data);

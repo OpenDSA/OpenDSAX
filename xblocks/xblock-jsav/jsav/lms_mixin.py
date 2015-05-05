@@ -4,39 +4,40 @@ BASICALLY CRIBBED BY @jbau from the edx-ora2 project at
 https://raw.githubusercontent.com/edx/edx-ora2/master/apps/openassessment/xblock/lms_mixin.py
 """
 
-from xblock.fields import String, Float, Scope, DateTime, Boolean, Integer
+from xblock.fields import String, Scope, DateTime, Integer
 
 
 class LmsCompatibilityMixin(object):
+
     """
     Extra fields and methods used by LMS/Studio.
     """
     # Studio the default value for this field to show this XBlock
     # in the list of "Advanced Components"
     display_name = String(
-        default="JSAV-Based Materials", 
+        default="JSAV-Based Materials",
         scope=Scope.settings,
         help="Display name"
     )
 
     start = DateTime(
-        default=None, 
+        default=None,
         scope=Scope.settings,
         help="ISO-8601 formatted string representing the start date of this assignment."
     )
 
     due = DateTime(
-        default=None, 
+        default=None,
         scope=Scope.settings,
         help="ISO-8601 formatted string representing the due date of this assignment."
     )
 
     weight = Integer(
         display_name="Problem Weight",
-        help = "The number of points this problem is worth",
-        values = {"min": 1, "max": 10, "step": 1},
-        default = 3,
-        scope = Scope.settings)
+        help="The number of points this problem is worth",
+        values={"min": 1, "max": 10, "step": 1},
+        default=3,
+        scope=Scope.settings)
 
     def has_dynamic_children(self):
         """Do we dynamically determine our children? No, we don't have any.

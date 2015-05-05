@@ -164,7 +164,7 @@ Both
 	$ cd /edx/OpenDSAX
 	$ make ds-testX
 
-#. Refer to :ref:`using_devstack` to start the studio and LMS::
+#. Refer to :ref:`using_devstack` to start the studio and LMS
 
 #. To use OpenDSAX XBlocks in a course, follow the instuction `in this page <http://opendsax.readthedocs.org/en/latest/Introduction.html#trying-it-out>`_ starting from point #4.
 

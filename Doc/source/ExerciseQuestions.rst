@@ -41,7 +41,7 @@ Each summary question requires these fields:
 * questionUrls: This is an array that contains the strings of each question in the form of their URL
 
 =========================
-Using in the Workbench
+Using the Workbench
 =========================
 To test or use your questions in the workbench, you'll need to first install the questions xblock to your sdk:
 

@@ -47,4 +47,5 @@ To test or use your questions in the workbench, you'll need to first install the
 
 * From in the xblock directory, run 'pip install -e questions'
 * Open the question.py file in the question directory
-* At the bottom, there is the workbench scenario. Change the summary question file attribute to be the one you wish to see on the workbench.
+* At the bottom, there is the workbench scenario. Change the summary question file attribute to be the one you wish to see on the workbench. See below:
+	<questions summary_question='YOUR_FILE_HERE'></questions>

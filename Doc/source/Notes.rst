@@ -8,6 +8,7 @@ In OpenDSAX, user interactions with interactive content (i.e slideshows, AVs, an
 
 * From the browser, you can simply investigate the localStorage object from the browser's console by typing ``localStorage``. This object will contain all the logged user interactions that are not yet saved on the server.
 
-* From the EDX platform, you can access user interactions after being saved on the server by accessing the ``tracking.log`` file on the vagrant machine. The path to the ``traking.log`` file is ::
+* From the devstack virtual machine, you can access user interactions after being saved on the server by accessing the ``tracking.log`` file. You can simply access the contents of this file by typing ::
 
-	vagrant@precise64:/edx/var/log/tracking$
+	$ cd /edx/var/log/tracking
+	$ cat tracking.log

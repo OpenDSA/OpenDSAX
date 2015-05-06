@@ -1,4 +1,5 @@
-{		
+{	
+"usesJsav": true,	
 "jsavStuff" : "alert('hey')",
 "max_shown_answers": "2",
 "num_possible_answers": "2",

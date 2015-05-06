@@ -23,7 +23,7 @@ class ExerciseQuestionsXBlock(XBlock):
     # TO-DO: change this view to display your data your own way.
     def student_view(self, context=None):
         print(self.summaryQuestion)
-        questionData = self.resource_string(self.summaryQuestion)
+        questionData = self.resource_string("static/json/summaryQuestions/BinSortQuestions.json")
         questionData = json.loads(questionData)
         self.maxQuestionIndex = questionData["numQuestionsForExercise"] - 1;        
         self.maxPoints = questionData["maxPointsForExercise"];                
@@ -37,12 +37,14 @@ class ExerciseQuestionsXBlock(XBlock):
                                 "score" : self.score
                                 })
         html_template = Template(self.resource_string(questionData["htmlString"]))
-
+        jsavContent = ""
+        if data["usesJsav"]:
+            jsavContent = data["jsavStuff"]
         frag = Fragment(html_template.render(html_context))
         js_context = Context({
                     "numberOfPossibleAnswers" : len(data["question"]["answers"]),
                     "answers": json.dumps(data["question"]["answers"]),
-                    "jsavStuff": data["jsavStuff"],                    
+                    "jsavStuff": jsavContent,                    
                     "solution_index": data["question"]["solution_index"]
                       })
         js_template = Template(self.resource_string(questionData["jsString"]))
@@ -66,7 +68,10 @@ class ExerciseQuestionsXBlock(XBlock):
             if self.score < self.maxPoints:
                 self.score = self.score + 1
         tempQuestionArray = json_data["question"]["answers"]
-        return {"question_title": json_data["question"]["problem"], "solution_index": json_data["question"]["solution_index"],"answers": tempQuestionArray,"score": self.score}
+        jsavDataToReturn = ""
+        if json_data["usesJsav"]:
+            jsavDataToReturn = json_data["jsavStuff"]
+        return {"question_title": json_data["question"]["problem"], "solution_index": json_data["question"]["solution_index"],"answers": tempQuestionArray,"score": self.score,"jsavStuff": jsavDataToReturn}
 
     @staticmethod
     def workbench_scenarios():

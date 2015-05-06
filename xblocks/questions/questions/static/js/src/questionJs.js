@@ -11,6 +11,7 @@ var jsavString = "{{jsavStuff|safe}}";
 //Gets executed once per question
 function updateQuestion(result) {
         answers = result.answers;
+        jsavStuff = result.jsavStuff;
         possibleAnswers = result.answers.length
         solutionIndex = result.solution_index;
         var answerString = "";
@@ -35,11 +36,13 @@ function updateQuestion(result) {
             }
         }
         $('#answerChoices').html(answerString);
-
-
         flag = "false";
         $('#question').text(result.question_title);
         $('.score', element).text(result.score);
+        if (jsavStuff != "")
+        {
+            eval(jsavStuff);
+        }
     }
 
     //Checks to see if the question was answered correctly. Will fetch a new question upon correct answer

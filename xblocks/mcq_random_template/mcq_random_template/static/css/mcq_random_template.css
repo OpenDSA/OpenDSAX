@@ -1,9 +1,0 @@
-/* CSS for MCQRandomTemplateXBlock */
-
-.mcq_random_template_block .count {
-    font-weight: bold;
-}
-
-.mcq_random_template_block p {
-    cursor: pointer;
-}

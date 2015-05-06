@@ -15,5 +15,6 @@ Table of Contents
    Devstack
    Fullstack
    xblocks/OpenDSAX_XBlocks
+   ExerciseQuestions
    Architecture
    Notes	

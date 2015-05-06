@@ -1,6 +1,6 @@
 {	
 "usesJsav": true,	
-"jsavStuff" : "alert('hey')",
+"jsavStuff" : "{alert('This is a test alert. Change the jsavStuff value in the question file to be your jsav function');}",
 "max_shown_answers": "2",
 "num_possible_answers": "2",
 "question" : {

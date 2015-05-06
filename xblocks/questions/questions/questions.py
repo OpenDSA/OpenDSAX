@@ -9,7 +9,7 @@ from xblock.fragment import Fragment
 
 
 class ExerciseQuestionsXBlock(XBlock):
-    summary_question = String(help="", default = "", scope = Scope.user_state)
+    summary_question = String(help="", default = "none", scope = Scope.settings)
     maxQuestionIndex = Integer(help="The highest index for questions", default = 0, scope =Scope.user_state)
     maxPoints = Integer(help="The max points achievable for this exercise", default = 10, scope=Scope.user_state)
     score = Integer(help="Score for the exercise", default = 0, scope=Scope.user_state)
@@ -20,10 +20,8 @@ class ExerciseQuestionsXBlock(XBlock):
         dat = pkg_resources.resource_string(__name__, path)
         return dat.decode("utf8")
 
-    # TO-DO: change this view to display your data your own way.
     def student_view(self, context=None):
-        print(self.summaryQuestion)
-        questionData = self.resource_string("static/json/summaryQuestions/BinSortQuestions.json")
+        questionData = self.resource_string(self.summary_question)
         questionData = json.loads(questionData)
         self.maxQuestionIndex = questionData["numQuestionsForExercise"] - 1;        
         self.maxPoints = questionData["maxPointsForExercise"];                
@@ -79,7 +77,7 @@ class ExerciseQuestionsXBlock(XBlock):
         return [
             ("ExerciseQuestionsXBlock",
              """<vertical_demo>
-                <questions summary_question="static/json/summaryQuestions/BinSortQuestions.json"></questions>
+                <questions summary_question='static/json/summaryQuestions/BinSortQuestions.json'></questions>
                 </vertical_demo>
              """),
         ]

@@ -9,7 +9,7 @@ from xblock.fragment import Fragment
 
 
 class ExerciseQuestionsXBlock(XBlock):
-    summaryQuestion = String(help="", default = "", scope = Scope.user_state)
+    summary_question = String(help="", default = "", scope = Scope.user_state)
     maxQuestionIndex = Integer(help="The highest index for questions", default = 0, scope =Scope.user_state)
     maxPoints = Integer(help="The max points achievable for this exercise", default = 10, scope=Scope.user_state)
     score = Integer(help="Score for the exercise", default = 0, scope=Scope.user_state)
@@ -79,7 +79,7 @@ class ExerciseQuestionsXBlock(XBlock):
         return [
             ("ExerciseQuestionsXBlock",
              """<vertical_demo>
-                <questions summaryQuestion="static/json/summaryQuestions/BinSortQuestions.json"></questions>
+                <questions summary_question="static/json/summaryQuestions/BinSortQuestions.json"></questions>
                 </vertical_demo>
              """),
         ]

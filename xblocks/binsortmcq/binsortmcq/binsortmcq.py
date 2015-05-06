@@ -4,11 +4,12 @@ import json
 
 from django.template import Context, Template
 from xblock.core import XBlock
-from xblock.fields import Scope, Integer, List
+from xblock.fields import Scope, Integer, List, String
 from xblock.fragment import Fragment
 
 
 class BinSortMCQXBlock(XBlock):
+    summaryQuestion = String(help="", default = "", scope = Scope.user_state)
     maxQuestionIndex = Integer(help="The highest index for questions", default = 0, scope =Scope.user_state)
     maxPoints = Integer(help="The max points achievable for this exercise", default = 10, scope=Scope.user_state)
     score = Integer(help="Score for the exercise", default = 0, scope=Scope.user_state)
@@ -21,7 +22,8 @@ class BinSortMCQXBlock(XBlock):
 
     # TO-DO: change this view to display your data your own way.
     def student_view(self, context=None):
-        questionData = self.resource_string("static/json/questionInfo.json")
+        print(self.summaryQuestion)
+        questionData = self.resource_string(self.summaryQuestion)
         questionData = json.loads(questionData)
         self.maxQuestionIndex = questionData["numQuestionsForExercise"] - 1;        
         self.maxPoints = questionData["maxPointsForExercise"];                
@@ -40,6 +42,7 @@ class BinSortMCQXBlock(XBlock):
         js_context = Context({
                     "numberOfPossibleAnswers" : len(data["question"]["answers"]),
                     "answers": json.dumps(data["question"]["answers"]),
+                    "jsavStuff": data["jsavStuff"],                    
                     "solution_index": data["question"]["solution_index"]
                       })
         js_template = Template(self.resource_string(questionData["jsString"]))
@@ -71,7 +74,7 @@ class BinSortMCQXBlock(XBlock):
         return [
             ("BinSortMCQXBlock",
              """<vertical_demo>
-                <binsortmcq/>
+                <binsortmcq summaryQuestion="static/json/questionInfo.json"></binsortmcq>
                 </vertical_demo>
              """),
         ]

@@ -1,8 +1,8 @@
 {
 	"xblockName" : "BinSortMCQXBlock",
-	"cssString" : "static/css/binsortmcq.css",
-	"jsString" : "static/js/src/binsortmcq.js",
-	"htmlString" : "static/html/binsortmcq.html",
+	"cssString" : "static/css/questionCss.css",
+	"jsString" : "static/js/src/questionJs.js",
+	"htmlString" : "static/html/questionHtml.html",
 	"maxPointsForExercise" : 10,
 	"numQuestionsForExercise" : 2,
 	"questionUrls": [

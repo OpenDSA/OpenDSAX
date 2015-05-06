@@ -1,7 +1,10 @@
-"""TO-DO: Write a description of what this XBlock is."""
+"""This XBlock represents a multiple choice question pool. Copy most and replace the question pool html strings to use for your own questions."""
 
 import pkg_resources
+import random
+import json
 
+from django.template import Context, Template
 from xblock.core import XBlock
 from xblock.fields import Scope, Integer
 from xblock.fragment import Fragment
@@ -14,12 +17,18 @@ class MCQOrderedXBlock(XBlock):
 
     # Fields are defined on the class.  You can access them in your code as
     # self.<fieldname>.
+    # maxQuestionIndex should be how many questions we have - 1
+    maxQuestionIndex = Integer(help="The highest index for questions", default = 0, scope =Scope.user_state)
+    # maxPoints should be changed to whatever the maximum points achievable are for this exercise
+    maxPoints = Integer(help="The max points achievable for this exercise", default = 0, scope=Scope.user_state)
+    
+    score = Integer(help="Score for the exercise", default = 0, scope=Scope.user_state)
 
-    # TO-DO: delete count, and define your own fields.
-    count = Integer(
-        default=0, scope=Scope.user_state,
-        help="A simple counter, to show something happening",
-    )
+    """
+    Fill in the question html files here (urls)
+    """
+    questionPool = ["static/html/bubblesort_Question1.html"]
+    currentQuestionIndex = Integer(help="What question we are on", default = 0, scope = Scope.user_state)
 
     def resource_string(self, path):
         """Handy helper for getting resources from our kit."""
@@ -28,29 +37,46 @@ class MCQOrderedXBlock(XBlock):
 
     # TO-DO: change this view to display your data your own way.
     def student_view(self, context=None):
+
         """
-        The primary view of the MCQOrderedXBlock, shown to students
-        when viewing courses.
+        Here we need to get a random file from the pool of html strings.
+        We can declare an array of html strings, and get an index and random.
+        Should we inject the header/score html code prior to the random question?
         """
-        html = self.resource_string("static/html/mcq_ordered.html")
-        frag = Fragment(html.format(self=self))
-        frag.add_css(self.resource_string("static/css/mcq_ordered.css"))
-        frag.add_javascript(self.resource_string("static/js/src/mcq_ordered.js"))
-        frag.initialize_js('MCQOrderedXBlock')
+
+        json_data = json.load(self.resource_string(self.questionPool[currentQuestionIndex]))
+
+        self.maxQuestionIndex = json_data["num_questions"]
+        self.maxPoints = json_data["max_points"]
+        html_context = Context({"question_title": json_data["question"].problem,
+                                "max_points": self.maxPoints
+                                })
+
+        questionString = self.questionPool[self.currentQuestionIndex]
+
+        html_template = Template(self.resource_string("static/html/bubblesort_Question1.html"))
+        frag = Fragment(html_template.render(html_context))
+        frag.add_css(self.resource_string("static/css/bubblesortquestions.css"))
+        frag.add_javascript(self.resource_string("static/js/src/bubblesortquestions.js"))
+        frag.initialize_js('BubblesortQuestionsXBlock')
         return frag
+
+    problem_view = student_view
+
 
     # TO-DO: change this handler to perform your own actions.  You may need more
     # than one handler, or you may not need any handlers at all.
     @XBlock.json_handler
-    def increment_count(self, data, suffix=''):
-        """
-        An example handler, which increments the data.
-        """
-        # Just to show data coming in...
-        assert data['hello'] == 'world'
+    def getNewQuestion(self, data, suffix=''):
 
-        self.count += 1
-        return {"count": self.count}
+        self.currentQuestionIndex += 1
+        questionString = self.questionPool[self.currentQuestionIndex]
+
+        newHTML = self.resource_string(questionString)
+        if data['question'] == 'correct' and data['flag'] == 'false':
+            if self.score < self.maxPoints:
+                self.score = self.score + 1
+        return {"html": newHTML, "score": self.score}
 
     # TO-DO: change this to create the scenarios you'd like to see in the
     # workbench while developing your XBlock.
@@ -58,10 +84,8 @@ class MCQOrderedXBlock(XBlock):
     def workbench_scenarios():
         """A canned scenario for display in the workbench."""
         return [
-            ("MCQOrderedXBlock",
+            ("BubblesortQuestionsXBlock",
              """<vertical_demo>
-                <mcq_ordered/>
-                <mcq_ordered/>
                 <mcq_ordered/>
                 </vertical_demo>
              """),

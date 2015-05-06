@@ -1,0 +1,15 @@
+{
+		"jsavStuff" : "var initJSAV = function () {var jsav = new JSAV('jsav');jsav.recorded();var bt = jsav.ds.binarytree({center: true, visible: true, nodegap: 15});bt.root(14);var rt = bt.root();rt.left(2);rt.left().left(1);rt.left().right(3);rt.right(11);rt.right().left(10);rt.right().left().left(7);rt.right().right(30);rt.right().right().left(40);bt.layout();}",
+"max_shown_answers": "4",
+"num_possible_answers": "4",
+"question" : {
+		"problem" : "Which of these inputs will cost the most for Shellsort when using divide-by-twos increments on an array with a size where n is a power of 2?",
+		"answers": [
+			"A sorted array.",
+			"An array where even positions store values 1 to n/2 and odd positions store values n/2+1 to n.",
+			"An array with random input.",
+			"A reverse sorted array."
+			],
+		"solution_index" : "1"		
+	}
+}

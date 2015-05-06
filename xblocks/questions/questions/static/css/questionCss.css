@@ -1,0 +1,25 @@
+
+.question {
+	font-family: Arial;
+	font-size: 12pt;
+}
+
+form {
+	
+    }
+
+.answers {
+	font-family: Arial;
+	font-size: 8pt;
+}
+
+button {
+	background-color: #B8DBFF;
+	border-radius: 6px;
+}
+
+div.questionsXblock {
+    cursor: pointer;
+    border-radius: 8px;
+    background-color: #E0E0D1;
+}

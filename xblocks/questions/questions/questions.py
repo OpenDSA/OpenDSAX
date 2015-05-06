@@ -8,7 +8,7 @@ from xblock.fields import Scope, Integer, List, String
 from xblock.fragment import Fragment
 
 
-class BinSortMCQXBlock(XBlock):
+class ExerciseQuestionsXBlock(XBlock):
     summaryQuestion = String(help="", default = "", scope = Scope.user_state)
     maxQuestionIndex = Integer(help="The highest index for questions", default = 0, scope =Scope.user_state)
     maxPoints = Integer(help="The max points achievable for this exercise", default = 10, scope=Scope.user_state)
@@ -50,7 +50,7 @@ class BinSortMCQXBlock(XBlock):
         js_str = js_template.render(js_context)
         frag.add_javascript(js_str)
         frag.add_css(self.resource_string(questionData["cssString"]))
-        frag.initialize_js("BinSortMCQXBlock")
+        frag.initialize_js("ExerciseQuestionsXBlock")
         return frag
 
     @XBlock.json_handler
@@ -72,9 +72,9 @@ class BinSortMCQXBlock(XBlock):
     def workbench_scenarios():
         """A canned scenario for display in the workbench."""
         return [
-            ("BinSortMCQXBlock",
+            ("ExerciseQuestionsXBlock",
              """<vertical_demo>
-                <binsortmcq summaryQuestion="static/json/questionInfo.json"></binsortmcq>
+                <questions summaryQuestion="static/json/summaryQuestions/BinSortQuestions.json"></questions>
                 </vertical_demo>
              """),
         ]

@@ -5,7 +5,7 @@
 	"maxPointsForExercise" : 10,
 	"numQuestionsForExercise" : 2,
 	"questionUrls": [
-		"static/json/BinSortMCQ1.json", 
-		"static/json/BinSortTF1.json"
+		"static/json/individualQuestions/BinSortMCQ1.json", 
+		"static/json/individualQuestions/BinSortTF1.json"
 		]
 }

@@ -30,7 +30,8 @@ To add an additional, individual question to the summary question, you just need
 Adding a summary question
 ------------
 If no summary question exists that represents your question, you'll need to create a new file inside the summary question directory of the question xblock.
-Each summary question requires these fields 
+Each summary question requires these fields:
+ 
 * cssString: This is the location of the css file for the question (could perhaps not and hardcode this?)
 * htmlString: This is the location of the html file for the question (could perhaps not and hardcode this?)
 * jsString: This is the location of the javascript file for the question (could perhaps not and hardcode this?)

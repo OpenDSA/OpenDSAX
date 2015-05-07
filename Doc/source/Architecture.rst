@@ -54,14 +54,15 @@ student starts to interact with it. Depends on the JSAV XBlock instance type,
 events might be "message" events (which are triggered by IFramed profieciency
 exercises and AVs) or "jsav-log-event" events (which are triggered by slide
 shows). Module XBlock client side JavaScript will listen for those events and
-handle them, scoring events will be filtered and validated before Module
-XBlock calls "reportProgress" function of the correspoding JSAV XBlock in
-order to report the score back to JSAV XBlock server side via AJAX request.
-Server side can have more evaluation rules than the client side, Actually only
-server side decides whether the student will be awarded profeciency and
-given the problem points or not. Server side decision will be sent back via
-AJAX response and JSAV and Module XBlocks client side will update proficiency
-and score indicator(s) based on server response.
+handle them, events whcihc have scoring data will be filtered and validated
+before Module XBlock calls "reportProgress" function of the correspoding JSAV
+XBlock in order to report the score back to JSAV XBlock server side via AJAX
+request. Server side could have more evaluation rules to apply on scoring data
+than the client side. Only server side decides whether the student will be
+awarded profeciency and given the problem points or not. Server side decision
+will be sent back via AJAX response to JSAV client side and accordingly JSAV
+and Module XBlocks client side will update proficiency and score indicator(s)
+based on server response.
 
 Here below a sequance diagram that present interactions happening between
 Module and JSAV XBlocks and between client and server sides as well.

@@ -74,16 +74,3 @@ Module and JSAV XBlocks and between client and server sides as well.
 
        Fig 2: OpenDSAX XBlocks sequence diagram.
 
-
-.. list-table:: suggested subtopics
-   :widths: 800
-   :header-rows: 1
-
-   * - Subtopics
-   * - XBlocks interaction with EdX
-   * - Scoring (About grades and grade book)
-   * - Code layout
-   * - Restrictions and limitations
-   * - Ongoing work
-   * - How to contribute
-   * - Nice to have: ``Programming detail hints``

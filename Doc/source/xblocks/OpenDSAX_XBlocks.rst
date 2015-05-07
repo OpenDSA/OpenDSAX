@@ -9,3 +9,6 @@ OpenDSAX XBlocks Reference Manual
    xblock_module
    xblock_jsav
    xblock_content
+   binsortmcq
+   mcq_ordered
+   mcq_randam_template

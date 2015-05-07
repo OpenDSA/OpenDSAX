@@ -23,6 +23,10 @@ sys.path.insert(0, os.path.abspath('../../xblocks/xblock-utils'))
 sys.path.insert(0, os.path.abspath('../../xblocks/xblock-module'))
 sys.path.insert(0, os.path.abspath('../../xblocks/xblock-jsav'))
 sys.path.insert(0, os.path.abspath('../../xblocks/xblock-content'))
+sys.path.insert(0, os.path.abspath('../../xblocks/binsortmcq'))
+sys.path.insert(0, os.path.abspath('../../xblocks/mcq_ordered'))
+sys.path.insert(0, os.path.abspath('../../xblocks/mcq_random_template'))
+
 
 # -- General configuration ------------------------------------------------
 

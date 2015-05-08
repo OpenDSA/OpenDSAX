@@ -1,8 +1,8 @@
 .. _Architecture:
 
-=============================================
-OpenDSAX XBlocks Architecture (Draft Version)
-=============================================
+=============================
+OpenDSAX XBlocks Architecture
+=============================
 
 ------------
 Introduction

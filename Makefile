@@ -38,10 +38,10 @@ testX:
 	$(CP) $(XBLOCKS_HOME)/Books/$@/html $(XBLOCK_CONTENT)/public/
 
 ds-testX: min testX
-	$(MAKE) install-xblocks
+	"$(MAKE)" install-xblocks
 
 fs-testX: min testX
-	$(MAKE) fs-install-xblocks
+	"$(MAKE)" fs-install-xblocks
 
 
 allBooks: testX
@@ -64,9 +64,9 @@ pull:
 	git pull
 	git submodule init
 	git submodule update
-	$(MAKE) -s -C JSAV
-	$(MAKE) -s min
-	cd Doc && $(MAKE)
+	"$(MAKE)" -s -C JSAV
+	"$(MAKE)" -s min
+	cd Doc && "$(MAKE)"
 	$(CP) $(XBLOCKS_HOME)/lib $(XBLOCK_MODULE)/public/
 	$(CP) $(XBLOCKS_HOME)/JSAV $(XBLOCK_MODULE)/public/
 	$(CP) $(XBLOCKS_HOME)/AV $(XBLOCK_JSAV)/public/

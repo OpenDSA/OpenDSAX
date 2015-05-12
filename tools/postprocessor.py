@@ -250,7 +250,7 @@ def update_edx_file(path, modules):
         chunked_html_files = []
         found_counter += 1
       else:
-        chunked_html_files.append(section.prettify())
+        chunked_html_files.append(str(section).decode('utf-8'))
     path_html = os.path.join(os.path.dirname(path), '{}-{}.html'.format(mod_name, found_counter))
     with codecs.open(path_html, 'w', 'utf-8') as o:
       o.writelines(chunked_html_files)
@@ -262,7 +262,7 @@ def update_edx_file(path, modules):
       o.writelines(html)
       
   # Delete the file on the way out
-  os.remove(path)
+  #os.remove(path)
   return exercise_data
     
 def pretty_print_xml(data, file_path):

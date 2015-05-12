@@ -385,7 +385,7 @@ def make_edx(config):
                         'display_name': pdata.get('data-long-name', ""),
                         # TODO: where do js_resources come from?
                         'js_resources': pdata.get('js_resources', ""),
-                        'problem_url': pdata.get('problem_url', "/AV/"+chapter_name),
+                        'problem_url': pdata.get('problem_url', "/AV/"+chapter_name+"/"),
                         'short_name': name,
                         'showhide': pdata.get('data-showhide', ""),
                         # JXOP-debug?

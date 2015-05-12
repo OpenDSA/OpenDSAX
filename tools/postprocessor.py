@@ -180,7 +180,6 @@ def update_TermDef(glossary_file, terms_dict):
     
 def update_edx_file(path, modules):
   # Read contents of module HTML file
-  print path
   with codecs.open(path, 'r', 'utf-8') as html_file:
     html = html_file.read()
   
@@ -404,7 +403,7 @@ def make_edx(config):
     pretty_print_xml(chapter_xml, chapter_file_path)
   pretty_print_xml(top_xml, top_file_path)
     
-  mod_name = os.path.join(dest_dir, '..', os.path.splitext(os.path.basename(path))[0]+'.tar.gz')
+  mod_name = os.path.join(dest_dir, '..', config.book_name+'.tar.gz')
   with tarfile.open(mod_name, 'w:gz') as tar:
       tar.add(os.path.join(dest_dir, 'course.xml'),
               arcname = '2015S/course.xml')

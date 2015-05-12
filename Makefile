@@ -112,3 +112,7 @@ fs-install-utils:
 	$(RM) $(SITE_PKG_HOME)/xblockutils
 	$(RM) $(SITE_PKG_HOME)/xblock_utils-0.1a0-py2.7.egg-info
 	sudo -H -u edxapp /edx/bin/pip.edxapp install $(XBLOCKS_HOME)/xblocks/xblock-utils/
+    
+fs-install-course:
+	cd /edx/app/edxapp/edx-platform
+	sudo -u www-data /edx/bin/python.edxapp ./manage.py cms --settings=aws import /edx/var/edxapp/data  $(XBLOCKS_HOME)/Books/$@/$@.tar.gz

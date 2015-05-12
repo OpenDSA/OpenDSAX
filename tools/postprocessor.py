@@ -332,7 +332,7 @@ def make_edx(config):
                     "toc_link": 'Table_of_Contents'
                     })
   SubElement(module_xml, 'content', {
-                        'url_name': '{}-0'.format('index'),
+                        'short_name': '{}-0'.format('index'),
                         'xblock-family': "xblock.v1",
                         'long_name': "{} OpenDSA Content".format('Table of Contents')
                         })

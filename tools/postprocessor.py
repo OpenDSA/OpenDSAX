@@ -340,7 +340,7 @@ def make_edx(config):
                     "content_type": "topnav",
                     "prev_link": book_index['Table of Contents']['prev'],
                     "next_link": book_index['Table of Contents']['next'],
-                    "toc_link": 'Table_of_Contents'
+                    "toc_link": '../../Table_of_Contents/Table_of_Contents'
                     })
   SubElement(module_xml, 'content', {
                         'short_name': '{}-0'.format('index'),
@@ -372,7 +372,7 @@ def make_edx(config):
                     "content_type": "topnav",
                     "prev_link": book_index[sequential_name]['prev'],
                     "next_link": book_index[sequential_name]['next'],
-                    "toc_link": 'toc'
+                    "toc_link": '../../Table_of_Contents/Table_of_Contents'
                     })
         SubElement(module_xml, 'content', {
                         'url_name': '{}-0'.format(subsection_name),

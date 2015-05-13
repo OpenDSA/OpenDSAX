@@ -1,3 +1,6 @@
+ifeq ($(OS),Windows_NT)
+	SHELL=C:/Windows/System32/cmd.exe
+endif
 # Makefile for Sphinx documentation
 #
 

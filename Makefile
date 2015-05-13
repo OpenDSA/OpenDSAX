@@ -1,5 +1,5 @@
 ifeq ($(OS),Windows_NT)
-    SHELL=C:/Windows/System32/cmd.exe
+	SHELL=C:/Windows/System32/cmd.exe
 endif
 RM = rm -rf
 CP = cp -rf
@@ -64,9 +64,9 @@ pull:
 	git pull
 	git submodule init
 	git submodule update
-	"$(MAKE)" -s -C JSAV
-	"$(MAKE)" -s min
-	cd Doc && "$(MAKE)"
+	$(MAKE) -s -C JSAV
+	$(MAKE) -s min
+	cd Doc && $(MAKE)
 	$(CP) $(XBLOCKS_HOME)/lib $(XBLOCK_MODULE)/public/
 	$(CP) $(XBLOCKS_HOME)/JSAV $(XBLOCK_MODULE)/public/
 	$(CP) $(XBLOCKS_HOME)/AV $(XBLOCK_JSAV)/public/

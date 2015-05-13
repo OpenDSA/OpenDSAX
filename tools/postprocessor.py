@@ -281,8 +281,7 @@ def make_edx(config):
   dest_dir = config.book_dir + config.rel_book_output_path
   # Iterate through all of the existing files
   ignore_files = ('Gradebook.html', 'search.html', 'conceptMap.html',
-                  'genindex.html', 
-                  'RegisterBook.html', 'Bibliography.html')
+                  'genindex.html', 'RegisterBook.html')
   html_files = [path for path in os.listdir(dest_dir)
                 if path.endswith('.html') and path not in ignore_files]
   exercises = {}
@@ -377,6 +376,7 @@ def make_edx(config):
                     })
         SubElement(module_xml, 'content', {
                         'url_name': '{}-0'.format(subsection_name),
+                        'short_name': '{}-0'.format(subsection_name),
                         'xblock-family': "xblock.v1",
                         'long_name': "{} OpenDSA Content".format(section_name)
                         })
@@ -408,6 +408,7 @@ def make_edx(config):
                         })
             SubElement(module_xml, 'content', {
                         'url_name': '{}-{}'.format(subsection_name, index),
+                        'short_name': '{}-{}'.format(subsection_name, index),
                         'xblock-family': "xblock.v1",
                         'long_name': "{} OpenDSA Content".format(section_name)
                         })

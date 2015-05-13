@@ -178,7 +178,7 @@ def update_TermDef(glossary_file, terms_dict):
         i-= 1
     i += 1
     
-def update_edx_file(path, modules):
+def update_edx_file(path, modules, url_index):
   # Read contents of module HTML file
   with codecs.open(path, 'r', 'utf-8') as html_file:
     html = html_file.read()
@@ -281,9 +281,16 @@ def make_edx(config):
   html_files = [path for path in os.listdir(dest_dir)
                 if path.endswith('.html') and path not in ignore_files]
   exercises = {}
+  url_index = {
+    section_data['long_name'] : '{}/{}'.format(chapter_name, section_name.replace('/', '_'))
+    for chapter_name, sections in config.chapters.items()
+    for section_name, section_data in sections.items()
+  }
+  url_index['genindex'] = 'Table_of_Contents/Table_of_Contents'
+  url_index['search'] = 'Table_of_Contents/Table_of_Contents'
   for path in html_files:
     file_path = os.path.join(dest_dir, path)
-    exercises[path] = update_edx_file(file_path, tuple(html_files)+ignore_files)
+    exercises[path] = update_edx_file(file_path, tuple(html_files)+ignore_files, url_index)
   
   # Create the directories
   os.mkdir(os.path.join(dest_dir, 'chapter/'))
@@ -310,9 +317,9 @@ def make_edx(config):
     for section_name, section_data in sections.items():
       sequential_name = section_name.replace('/', '_')
       book_index[sequential_name] = {
-        'prev': previous_name
+        'prev': '../../{}/{}'.format(chapter_name, previous_name)
       }
-      book_index[previous_name]['next'] = sequential_name
+      book_index[previous_name]['next'] = '../../{}/{}'.format(chapter_name, sequential_name)
       previous_name = sequential_name
   book_index[previous_name]['next'] = ""
   

@@ -224,7 +224,12 @@ def update_edx_file(path, modules, url_index):
       else:
         external, internal = href, ''
       if external.endswith('.html'):
-        link['href'] = '../../'+'#'.join((external[:-5],internal))
+        # Snip off the ".html"
+        external = external[:-5]
+        # Map it to the proper folder in OpenEdX
+        external = url_index.get(external, external)
+        # Force it to approach it from the top
+        link['href'] = '../../'+'#'.join((external,internal))
         
       # Do something with the actual href
   

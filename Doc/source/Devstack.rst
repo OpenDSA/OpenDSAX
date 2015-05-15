@@ -21,7 +21,7 @@ The Devstack configuration has the following components:
 * Forums / elasticsearch / ruby (discussion forums)
 * ORA (Open Response Assessor)
 
-This document contains instructions for instaling the most recent named release of OpenEdX Devstack called ``Birch``.
+This document contains instructions for installing the most recent named release of OpenEdX Devstack called ``Birch``.
 
 For more information about ``Birch`` see `Birch release announcement <https://open.edx.org/announcements/open-edx-release-birch-release-february-24-2015>`_.
 
@@ -47,7 +47,7 @@ MS Windows 7
 ---------------------
 One-time Installation
 ---------------------
-Devstack Installation will require downloading a vitrual box and many repositories from edx github account. Make sure you have reliable Internet connection to be able to complete the installation steps successfully.
+Devstack Installation will require downloading a virtual box and many repositories from the EdX Github account. Make sure you have reliable internet connection to be able to complete the installation steps successfully.
 
 For a complete installation manual see `here <http://edx.readthedocs.org/projects/edx-installing-configuring-and-running/en/latest/index.html>`_. However we also provide a step by step instructions and show solutions to the common problems faced during the installation process.
 
@@ -100,7 +100,7 @@ Deploying OpenDSAX xblocks on Devstack
 
 To use OpenDSAX xblocks (or any other xblock) in the Studio and LMS, there are three things you need to do:
 	#) Make sure the ALLOW_ALL_ADVANCED_COMPONENTS feature flag is set to True
-	#) Clone OpenDSAX repository (prefered to be inside ``devstack`` folder).
+	#) Clone OpenDSAX repository (preferred to be inside ``devstack`` folder).
 	#) Install OpenDSAX xblocks into the virtual environment you are running the studio from
 
 Note: ALLOW_ALL_ADVANCED_COMPONENTS is set to True by default in the Devstack environment, so this part is already taken care of.
@@ -158,7 +158,7 @@ Both
 	$ cd /edx/OpenDSAX
 	$ make install-xblocks
 
-#. Becasue OpenDSAX xblocks were developed to allow OpenDSA eBooks to be implemented in OpenEdX platform, You have to build an OpenDSA eBook first. For that sake, OpenDSAX reporsitory comes with a sample eBook called ``testX`` :: 
+#. Because OpenDSAX xblocks were developed to allow OpenDSA eBooks to be implemented in OpenEdX platform, You have to build an OpenDSA eBook first. For that sake, OpenDSAX repository comes with a sample eBook called ``testX`` :: 
 
 	$ sudo su edxapp
 	$ cd /edx/OpenDSAX
@@ -171,8 +171,8 @@ Both
 --------------------
 When things go wrong
 --------------------
-If you couldn't download the virtual box or the provisioing step did't finish or 
-anything went wrong you can delete the VM and start from the begining.
+If you couldn't download the virtual box or the provisioning step didn't finish or 
+anything went wrong you can delete the VM and start from the beginning.
 
 #. Linux: ::
 
@@ -185,6 +185,15 @@ anything went wrong you can delete the VM and start from the begining.
 		C:\devstack> vagrant destroy
 
 In addition, this `wiki page <https://github.com/edx/configuration/wiki/Vagrant-troubleshooting>`_ shows different issues that could happen during vagrant installation and how to solve them.
+
+If you have a problem that ::
+
+        The guest machine entered an invalid state ...
+        
+And it complains about VTS-X virtualization being disabled, then you might need to adjust your vagrantfile to the follwoing (lines 8 and 9):
+
+        MEMORY = 3175
+        CPU_COUNT = 1
 
 -----------------------------------------
 Developing and testing XBlock on Devstack

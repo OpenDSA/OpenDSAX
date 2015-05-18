@@ -32,17 +32,14 @@ min: nomin
 
 # testX: min
 # 	python $(CONFIG_SCRIPT) config/testX.json
-    
+
 testX:
 	python $(CONFIG_SCRIPT) --edx config/$@.json
 	$(CP) $(XBLOCKS_HOME)/Books/$@/html $(XBLOCK_CONTENT)/public/
 
-ds-testX: min testX
-	"$(MAKE)" install-xblocks
+ds-testX: min testX install-xblocks
 
-fs-testX: min testX
-	"$(MAKE)" fs-install-xblocks
-
+fs-testX: min testX fs-install-xblocks
 
 allBooks: testX
 
@@ -91,7 +88,7 @@ install-binsortmcq:
 	cd $(XBLOCKS_HOME)/xblocks/binsortmcq && $(PIP)
 
 # Fullstack xblock installation targets
-fs-install-xblocks: fs-install-utils fs-install-module fs-install-jsav fs-install-content
+fs-install-xblocks: fs-install-utils fs-install-module fs-install-jsav fs-install-content restart-edxapp
 
 fs-install-jsav:	
 	$(RM) $(SITE_PKG_HOME)/jsav
@@ -116,3 +113,6 @@ fs-install-utils:
 fs-install-course:
 	cd /edx/app/edxapp/edx-platform
 	sudo -u www-data /edx/bin/python.edxapp ./manage.py cms --settings=aws import /edx/var/edxapp/data  $(XBLOCKS_HOME)/Books/$@/$@.tar.gz
+
+restart-edxapp:
+	sudo /edx/bin/supervisorctl -c /edx/etc/supervisord.conf restart edxapp:

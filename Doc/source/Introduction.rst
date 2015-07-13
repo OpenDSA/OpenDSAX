@@ -52,11 +52,11 @@ Those roles include:
 Trying it out
 -------------
 
-The OpenDSA project runs an OpenEdX server at ``opendsax.cc.vt.edu``.
+The OpenDSA project runs an OpenEdX server at ``opendsax.cs.vt.edu``.
 Here is information on how you can access the server and try some
 things out.
 
-#. Point your browser to `http://opendsax.cc.vt.edu:18010 <http://opendsax.cc.vt.edu:18010>`_.
+#. Point your browser to `http://opendsax.cs.vt.edu:18010 <http://opendsax.cs.vt.edu:18010>`_.
 
 #. Register for new account and login.
 

@@ -105,6 +105,7 @@ To use OpenDSAX xblocks (or any other xblock) in Fullstack Studio and LMS, there
 #. Becasue OpenDSAX xblocks were developed to allow OpenDSA eBooks to be implemented in OpenEdX platform, You have to build an OpenDSA eBook first. For that sake, OpenDSAX reporsitory comes with a sample eBook called ``testX`` :: 
 
 	$ cd /edx/app/edxapp/OpenDSAX
+	$ sudo pip install -r requirements.txt
 	$ sudo make fs-testX
 
 #. To use OpenDSAX XBlocks in a course, follow the instuction `in this page <http://opendsax.readthedocs.org/en/latest/Introduction.html#trying-it-out>`_ starting from point #4.

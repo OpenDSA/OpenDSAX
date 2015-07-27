@@ -12,6 +12,7 @@ import xml.dom.minidom as minidom
 from pprint import pprint
 from xml.etree.ElementTree import ElementTree, SubElement, Element
 from bs4 import BeautifulSoup
+from collections import defaultdict
 import tarfile
 import shutil
 import urlparse
@@ -192,6 +193,24 @@ def update_edx_file(path, modules, url_index):
   
   soup = BeautifulSoup(html, "lxml")
   
+  # Find all of the scripts that we might need
+  scripts = defaultdict(list)
+  for script in soup('script'):
+    if script.has_attr('src') and script['src'].startswith('../../../AV/'):
+        url = script['src'].replace('../../../', 'OpenDSA/')
+        name = os.path.splitext(os.path.basename(url))[0]
+        if name.endswith('CODE'):
+            name = name.replace('CODE', 'CON')
+        scripts[name].append(url)
+  # And any css files that we might want
+  styles = defaultdict(list)
+  for style in soup('link'):
+    if style.has_attr('href') and style['href'].startswith('../../../AV/'):
+        url = style['href'].replace('../../../', 'OpenDSA/')
+        name = os.path.splitext(os.path.basename(url))[0]
+        if name.endswith('CODE'):
+            name = name.replace('CODE', 'CON')
+        scripts[name].append(url)
   # Strip out Script, Style, and Link tags
   for tag in ('script', 'link', 'style'):
     for s in soup(tag):
@@ -203,7 +222,6 @@ def update_edx_file(path, modules, url_index):
         # Really? No href? Is that even valid HTML?
         continue
     href = link['href']
-    #TODO: Check if we need to add chapter folders to the URL
     # Skip dummy urls redirecting to itself
     if href == '#':
       continue
@@ -233,43 +251,49 @@ def update_edx_file(path, modules, url_index):
         
       # Do something with the actual href
   
-  
-  '''
-  TODO: Add the references to these broken-up files in the final course zip
-  '''
   # Breaking file into components
   section_divs = [i for l in soup.find_all('div', class_='section') 
                     for i in l.find_all(recursive=False)]
-  exercise_data = {}
   found_counter = 0
+  exercise_data = {}
   if section_divs:
-    chunked_html_files = []
+    # Process the fragments in two passes
+    fragments = []
+    fragment_components = []
+    # In the first pass, we find all of the problems and group them into fragments
     for section in section_divs:
-      # If we find a slideshow or practice exercise, then write it out to a file
-      if section.name == 'div' and 'data-type' in section.attrs and section['data-type'] in ('ss', 'pe'):
-        path_html = os.path.join(os.path.dirname(path), '{}-{}.html'.format(mod_name, found_counter))
-        with codecs.open(path_html, 'w', 'utf-8') as o:
-          o.writelines(chunked_html_files)
+      # If we find a slideshow or practice exercise, then start a new fragment
+      fragment_components.append(unicode(section))
+      if section.name == 'div' and section.has_attr('data-type') and section['data-type'] in ('ss', 'pe'):
         name = section['id']
-        exercise_data[name] = {key: section[key] for key in section.attrs}
-        chunked_html_files = []
+        fragments.append((name, fragment_components))
+        fragment_components = []
         found_counter += 1
-      else:
-        chunked_html_files.append(unicode(section))
-    if found_counter:
-        path_html = os.path.join(os.path.dirname(path), '{}-{}.html'.format(mod_name, found_counter))
-    else:
-        path_html = os.path.join(os.path.dirname(path), '{}.html'.format(mod_name))
-    with codecs.open(path_html, 'w', 'utf-8') as o:
-      o.writelines(chunked_html_files)
-    chunked_html_files = []
+        exercise_data[name] = {key: section[key] for key in section.attrs}
+    # Then we write out each grouping with the proper name and JS/CSS
+    for section_id, fragment in fragments:
+        seq = '-{0:02d}'.format(found_counter) if found_counter > 0 else ''
+        filename = '{}{}.html'.format(mod_name, seq)
+        path_html = os.path.join(os.path.dirname(path), filename)
+        # Are there any scripts or styles?
+        for a_script in sorted(scripts[section_id]):
+          fragment.insert(0, '<script type="text/javascript" src="{}">'.format(a_script))
+        for a_style in sorted(styles[section_id]):
+          fragment.insert(0, '<link rel="stylesheet" type="text/css" href="{}">'.format(a_style))
+        # Write it out, preserving unicode
+        with codecs.open(path_html, 'w', 'utf-8') as o:
+          o.writelines(fragment)
   else:
     print "Failed to find any 'div' tags with a 'section' class."
     path_html = os.path.join(os.path.dirname(path), '{}-{}.html'.format(mod_name, found_counter))
     with codecs.open(path_html, 'w', 'utf-8') as o:
       o.writelines(html)
+  print exercise_data
   print "\t Had ", 1+found_counter, "parts"
       
+      
+  print scripts
+  
   # Delete the file on the way out
   #os.remove(path)
   return exercise_data

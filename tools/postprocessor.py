@@ -185,12 +185,12 @@ def update_edx_file(path, modules, url_index):
   
   # Get the module name and create its subfolder
   mod_name = os.path.splitext(os.path.basename(path))[0]
-  print mod_name
+  print "Found HTML file:", mod_name
   
   # Strip out the script, style, link, and meta tags
     
   
-  soup = BeautifulSoup(html)
+  soup = BeautifulSoup(html, "lxml")
   
   # Strip out Script, Style, and Link tags
   for tag in ('script', 'link', 'style'):
@@ -256,7 +256,10 @@ def update_edx_file(path, modules, url_index):
         found_counter += 1
       else:
         chunked_html_files.append(unicode(section))
-    path_html = os.path.join(os.path.dirname(path), '{}-{}.html'.format(mod_name, found_counter))
+    if found_counter:
+        path_html = os.path.join(os.path.dirname(path), '{}-{}.html'.format(mod_name, found_counter))
+    else:
+        path_html = os.path.join(os.path.dirname(path), '{}.html'.format(mod_name))
     with codecs.open(path_html, 'w', 'utf-8') as o:
       o.writelines(chunked_html_files)
     chunked_html_files = []
@@ -265,6 +268,7 @@ def update_edx_file(path, modules, url_index):
     path_html = os.path.join(os.path.dirname(path), '{}-{}.html'.format(mod_name, found_counter))
     with codecs.open(path_html, 'w', 'utf-8') as o:
       o.writelines(html)
+  print "\t Had ", 1+found_counter, "parts"
       
   # Delete the file on the way out
   #os.remove(path)

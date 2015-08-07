@@ -87,8 +87,11 @@ install-content:
 install-binsortmcq:
 	cd $(XBLOCKS_HOME)/xblocks/binsortmcq && $(PIP)
 
+restart-edxapp:
+	sudo /edx/bin/supervisorctl -c /edx/etc/supervisord.conf restart edxapp:
+
 # Fullstack xblock installation targets
-fs-install-xblocks: fs-install-utils fs-install-module fs-install-jsav fs-install-content restart-edxapp
+fs-install-xblocks: fs-install-utils fs-install-module fs-install-jsav fs-install-content fs-restart-edxapp
 
 fs-install-jsav:	
 	$(RM) $(SITE_PKG_HOME)/jsav
@@ -114,5 +117,5 @@ fs-install-course:
 	cd /edx/app/edxapp/edx-platform
 	sudo -u www-data /edx/bin/python.edxapp ./manage.py cms --settings=aws import /edx/var/edxapp/data  $(XBLOCKS_HOME)/Books/$@/$@.tar.gz
 
-restart-edxapp:
-	sudo /edx/bin/supervisorctl -c /edx/etc/supervisord.conf restart edxapp:
+fs-restart-edxapp:
+	sudo /edx/bin/supervisorctl restart edxapp:

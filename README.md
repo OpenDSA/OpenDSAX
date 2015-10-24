@@ -1,10 +1,13 @@
 OpenDSAX
 ========
 
-Development repository for an OpenDSA implementation within the
-OpenEdX framework.
-At the present time, this is speculative.
-It is meant to explore the possibility for replacing the existing
+NOTE: THIS REPOSITORY IS OBSOLETE.
+
+Development repository for a (now aborted) OpenDSA implementation within
+theOpenEdX framework. We dicided to go with LTI, and the various
+traditional LMS that support LTI, instead of OpenEdX.
+
+It was meant to explore the possibility for replacing the existing
 OpenDSA infrastructure (which is mostly home grown) with one built on
 the OpenEdX framework.
 The idea is to preserve most of the existing content development
